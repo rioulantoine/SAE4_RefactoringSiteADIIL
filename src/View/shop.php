@@ -30,7 +30,8 @@
 require_once __DIR__ . '/Template/header.php';
 require_once dirname(__DIR__) . '/Model/database.php';
 require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
-require_once dirname(__DIR__, 2) . '/temp-site/cart_class.php';
+// Use the project's Model cart class (temp-site cart_class.php is missing)
+require_once dirname(__DIR__) . '/Model/cart_class.php';
 
 // Connexion à la base de donnees
 $db = new DB();
@@ -133,7 +134,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
     <div id='cart-info'>
         <button>
-            <a href="<?php echo $base; ?>/temp-site/cart.php">
+            <a href="<?php echo $base; ?>/src/View/cart.php">
                 <img src="<?php echo $base; ?>/public/assets/logo_caddie.png" alt="Logo du panier">
                 <p>Panier (<span id="count"><?=$cart->count();?></span>)</p>
             </a>
@@ -167,7 +168,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                     <div>
                         <p id="stock-status">
                             <?php if ((int)$product['stock_article'] > 0 || (int)$product['stock_article'] < 0): ?>
-                                <a class="addCart" id="add-to-cart-button" href="<?php echo $base; ?>/temp-site/cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">
+                                <a class="addCart" id="add-to-cart-button" href="<?php echo $base; ?>/public/api/cart.php?action=add&id=<?= htmlspecialchars($product['id_article']) ?>&redirect=<?php echo urlencode($base . '/src/View/shop.php'); ?>">
                                     Ajouter au panier
                                 </a>
                             <?php else: ?>

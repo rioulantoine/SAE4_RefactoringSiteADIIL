@@ -1,3 +1,4 @@
+<?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,11 +7,11 @@
     <title>Mon panier</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="/styles/cart_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/cart_style.css">
 
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/header_style.css">
-    <link rel="stylesheet" href="/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
 
     <script>
         //Fonction pour valider la soumission du formulaire (form-quantity) par la touche "Entrée"
@@ -33,18 +34,19 @@
 <!--------------->
 
 <?php 
-
-// Importer les fichiers
-require_once "header.php" ;
-require_once 'database.php';
-require_once 'files_save.php';
-require_once 'cart_class.php';
+// includes (use safe absolute paths)
+require_once __DIR__ . '/Template/header.php';
+require_once dirname(__DIR__) . '/Model/database.php';
+require_once dirname(__DIR__) . '/Model/cart_class.php';
+// temp-site helper kept if still used for file uploads
+require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
 
 // Connexion à la base de donnees
 $db = new DB();
 
-// Initialisation du panier
 $cart = new cart($db);
+
+
 ?>
 
 <!-- On récupère les produits du panier -->
@@ -58,7 +60,6 @@ $cart = new cart($db);
         $placeholders = implode(",", array_fill(0, count($ids), "?"));
         $query = "SELECT * FROM ARTICLE WHERE id_article IN ($placeholders)";
         $types = str_repeat("i", count($ids));
-        
         $products = $db->select(
             $query, 
             $types, 
@@ -88,8 +89,8 @@ $cart = new cart($db);
 
     <div>
         <button id="shop-button" >
-            <a href="shop.php">
-                <img src="/assets/fleche_retour.png" alt="Fleche de retour">
+            <a href="<?php echo $base; ?>/src/View/shop.php">
+                <img src="<?php echo $base; ?>/public/assets/fleche_retour.png" alt="Fleche de retour">
                 Retourner à la boutique
             </a>
         </button>
@@ -98,7 +99,7 @@ $cart = new cart($db);
 
 <?php if (!empty($_SESSION['cart'])) : ?>
 <div id='cart-container'>
-    <form method="POST" action="/cart.php" id= "form-quantity">
+    <form method="POST" action="<?php echo $base; ?>/public/api/cart.php?action=update&redirect=<?php echo urlencode($base . '/src/View/cart.php'); ?>" id= "form-quantity">
     <table>
             <thead>
                 <tr>
@@ -113,14 +114,14 @@ $cart = new cart($db);
                 <?php foreach ($products as $product) :?>
                 <tr>
                     <td id='article-cell'>
-                        <img src="/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
+                        <img src="<?php echo $base; ?>/public/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
                         <p><?= htmlspecialchars($product['nom_article']) ?></p>
                     </td>
                     <td><?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> €</td>                
                     <td><input type='text' name="cart[quantity][<?=$product['id_article']?>]" value="<?=$_SESSION['cart'][$product['id_article']]?>" onkeydown="pressEnter(event)"></td>
                     <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
                     <td>
-                        <a href="/cart.php?del=<?= $product['id_article'] ?>">Supprimer</a>
+                        <a href="<?php echo $base; ?>/public/api/cart.php?action=del&id=<?= $product['id_article'] ?>&redirect=<?php echo urlencode($base . '/src/View/cart.php'); ?>">Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -173,7 +174,7 @@ $cart = new cart($db);
     </form>
 </div>
 <div>
-    <form class="subscription" action="/order.php" method="post">
+    <form class="subscription" action="<?php echo $base; ?>/src/View/order.php" method="post">
         <?php
         if (isset($_SESSION['cart'])) {
             // Encodage du panier entier en JSON et transmission dans un seul champ caché
@@ -194,8 +195,7 @@ $cart = new cart($db);
 
 
 
-
-<?php require_once "footer.php" ?>
+<?php require_once __DIR__ . '/Template/footer.php' ?>
 
 </body>
 </html>
