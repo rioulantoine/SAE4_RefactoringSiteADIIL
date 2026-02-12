@@ -20,13 +20,14 @@
 <body id="index" class="body_margin">
 
     <?php
-     if (session_status() === PHP_SESSION_NONE) {
-         session_start();
-     }
-     require_once __DIR__ . '/src/View/Template/header.php';
-     require_once __DIR__ . '/src/Model/database.php';
-     $db = new DB();
-     $isLoggedIn = isset($_SESSION["userid"]);
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    require_once __DIR__ . '/src/View/Template/header.php';
+    require_once __DIR__ . '/src/Model/database.php';
+    $db = new DB();
+    $isLoggedIn = isset($_SESSION["userid"]);
     ?>
     <div id="page-container">
         <!--H1 A METTRE -->
@@ -150,7 +151,7 @@
                     </h4>
                 </div>
                 <?php endforeach; ?>
-                <h3><a href="temp-site/events.php">Voir tous les événements</a></h3>
+                <h3><a href="<?php echo $base; ?>/src/View/events.php">Voir tous les événements</a></h3>
             </div>
             <h2 class="titre_vertical">EVENT</h2>
 

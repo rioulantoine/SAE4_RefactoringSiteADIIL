@@ -6,10 +6,11 @@
     <title>Boutique</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="/styles/shop_style.css">
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/header_style.css">
-    <link rel="stylesheet" href="/styles/footer_style.css">
+    <?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/shop_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
 
 
 
@@ -26,10 +27,10 @@
 
 <!-- Importer les fichiers -->
 <?php 
-require_once "header.php" ;
-require_once 'database.php';
-require_once 'files_save.php';
-require_once 'cart_class.php';
+require_once __DIR__ . '/Template/header.php';
+require_once dirname(__DIR__) . '/Model/database.php';
+require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
+require_once dirname(__DIR__, 2) . '/temp-site/cart_class.php';
 
 // Connexion à la base de donnees
 $db = new DB();
@@ -132,8 +133,8 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
     <div id='cart-info'>
         <button>
-            <a href="cart.php">
-                <img src="/assets/logo_caddie.png" alt="Logo du panier">
+            <a href="<?php echo $base; ?>/temp-site/cart.php">
+                <img src="<?php echo $base; ?>/public/assets/logo_caddie.png" alt="Logo du panier">
                 <p>Panier (<span id="count"><?=$cart->count();?></span>)</p>
             </a>
         </button>
@@ -149,9 +150,9 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                 <div id="one-product">
                     <div>
                         <?php if($product['image_article'] == null):?>
-                            <img src="/admin/ressources/default_images/boutique.png" alt="Image de l'article" />
+                            <img src="<?php echo $base; ?>/public/admin/ressources/default_images/boutique.png" alt="Image de l'article" />
                         <?php else:?>
-                            <img src="/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
+                            <img src="<?php echo $base; ?>/public/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
                         <?php endif?>
                         <h3 title="<?= htmlspecialchars($product['nom_article']) ?>">
                             <?= htmlspecialchars($product['nom_article']) ?>
@@ -166,7 +167,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                     <div>
                         <p id="stock-status">
                             <?php if ((int)$product['stock_article'] > 0 || (int)$product['stock_article'] < 0): ?>
-                                <a class="addCart" id="add-to-cart-button" href="/cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">
+                                <a class="addCart" id="add-to-cart-button" href="<?php echo $base; ?>/temp-site/cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">
                                     Ajouter au panier
                                 </a>
                             <?php else: ?>
@@ -184,7 +185,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
 
 
-<?php require_once "footer.php" ?>
+<?php require_once __DIR__ . '/Template/footer.php' ?>
 
 <!--Dynamisme du panier-->
     <!--Automatisation de la soumission du formulaire (filter-form)-->
@@ -232,7 +233,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
         });
     </script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="/scripts/add_cart.js"></script>
+<script src="<?php echo $base; ?>/public/scripts/add_cart.js"></script>
 
 </body>
 </html>

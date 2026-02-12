@@ -7,15 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="stylesheet" href="/styles/login_style.css">
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/header_style.css">
+    <?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
+
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/login_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
 
 </head>
     <body>
         <?php 
-            require_once 'header.php';
-            require_once 'database.php';
+            require_once __DIR__ . '/Template/header.php';
+            require_once dirname(__DIR__) . '/Model/database.php';
             $db = new DB();
 
             function format_input($text){
@@ -79,7 +81,7 @@
                         [$lname,$fname,$mail,password_hash($password, PASSWORD_DEFAULT),'defaultPP.png']
                     );
                 }
-                header("Location: /login.php");
+                header("Location: " . $base . "/src/View/login.php");
                 exit;
             }else{
                 echo 'Utilisateur déjà présent';

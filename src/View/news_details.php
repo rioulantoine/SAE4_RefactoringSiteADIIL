@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php 
-        require_once 'database.php';
+        require_once __DIR__ . '/../Model/database.php';
         $db = new DB();
+        // normalize base URL
+        $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/');
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
             $eventid = $_GET['id'];
@@ -13,12 +15,12 @@
                 [$eventid]
             );
             if(empty($event) || is_null($event)){
-                header("Location: /index.php");
+                header("Location: " . $base . "/index.php");
                 exit;
             }
             $event = $event[0];
         }else{
-            header("Location: /index.php");
+            header("Location: " . $base . "/index.php");
             exit;
         }
     ?>
@@ -32,11 +34,11 @@
 
     <title><?php echo $event['titre_actualite']?></title>
 
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/header_style.css">
-    <link rel="stylesheet" href="/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
 
-    <link rel="stylesheet" href="/styles/event_details_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/event_details_style.css">
 
 
 
@@ -44,14 +46,14 @@
 
 <body>
     <?php
-    require_once 'header.php';
+    require_once __DIR__ . '/Template/header.php';
     $isLoggedIn = isset($_SESSION["userid"]);
 ?>
     <section class="event-details">
         <?php if($event['image_actualite'] == null):?>
-            <img src="/admin/ressources/default_images/event.jpg" alt="Image de l'actualite">
+            <img src="<?php echo $base; ?>/public/admin/ressources/default_images/event.jpg" alt="Image de l'actualite">
         <?php else:?>
-            <img src="/api/files/<?php echo $event['image_actualite']; ?>" alt="Image de l'actualite">
+            <img src="<?php echo $base; ?>/public/api/files/<?php echo $event['image_actualite']; ?>" alt="Image de l'actualite">
         <?php endif?>
         <h1><?php echo strtoupper($event['titre_actualite']); ?></h1>
 
@@ -72,7 +74,7 @@
     </section>
 
 
-    <?php require_once 'footer.php';?>
+    <?php require_once __DIR__ . '/Template/footer.php';?>
 </body>
 
 </html>

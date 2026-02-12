@@ -7,15 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="stylesheet" href="/styles/login_style.css">
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/header_style.css">
+    <?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
+
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/login_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
 
 </head>
     <body>
         <?php 
-            require_once 'header.php';
-            require_once 'database.php';
+            require_once __DIR__ . '/Template/header.php';
+            require_once dirname(__DIR__) . '/Model/database.php';
             $db = new DB();
         ?>
 
@@ -32,7 +34,7 @@
             <button type="submit">Se connecter</button>
         </form>
 
-        <form method="GET" action="/signin.php" id="create-account">
+        <form method="GET" action="<?php echo $base; ?>/src/View/signin.php" id="create-account">
             <h2>Pas encore de compte ?</h2>
             <button type="submit">Créez en un</button>
         </form>
@@ -76,7 +78,7 @@
                                 $_SESSION["isAdmin"] = true;
                             }
 
-                        header("Location: /index.php");
+                        header("Location: " . $base . "/index.php");
                         exit;
 
                     }else{

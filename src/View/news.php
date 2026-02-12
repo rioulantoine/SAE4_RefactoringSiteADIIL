@@ -7,16 +7,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <title>Actualités</title>
-    <link rel="stylesheet" href="/styles/news_style.css">
+     <?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/news_style.css">
 
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/header_style.css">
-    <link rel="stylesheet" href="/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
 </head>
 <body class="body_margin">
 <?php
-    require_once 'header.php';
-    require_once 'database.php';
+    require_once __DIR__ . '/Template/header.php';
+    require_once __DIR__ . '/../Model/database.php';
     $db = new DB();
     $show = 5;
 
@@ -82,10 +83,10 @@
         </div>
 </section>
 
-<?php require_once "footer.php" ?>
+    <?php require_once __DIR__ . '/Template/footer.php';?>
 
-<script src="/scripts/news_details_redirect.js"></script>
-<script src="/scripts/scroll_to_closest_event.js"></script>
+<script src="<?php echo $base; ?>/public/scripts/news_details_redirect.js"></script>
+<script src="<?php echo $base; ?>/public/scripts/scroll_to_closest_event.js"></script>
 
 </body>
 </html>

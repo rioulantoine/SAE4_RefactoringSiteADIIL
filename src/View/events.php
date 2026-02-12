@@ -7,15 +7,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <title>Evenements</title>
-    <link rel="stylesheet" href="/styles/events_style.css">
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/header_style.css">
-    <link rel="stylesheet" href="/styles/footer_style.css">
+    <?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/events_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
 </head>
 <body class="body_margin">
 <?php
-    require_once 'header.php';
-    require_once 'database.php';
+    require_once __DIR__ . '/Template/header.php';
+    require_once __DIR__ . '/../Model/database.php';
     $db = new DB();
     $isLoggedIn = isset($_SESSION["userid"]);
     $show = 5;
@@ -26,7 +27,7 @@
 ?>
 <h1>LES EVENEMENTS</h1>
 <section>
-    <a class="show-more" href="/events.php?show= <?php echo $show + 10?>">Voir plus loin dans le passé</a>
+    <a class="show-more" href="<?php echo $base; ?>/src/View/events.php?show=<?php echo $show + 10; ?>">Voir plus loin dans le passé</a>
     <div class="events-display">
                 <?php
                     $date = getdate();
@@ -130,8 +131,8 @@
                 <?php endforeach; ?>
         </div>
 </section>
-    <?php require_once 'footer.php';?>
-    <script src="/scripts/event_details_redirect.js"></script>
-    <script src="/scripts/scroll_to_closest_event.js"></script>
+    <?php require_once __DIR__ . '/Template/footer.php';?>
+    <script src="<?php echo $base; ?>/public/scripts/event_details_redirect.js"></script>
+    <script src="<?php echo $base; ?>/public/scripts/scroll_to_closest_event.js"></script>
 </body>
 </html>
