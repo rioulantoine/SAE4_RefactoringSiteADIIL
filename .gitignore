@@ -2,3 +2,5 @@
 .DS_Store
 ./api/files/
 .env
+Desc.txt 
+/vendor/

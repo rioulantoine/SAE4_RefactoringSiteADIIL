@@ -1,0 +1,18 @@
+{
+    "name": "antoinerioul/sae4_refactoring-site-adiil",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Antoinerioul\\Sae4RefactoringSiteAdiil\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Antoine",
+            "email": "rioul.antoine@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
