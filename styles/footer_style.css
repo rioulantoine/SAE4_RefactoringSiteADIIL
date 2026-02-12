@@ -1,0 +1,62 @@
+/*******************
+****** FOOTER ******
+********************/
+footer {
+    margin: 0;
+    margin-top: 15vh;
+    
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+
+    background-color: rgb(23, 23, 23);
+
+    height: 260px; 
+    padding: 35px; 
+
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+}
+
+footer > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    height: 100%;
+    text-align: left;
+}
+
+footer > div  a {
+    width: fit-content;
+    text-decoration: none;
+    font-size: 30px; 
+    color: white; 
+    font-family: "Inter", sans-serif;
+    font-weight:500;
+    font-size: 25px;
+    opacity: 80%;
+}
+
+footer > div  a:hover{
+    opacity: 100%;
+}
+
+footer > h2{
+    font-family: "Koulen","Inter", sans-serif;
+    width: fit-content;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    
+
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+
+    letter-spacing: -10px;
+
+
+    font-weight: 200;
+
+    font-size: 2em;
+}

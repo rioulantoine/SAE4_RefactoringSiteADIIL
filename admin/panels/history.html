@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historque d'achat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/general.css">
+    <link rel="stylesheet" href="../styles/panels.css">
+    <link rel="stylesheet" href="../styles/historique.css">
+</head>
+<body>
+
+     <!-- HEADER -->
+     <header>
+        <h1>Historque d'achat</h1>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+
+        <!-- FILTERS -->
+        <div class="filters">
+            <div>
+                <span>Boutique <div class="toggle toggle-active" id="toggle_boutique"></div></span>
+                <span>Grades <div class="toggle toggle-active" id="toggle_grades"></div></span>
+                <span>Evenements <div class="toggle toggle-active" id="toggle_events"></div></span>
+            </div>
+            <div>
+                <input type="text" placeholder="Recherche un utilisateur" id="userSearch">
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <table id="table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Element</th>
+                    <th>Utilisateur</th>
+                    <th>Date</th>
+                    <th>Quantité</th>
+                    <th>Prix payé</th>
+                    <th>Paiement</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <!-- AUTO GENERATED -->
+            </tbody>
+        </table>
+
+    </main>
+    
+    <!-- SCRIPTS -->
+    <script type="module" src="../scripts/toggle.js"></script>
+    <script type="module" src="../scripts/historique.js"></script>
+
+</body>
+</html>

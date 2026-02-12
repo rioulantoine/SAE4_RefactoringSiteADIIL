@@ -1,0 +1,59 @@
+/*********************
+****** A PROPOS ******
+**********************/
+
+.titre_section_apropos{
+    font-size: 70px;
+    text-align: center;
+    margin-bottom: 75px;
+}
+
+
+/* about_style.css */
+
+/* Style général pour les sections */
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Espacement entre chaque bloc */
+    max-width: 100%; /* Limite la largeur des sections */
+}
+
+/* Style pour les conteneurs des paragraphes et des images */
+section > div {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+/* Style pour les paragraphes */
+section > div > p {
+    line-height: 1.5;
+    text-align: justify;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+/* Style pour les images */
+section > div > img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* Ajoute des coins arrondis aux images */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère pour les images */
+}
+
+.photo-membres{
+    justify-content: space-around;
+}
+
+#bureau img{
+    width: 70%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère pour les images */
+    align-self: center;
+}
+#bureau p{
+    text-align: justify;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 30px;
+}

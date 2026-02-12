@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réunions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles/general.css">
+    <link rel="stylesheet" href="../styles/panels.css">
+    <link rel="stylesheet" href="../styles/reunions.css">
+
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>Réunions</h1>
+    </header>
+
+    <!-- NAVIGUATION -->
+    <nav>
+        <p hidden id="empty_navbar">Il n'y a pas grand chose ici</p>
+        <ul id="skeleton_navbar">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul id="content_navbar">
+
+            <!-- AUTO GENERATED -->
+
+        </ul>
+
+        <button class="btn-transparent navadd-btn" id="new_btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter une réunion</button>
+
+    </nav>
+
+    <!-- MAIN -->
+    <main>
+
+        <!-- SKELETON FOR LOADING -->
+        <div id="main_skeleton">
+
+            <div class="skeleton-preview" style="margin-top: 64px;"></div>
+
+        </div>
+
+        <!-- MAIN PROPERTIES -->
+        <div id="main_content" style="display: none;">
+
+            <div class="reunion-btns">
+                <button class="btn-transparent btn-blue" id="download_btn"><img src="../ressources/download.svg" alt="Télécharger">Télécharger</button>
+                <button class="btn-transparent btn-red" id="delete_btn"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+            </div>
+
+            <iframe id="pdf_preview" frameborder="0"></iframe>
+
+        </div>
+
+    </main>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="module" src="../scripts/reunions.js"></script>
+    
+</body>
+</html>

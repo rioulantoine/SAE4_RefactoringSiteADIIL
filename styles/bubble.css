@@ -1,0 +1,17 @@
+html{
+    overflow-x: hidden;
+}
+.bubble {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    filter: blur(50px);
+    border-radius: 50%;
+    z-index: 1;
+}
+.red-bubble{
+    background: radial-gradient(circle, rgba(233, 76, 76, 0.5), transparent);
+}
+.blue-bubble{
+    background: radial-gradient(circle, rgba(51, 139, 129, 0.5), transparent);
+}

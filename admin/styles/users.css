@@ -1,0 +1,30 @@
+#prop_roles{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+#prop_roles p{
+    padding: 10px;
+    border-radius: 13px;
+    color: var(--text-lighter);
+    border: 1px solid var(--border-color);
+    font-size: 15px;
+    font-weight: normal;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    user-select: none;
+}
+#prop_roles p:hover{
+    transform: scale(1.05);
+}
+#prop_roles p:active{
+    transform: scale(0.95);
+}
+#prop_roles p.selected{
+    color: #63CA60;
+    border-color: #63CA60;
+}

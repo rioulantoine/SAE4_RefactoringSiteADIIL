@@ -1,0 +1,117 @@
+/***********************
+******  Grade  ******
+************************/
+
+H1 {
+    font-size: 4.5em;
+    letter-spacing: 15px;
+    line-height: 100px;
+    font-weight: 500;
+    font-family: "Koulen", sans-serif;
+}
+
+
+
+/***Affichage des grades***/
+
+#product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    margin: 60px;
+    margin-bottom: 75px;
+}
+
+#one-product {
+    background-color: rgb(23, 23, 23);
+    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+    align-content: center;
+    justify-content: space-between;
+}
+
+#one-product div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-bottom: 0px;
+}
+
+#one-product div:first-of-type img {
+    width: 11vh;
+    height: 11vh;
+    overflow: hidden;
+    border-radius: 20px;
+    align-self: center;
+}
+
+#one-product h3 {
+    font-size: 1.6em;
+    text-align: center;
+    white-space: wrap; /*white-space: nowrap;*/
+    overflow: hidden;
+    /*text-overflow: ellipsis; /* Ajoute les "..." */
+    word-wrap: break-word;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+#one-product div:first-of-type p:nth-of-type(1) {
+    word-wrap: break-word;
+    margin-top: auto;
+    margin-bottom: 30px;
+    font-size: 1em;
+    color: white;
+    align-self: center; 
+    text-align: center;
+    font-style: italic;
+}
+
+#one-product div:first-of-type p:nth-of-type(2) {
+    word-wrap: break-word;
+    margin-top: auto;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: rgb(169, 169, 169);
+    align-self: center; 
+}
+
+#adhesion-status{
+    font-size: 1.2em;
+}
+
+
+#buy-button {
+    display: inline-block;
+    background-color: rgb(119, 241, 190);
+    color: #1E1E1E;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+}
+
+#buy-button:hover {
+    background-color: #1E1E1E;
+    color: rgb(119, 241, 190);
+}
+
+#detention {
+    padding: 10px;
+    background-color: rgb(169, 169, 169);
+    color: #1E1E1E;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    cursor:initial;
+    font-size: 1em;
+}

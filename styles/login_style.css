@@ -1,0 +1,97 @@
+/********************
+*** LOGIN FORM ******
+********************/
+.login-form {
+    color: #613333;
+    background-color: white;
+
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    padding: 30px;
+    width: 350px;
+    margin: 2vh auto 5vh auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form h1{
+    margin-bottom: 20px;
+    color: #613333;
+    font-size: 1.8em;
+}
+
+.login-form label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    align-self: flex-start;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.login-form input:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.login-form button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.login-form button:hover {
+    background-color: #0056b3;
+}
+
+.login-error{
+    text-align: center;
+}
+
+#create-account{
+    padding: 10px;
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    align-self: center;
+
+}
+#create-account h2{
+    margin-bottom: 20px;
+}
+
+#create-account button{
+    background-color: #2a4663;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    opacity: 80%;
+}
+
+#create-account button:hover{
+    opacity: 100%;
+}

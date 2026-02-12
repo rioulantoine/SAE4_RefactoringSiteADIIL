@@ -1,0 +1,86 @@
+/* Confirmation de supression du compte  */
+
+/* Conteneur de l'alerte */
+.alert-container {
+    position: fixed; /* Place l'alerte en haut de l'écran */
+    top: 0;
+    left: 0;
+    width: 100%; /* Occupe toute la largeur de la fenêtre */
+    height: 100%; /* Occupe toute la hauteur de la fenêtre */
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    display: flex; /* Centre l'alerte horizontalement et verticalement */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Place l'alerte au-dessus des autres éléments */
+}
+
+/* Contenu de l'alerte */
+.alert-content {
+    background: whitesmoke; /* Fond blanc pour le contenu */
+    padding: 30px; /* Espacement interne */
+    border-radius: 10px; /* Coins arrondis */
+    text-align: center; /* Centre le texte */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Ombre autour du contenu */
+    width: 400px; /* Largeur fixe */
+    max-width: 90%; /* S'adapte sur des écrans plus petits */
+}
+.alert-content li{
+    display: inline-block;
+}
+/* Texte de l'alerte */
+.alert-content p {
+    text-align: justify;
+    font-size: 16px;
+    color: #333; /* Texte sombre */
+    margin-bottom: 20px; /* Espacement sous le paragraphe */
+    line-height: 1.5; /* Hauteur de ligne pour une meilleure lisibilité */
+}
+
+/* Case à cocher */
+.alert-content input[type="checkbox"] {
+    margin-right: 10px; /* Espacement entre la case et le texte */
+}
+
+/* Boutons */
+.alert-content button {
+    margin: 10px; /* Espacement entre les boutons */
+    padding: 10px 20px; /* Taille des boutons */
+    border: none; /* Supprime les bordures */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Change le curseur en pointeur */
+    font-size: 14px;
+}
+.alert-content label{
+    color: #1E1E1E;
+}
+
+/* Bouton Valider (désactivé par défaut) */
+#confirmDelete {
+    background-color: #d9534f; /* Rouge désactivé */
+    color: white;
+    cursor: not-allowed; /* Curseur interdit */
+    opacity: 0.6; /* Transparence pour indiquer qu'il est désactivé */
+}
+
+/* Bouton Valider activé */
+#confirmDelete.enabled {
+    background-color: #5cb85c; /* Vert activé */
+    cursor: pointer;
+    opacity: 1; /* Rétablit l'opacité */
+}
+
+/* Bouton Revenir en arrière */
+#cancelDelete {
+    background-color: #6c757d; /* Gris */
+    color: white;
+    cursor: pointer;
+}
+
+#cancelDelete:hover {
+    background-color: #5a6268; /* Gris plus foncé au survol */
+}
+
+/* Transition pour les boutons */
+.alert-content button {
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
