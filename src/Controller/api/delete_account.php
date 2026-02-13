@@ -16,7 +16,7 @@
 <?php 
 session_start();
 
-require_once 'database.php';
+require_once __DIR__ . '/../../Model/database.php';
 $db = new DB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

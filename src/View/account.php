@@ -23,7 +23,7 @@
 
  <!-- Importer les fichiers -->
 <?php 
-require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
+require_once __DIR__ . '/../Service/files_save.php';
 
 // Connexion à la base de donnees
 $db = new DB();
@@ -351,7 +351,7 @@ if (isset($_SESSION['message'])) {
         </button>
 
         <!--Deconnexion-->
-        <form action="" method="post">
+        <form action="<?php echo $base; ?>logout" method="post">
             <input type="hidden" name="deconnexion" value="true">
             <button type="submit">
                     <img src="<?php echo $base; ?>/public/assets/logOut_icon.png" alt="icone de deconnexion">
@@ -360,7 +360,7 @@ if (isset($_SESSION['message'])) {
         </form>
 
         <!--Supprimer son compte-->
-        <form action="<?php echo $base; ?>/temp-site/delete_account.php" method="post">
+        <form action="<?php echo $base; ?>src/Controller/api/delete_account.php" method="post">
             <input type="hidden" name="delete_account" value="true">
             <button type="submit">
                 <img src="<?php echo $base; ?>/public/assets/delete_icon.png" alt="icone de suppression">

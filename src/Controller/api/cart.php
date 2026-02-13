@@ -1,14 +1,15 @@
 <?php
-// public/api/cart.php - minimal cart API for add/del/update actions
+// src/Controller/api/cart.php - minimal cart API for add/del/update actions
+
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-require_once __DIR__ . '/../../src/Model/cart_class.php';
-require_once __DIR__ . '/../../src/Model/database.php';
+require_once __DIR__ . '/../../Model/cart_class.php';
+require_once __DIR__ . '/../../Model/database.php';
 
 $db = new DB();
 $cart = new cart($db);
 
-$action = $_REQUEST['action'] ?? '';
+$action = $_GET['action'] ?? ''; // Changed from $_REQUEST to $_GET for consistency, but kept logic
 
 $response = ['error' => true, 'message' => 'Action invalide'];
 
@@ -76,6 +77,8 @@ switch ($action) {
 if (isset($_GET['redirect'])) {
     $loc = $_GET['redirect'];
     // basic safety: allow only same-origin redirects to the base URL
+    // Since we are now in include context, $base is available from index.php
+    global $base; 
     if (strpos($loc, $base) === 0 || strpos($loc, '/') === 0) {
         header('Location: ' . $loc);
         exit;

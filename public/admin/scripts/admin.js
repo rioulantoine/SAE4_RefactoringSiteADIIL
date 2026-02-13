@@ -1,6 +1,7 @@
 const listItems = document.querySelectorAll("#main nav ul li");
 const content = document.getElementById('content');
-
+//const base = "<?php echo $base; ?>";
+const base = window.base;
 const debug = isDebug();
 
 // Check for debug
@@ -8,7 +9,7 @@ function isDebug() {
 
     // Récupère l'URL actuelle
     const url = window.location.href;
-    
+
     // Vérifie si l'URL contient '?debug'
     if (url.includes('?debug')) {
         return true;
@@ -26,12 +27,9 @@ listItems.forEach(item => {
 
         // Ajoute la classe 'selected' à l'élément cliqué
         item.classList.add('selected');
-        content.src = './panels/' + item.getAttribute('perm') + '.html' + (debug ? '?debug' : '');
-        
-        
+        content.src = base + 'index.php?page=admin_panel&panel=' + item.getAttribute('perm') + (debug ? '&debug=true' : '');
     });
 });
-
 
 /* Select first permissions */
 listItems[0].click();

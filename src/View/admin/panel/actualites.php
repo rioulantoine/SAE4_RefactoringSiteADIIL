@@ -9,9 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../styles/general.css">
-    <link rel="stylesheet" href="../styles/panels.css">
-    <link rel="stylesheet" href="../styles/actualites.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/general.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/panels.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/actualites.css">
 
 </head>
 <body>
@@ -35,7 +35,7 @@
 
         </ul>
 
-        <button class="btn-transparent navadd-btn" id="new_btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter une actualité</button>
+        <button class="btn-transparent navadd-btn" id="new_btn"><img src="<?php echo $base; ?>public/admin/ressources/add.svg" alt="Ajouter">Ajouter une actualité</button>
 
     </nav>
 
@@ -90,7 +90,7 @@
                 </div>
                 <div>
                     <img id="prop_image" src="https://lium.univ-lemans.fr/wp-content/uploads/2018/01/PL-e1663234102408.png" alt="Image de l'actualité">
-                    <img src="../ressources/edit.svg" id="prop_img_edit" alt="Charger une nouvelle image">
+                    <img src="<?php echo $base; ?>public/admin/ressources/edit.svg" id="prop_img_edit" alt="Charger une nouvelle image">
                 </div>
             </div>
     
@@ -117,8 +117,8 @@
             <textarea id="prop_content" >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec dolor  in nisi interdum consectetur. Fusce imperdiet tincidunt turpis nec  aliquam. Nunc venenatis eget odio vel commodo. Proin ex lacus, gravida  vitae dolor sit amet, pellentesque cursus nibh. Cras maximus rutrum sem, vel mattis nisl sodales in. Mauris viverra tellus in lectus iaculis  venenatis. Donec lacus enim, facilisis in quam id, ullamcorper dignissim odio. Vivamus ultrices in sem eget venenatis. Nullam vehicula, arcu non sollicitudin hendrerit, nisi purus rhoncus arcu, quis sagittis nunc  ante in diam. Aenean varius mollis sapien non gravida.</textarea>
 
             <div class="saves-buttons">
-                <button class="btn-transparent btn-blue" id="save_btn"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
-                <button class="btn-transparent btn-red" id="delete_btn"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+                <button class="btn-transparent btn-blue" id="save_btn"><img src="<?php echo $base; ?>public/admin/ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
+                <button class="btn-transparent btn-red" id="delete_btn"><img src="<?php echo $base; ?>public/admin/ressources/delete.svg" alt="Supprimer">Supprimer</button>
             </div>
 
         </div>
@@ -127,7 +127,7 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="module" src="../scripts/actualite.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/actualite.js"></script>
     
 </body>
 </html>

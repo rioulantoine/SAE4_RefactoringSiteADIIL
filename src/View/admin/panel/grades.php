@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique</title>
+    <title>Grades</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../styles/general.css">
-    <link rel="stylesheet" href="../styles/panels.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/general.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/panels.css">
 
 </head>
 <body>
 
     <!-- HEADER -->
     <header>
-        <h1>Boutique</h1>
+        <h1>Grades</h1>
     </header>
 
     <!-- NAVIGUATION -->
@@ -34,7 +34,7 @@
 
         </ul>
 
-        <button class="btn-transparent navadd-btn" id="new_btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un article</button>
+        <button class="btn-transparent navadd-btn" id="new_btn"><img src="<?php echo $base; ?>public/admin/ressources/add.svg" alt="Ajouter">Ajouter un grade</button>
 
     </nav>
 
@@ -95,26 +95,6 @@
                 </div>
             </div>  
 
-            <div class="propertie">
-                <div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-text"></div>
-                </div>
-                <div>
-                    <div class="skeleton-text"></div>
-                </div>
-            </div>  
-
-            <div class="propertie">
-                <div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-text"></div>
-                </div>
-                <div>
-                    <div class="skeleton-toggle"></div>
-                </div>
-            </div>  
-
         </div>
 
         <!-- MAIN PROPERTIES -->
@@ -123,77 +103,57 @@
             <div class="propertie">
                 <div>
                     <p>Image de présentation</p>
-                    <p>Mettre à jour l'image de présentation de l'événement.</p>
+                    <p>Mettre à jour l'image de présentation du produit.</p>
                 </div>
                 <div>
-                    <img id="prop_image" alt="Image de l'article">
-                    <img src="../ressources/edit.svg" alt="Charger une nouvelle image" id="prop_image_edit">
+                    <img src="https://fr.minecraft.wiki/images/Lingot_d%27or.png?1ebba" alt="Image du grade" id="prop_image_grade">
+                    <img src="<?php echo $base; ?>public/admin/ressources/edit.svg" id="prop_image_edit" alt="Charger une nouvelle image">
                 </div>
             </div>
-
+    
             <div class="propertie">
                 <div>
-                    <p>Nom de l'article</p>
-                    <p>Nom affiché de l'article sur la boutique.</p>
+                    <p>Nom affiché</p>
+                    <p>Nom affiché sur le profil et dans la boutique.</p>
                 </div>
                 <div>
-                    <input type="text" id="prop_name" placeholder="Canette Oasis">
+                    <input type="text" placeholder="Or" id="prop_nom_grade">
                 </div>
             </div>
-
+    
             <div class="propertie">
                 <div>
-                    <p>Prix</p>
-                    <p>Prix de l'article TTC, or réduction.</p>
+                    <p>Description affiché</p>
+                    <p>Description affiché dans la boutique.</p>
                 </div>
                 <div>
-                    <input type="number" min="0" id="prop_price" value="1">
+                    <input type="text" placeholder="Or" id="prop_description_grade_grade">
                 </div>
             </div>
-
+    
             <div class="propertie">
                 <div>
-                    <p>Categorie</p>
-                    <p>Categorie pour trier les articles dans la boutique.</p>
+                    <p>Prix d'achat</p>
+                    <p>Prix à débourser pour obtenir le grade.</p>
                 </div>
                 <div>
-                    <input type="text" id="prop_categorie" placeholder="Snacks">
+                    <input type="number" placeholder="13" min="0" id="prop_prix_grade">
                 </div>
             </div>
-
+    
             <div class="propertie">
                 <div>
-                    <p>Quantités</p>
-                    <p>Quantités disponibles à l'achat de l'article (-1 Signifie illimité).</p>
+                    <p>Réduction sur les achats</p>
+                    <p>Taux de réduction (en pourcentage) à appliquer à tous les achats éligibles sur la boutique. 0 pour désactiver.</p>
                 </div>
                 <div>
-                    <input type="number" min="-1" id="prop_qte" value="-1">
+                    <input type="number" placeholder="5" min="0" max="100" id="prop_reduction_grade">
                 </div>
             </div>
-
-            <div class="propertie">
-                <div>
-                    <p>XP</p>
-                    <p>XP rapporter par l'achat de l'article.</p>
-                </div>
-                <div>
-                    <input type="number" id="prop_xp" value="10">
-                </div>
-            </div>
-
-            <div class="propertie">
-                <div>
-                    <p>Réductions applicables</p>
-                    <p>Est-ce que les réductions du prix des grades peuvent s'appliquer sur cet article ?</p>
-                </div>
-                <div>
-                    <div class="toggle toggle-active" id="prop_reductions"></div>
-                </div>
-            </div>
-
+    
             <div class="saves-buttons">
-                <button class="btn-transparent btn-blue" id="save_btn"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
-                <button class="btn-transparent btn-red" id="delete_btn"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+                <button class="btn-transparent btn-blue" id="save_btn"><img src="<?php echo $base; ?>public/admin/ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
+                <button class="btn-transparent btn-red" id="delete_btn"><img src="<?php echo $base; ?>public/admin/ressources/delete.svg" alt="Supprimer">Supprimer</button>
             </div>
 
         </div>
@@ -202,8 +162,8 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="module" src="../scripts/toggle.js"></script>
-    <script type="module" src="../scripts/boutique.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/toggle.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/grades.js"></script>
     
 </body>
 </html>

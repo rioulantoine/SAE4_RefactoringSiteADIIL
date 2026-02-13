@@ -25,7 +25,7 @@
 <?php
 
 // Importer les fichiers
-require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
+require_once $base . 'src/Service/files_save.php';
 
 // Connexion à la base de données
 $db = new DB();
@@ -187,6 +187,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 </script>
 
+<<<<<<< HEAD
+=======
+
+<?php require_once __DIR__ . '/Template/footer.php' ?>
+>>>>>>> admin
 
 </body>
 </html>

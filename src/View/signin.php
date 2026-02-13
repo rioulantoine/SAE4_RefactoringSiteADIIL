@@ -79,7 +79,7 @@
                         [$lname,$fname,$mail,password_hash($password, PASSWORD_DEFAULT),'defaultPP.png']
                     );
                 }
-                header("Location: " . $base . "/login");
+                header("Location: " . $base . "login");
                 exit;
             }else{
                 echo 'Utilisateur déjà présent';

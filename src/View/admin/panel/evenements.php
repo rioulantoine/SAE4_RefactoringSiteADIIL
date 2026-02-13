@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evenements</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/general.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/panels.css">
+
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>Evenements</h1>
+    </header>
+
+    <!-- NAVIGUATION -->
+    <nav>
+        <p hidden id="empty_navbar">Il n'y a pas grand chose ici</p>
+        <ul id="skeleton_navbar">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul id="content_navbar">
+
+            <!-- AUTO GENERATED -->
+
+        </ul>
+
+        <button class="btn-transparent navadd-btn" id="new_btn"><img src="<?php echo $base; ?>public/admin/ressources/add.svg" alt="Ajouter">Ajouter un événement</button>
+
+    </nav>
+
+    <!-- MAIN -->
+    <main>
+
+        <!-- SKELETON FOR LOADING -->
+        <div id="main_skeleton">
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-image"></div>
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-toggle"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- MAIN PROPERTIES -->
+        <div id="main_content" style="display: none;">
+
+            <div class="propertie">
+                <div>
+                    <p>Image de présentation</p>
+                    <p>Mettre à jour l'image de présentation de l'événement.</p>
+                </div>
+                <div>
+                    <img src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg" id="prop_image" alt="Image de l'événement">
+                    <img src="<?php echo $base; ?>public/admin/ressources/edit.svg" id="prop_image_edit" alt="Charger une nouvelle image">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>Nom de l'événement</p>
+                    <p>Nom affiché de l'événement sur le calendrier.</p>
+                </div>
+                <div>
+                    <input type="text" id="prop_name" placeholder="Barbecue de l'ADIIL">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>Description</p>
+                    <p>Description de l'événement.</p>
+                </div>
+                <div>
+                    <input type="text" id="prop_desc" placeholder="Super barbecue de l'ADIIL">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>XP</p>
+                    <p>XP rapporter par l'événement.</p>
+                </div>
+                <div>
+                    <input type="number" id="prop_xp" value="10">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>Date de l'événement</p>
+                    <p>Date a laquel aura lieu l'événement.</p>
+                </div>
+                <div>
+                    <input type="date" id="prop_date">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>Lieu de l'événement</p>
+                    <p>Endroit où l'événement va se dérouller.</p>
+                </div>
+                <div>
+                    <input type="text" id="prop_lieu" placeholder="Parking Batiment Info">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>Places disponibles</p>
+                    <p>Places disponibles à la ventre de l'évènement. -1 Signifie illimité.</p>
+                </div>
+                <div>
+                    <input type="number" id="prop_places" placeholder="50" min="-1">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>Prix de la place</p>
+                    <p>Prix (en euros) d'une place à cet évènement. Mettre 0 pour afficher “gratuit”.</p>
+                </div>
+                <div>
+                    <input type="number" id="prop_price" placeholder="4.99" min="0">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>Réductions applicables</p>
+                    <p>Est-ce que les réductions du prix des grades peuvent s'appliquer sur cet événement ?</p>
+                </div>
+                <div>
+                    <div class="toggle toggle-active" id="prop_reductions"></div>
+                </div>
+            </div>
+
+            <div class="saves-buttons">
+                <button class="btn-transparent btn-blue" id="save_btn"><img src="<?php echo $base; ?>public/admin/ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
+                <button class="btn-transparent btn-red" id="delete_btn"><img src="<?php echo $base; ?>public/admin/ressources/delete.svg" alt="Supprimer">Supprimer</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/toggle.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/events.js"></script>
+    
+</body>
+</html>

@@ -28,7 +28,7 @@
 <?php 
 require_once __DIR__ . '/Template/header.php';
 require_once dirname(__DIR__) . '/Model/database.php';
-require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
+require_once __DIR__ . '/../Service/files_save.php';
 
 // Connexion à la base de donnees
 $db = new DB();

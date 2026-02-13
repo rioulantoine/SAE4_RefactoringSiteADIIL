@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evenements</title>
+    <title>Boutique</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../styles/general.css">
-    <link rel="stylesheet" href="../styles/panels.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/general.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/panels.css">
 
 </head>
 <body>
 
     <!-- HEADER -->
     <header>
-        <h1>Evenements</h1>
+        <h1>Boutique</h1>
     </header>
 
     <!-- NAVIGUATION -->
@@ -34,7 +34,7 @@
 
         </ul>
 
-        <button class="btn-transparent navadd-btn" id="new_btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un événement</button>
+        <button class="btn-transparent navadd-btn" id="new_btn"><img src="<?php echo $base; ?>public/admin/ressources/add.svg" alt="Ajouter">Ajouter un article</button>
 
     </nav>
 
@@ -93,7 +93,7 @@
                 <div>
                     <div class="skeleton-text"></div>
                 </div>
-            </div>
+            </div>  
 
             <div class="propertie">
                 <div>
@@ -103,27 +103,7 @@
                 <div>
                     <div class="skeleton-text"></div>
                 </div>
-            </div>
-
-            <div class="propertie">
-                <div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-text"></div>
-                </div>
-                <div>
-                    <div class="skeleton-text"></div>
-                </div>
-            </div>
-
-            <div class="propertie">
-                <div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-text"></div>
-                </div>
-                <div>
-                    <div class="skeleton-text"></div>
-                </div>
-            </div>
+            </div>  
 
             <div class="propertie">
                 <div>
@@ -133,7 +113,7 @@
                 <div>
                     <div class="skeleton-toggle"></div>
                 </div>
-            </div>
+            </div>  
 
         </div>
 
@@ -146,35 +126,55 @@
                     <p>Mettre à jour l'image de présentation de l'événement.</p>
                 </div>
                 <div>
-                    <img src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg" id="prop_image" alt="Image de l'événement">
-                    <img src="../ressources/edit.svg" id="prop_image_edit" alt="Charger une nouvelle image">
+                    <img id="prop_image" alt="Image de l'article">
+                    <img src="<?php echo $base; ?>public/admin/ressources/edit.svg" alt="Charger une nouvelle image" id="prop_image_edit">
                 </div>
             </div>
 
             <div class="propertie">
                 <div>
-                    <p>Nom de l'événement</p>
-                    <p>Nom affiché de l'événement sur le calendrier.</p>
+                    <p>Nom de l'article</p>
+                    <p>Nom affiché de l'article sur la boutique.</p>
                 </div>
                 <div>
-                    <input type="text" id="prop_name" placeholder="Barbecue de l'ADIIL">
+                    <input type="text" id="prop_name" placeholder="Canette Oasis">
                 </div>
             </div>
 
             <div class="propertie">
                 <div>
-                    <p>Description</p>
-                    <p>Description de l'événement.</p>
+                    <p>Prix</p>
+                    <p>Prix de l'article TTC, or réduction.</p>
                 </div>
                 <div>
-                    <input type="text" id="prop_desc" placeholder="Super barbecue de l'ADIIL">
+                    <input type="number" min="0" id="prop_price" value="1">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>Categorie</p>
+                    <p>Categorie pour trier les articles dans la boutique.</p>
+                </div>
+                <div>
+                    <input type="text" id="prop_categorie" placeholder="Snacks">
+                </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <p>Quantités</p>
+                    <p>Quantités disponibles à l'achat de l'article (-1 Signifie illimité).</p>
+                </div>
+                <div>
+                    <input type="number" min="-1" id="prop_qte" value="-1">
                 </div>
             </div>
 
             <div class="propertie">
                 <div>
                     <p>XP</p>
-                    <p>XP rapporter par l'événement.</p>
+                    <p>XP rapporter par l'achat de l'article.</p>
                 </div>
                 <div>
                     <input type="number" id="prop_xp" value="10">
@@ -183,48 +183,8 @@
 
             <div class="propertie">
                 <div>
-                    <p>Date de l'événement</p>
-                    <p>Date a laquel aura lieu l'événement.</p>
-                </div>
-                <div>
-                    <input type="date" id="prop_date">
-                </div>
-            </div>
-
-            <div class="propertie">
-                <div>
-                    <p>Lieu de l'événement</p>
-                    <p>Endroit où l'événement va se dérouller.</p>
-                </div>
-                <div>
-                    <input type="text" id="prop_lieu" placeholder="Parking Batiment Info">
-                </div>
-            </div>
-
-            <div class="propertie">
-                <div>
-                    <p>Places disponibles</p>
-                    <p>Places disponibles à la ventre de l'évènement. -1 Signifie illimité.</p>
-                </div>
-                <div>
-                    <input type="number" id="prop_places" placeholder="50" min="-1">
-                </div>
-            </div>
-
-            <div class="propertie">
-                <div>
-                    <p>Prix de la place</p>
-                    <p>Prix (en euros) d'une place à cet évènement. Mettre 0 pour afficher “gratuit”.</p>
-                </div>
-                <div>
-                    <input type="number" id="prop_price" placeholder="4.99" min="0">
-                </div>
-            </div>
-
-            <div class="propertie">
-                <div>
                     <p>Réductions applicables</p>
-                    <p>Est-ce que les réductions du prix des grades peuvent s'appliquer sur cet événement ?</p>
+                    <p>Est-ce que les réductions du prix des grades peuvent s'appliquer sur cet article ?</p>
                 </div>
                 <div>
                     <div class="toggle toggle-active" id="prop_reductions"></div>
@@ -232,8 +192,8 @@
             </div>
 
             <div class="saves-buttons">
-                <button class="btn-transparent btn-blue" id="save_btn"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
-                <button class="btn-transparent btn-red" id="delete_btn"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+                <button class="btn-transparent btn-blue" id="save_btn"><img src="<?php echo $base; ?>public/admin/ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
+                <button class="btn-transparent btn-red" id="delete_btn"><img src="<?php echo $base; ?>public/admin/ressources/delete.svg" alt="Supprimer">Supprimer</button>
             </div>
 
         </div>
@@ -242,8 +202,8 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="module" src="../scripts/toggle.js"></script>
-    <script type="module" src="../scripts/events.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/toggle.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/boutique.js"></script>
     
 </body>
 </html>
