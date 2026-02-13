@@ -3,9 +3,7 @@
 <?php 
         require_once __DIR__ . '/../Model/database.php';
         $db = new DB();
-        // normalize base URL
-        $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/');
-
+        
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
             $eventid = $_GET['id'];
             $event = $db->select(
@@ -34,11 +32,11 @@
 
     <title><?php echo $event['titre_actualite']?></title>
 
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/footer_style.css">
 
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/event_details_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/event_details_style.css">
 
 
 

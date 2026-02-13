@@ -1,4 +1,3 @@
-<?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL', '/'); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,11 +6,11 @@
     <title>Commander</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/order_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/order_style.css">
 
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/footer_style.css">
 
 </head>
 
@@ -42,7 +41,7 @@ $userid = $_SESSION["userid"];
 
 // Récupérer le panier
 if (empty($_SESSION['cart'])) {
-    header("Location: " . $base . "/cart");
+    header("Location: " . $base . "cart");
     exit;
 }
 
@@ -88,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = "Commande réalisée avec succès !";
         $_SESSION['message_type'] = "success";
 
-        header("Location: " . $base . "/cart"); // Rediriger vers le panier
+        header("Location: " . $base . "cart"); 
         exit;
     } else {
     }
@@ -102,12 +101,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h1>MA COMMANDE</h1>
 
 <div>
-    <button id="cart-button" >
-        <a href="<?php echo $base; ?>/cart">
-            <img src="<?php echo $base; ?>/public/assets/fleche_retour.png" alt="Fleche de retour">
-            Retourner au panier
-        </a>
-    </button>
+    <a id="cart-button" href="<?php echo $base; ?>cart">
+        <img src="<?php echo $base; ?>public/assets/fleche_retour.png" alt="Fleche de retour">
+        Retourner au panier
+    </a>
 </div>
 
 <div>
@@ -175,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="paypal">PayPal</option>
         </select><br><br>
         <div id="carte_credit" class="mode_paiement_fields">
-            <form method="POST" action="<?php echo $base; ?>/order">
+            <form method="POST" action="<?php echo $base; ?>order">
                 <input type="hidden" name="mode_paiement" value="carte_credit">
 
                 <label for="numero_carte">Numéro de Carte :</label>
@@ -191,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
         <div id="paypal" class="mode_paiement_fields" style="display: none;">
-            <form method="POST" action="<?php echo $base; ?>/order">
+            <form method="POST" action="<?php echo $base; ?>order">
                 <input type="hidden" name="mode_paiement" value="paypal">
 
                 <button type="button" id="paypal-button">Se connecter à PayPal</button><br><br>

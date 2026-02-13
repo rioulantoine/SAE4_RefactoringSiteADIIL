@@ -6,11 +6,10 @@
     <title>Boutique</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/shop_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/shop_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/footer_style.css">
 </head>
 
 
@@ -128,8 +127,8 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
     <div id='cart-info'>
         <button>
-            <a href="<?php echo $base; ?>/cart">
-                <img src="<?php echo $base; ?>/public/assets/logo_caddie.png" alt="Logo du panier">
+            <a href="<?php echo $base; ?>cart">
+                <img src="<?php echo $base; ?>public/assets/logo_caddie.png" alt="Logo du panier">
                 <p>Panier (<span id="count"><?=$cart->count();?></span>)</p>
             </a>
         </button>
@@ -145,9 +144,9 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                 <div id="one-product">
                     <div>
                         <?php if($product['image_article'] == null):?>
-                            <img src="<?php echo $base; ?>/public/admin/ressources/default_images/boutique.png" alt="Image de l'article" />
+                            <img src="<?php echo $base; ?>public/admin/ressources/default_images/boutique.png" alt="Image de l'article" />
                         <?php else:?>
-                            <img src="<?php echo $base; ?>/public/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
+                            <img src="<?php echo $base; ?>public/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
                         <?php endif?>
                         <h3 title="<?= htmlspecialchars($product['nom_article']) ?>">
                             <?= htmlspecialchars($product['nom_article']) ?>
@@ -162,7 +161,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                     <div>
                         <p id="stock-status">
                             <?php if ((int)$product['stock_article'] > 0 || (int)$product['stock_article'] < 0): ?>
-                                <a class="addCart" id="add-to-cart-button" href="<?php echo $base; ?>/public/api/cart.php?action=add&id=<?= htmlspecialchars($product['id_article']) ?>&redirect=<?php echo urlencode($base . '/src/View/shop.php'); ?>">
+                                <a class="addCart" id="add-to-cart-button" href="<?php echo $base; ?>public/api/cart.php?action=add&id=<?= htmlspecialchars($product['id_article']) ?>&redirect=<?php echo urlencode($base . '/src/View/shop.php'); ?>">
                                     Ajouter au panier
                                 </a>
                             <?php else: ?>

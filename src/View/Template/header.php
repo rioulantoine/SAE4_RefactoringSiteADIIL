@@ -10,7 +10,7 @@
 <!-- HEADER -->
 <header>
     <a id="accueil" href="<?php echo $base; ?>accueil">
-        <img src="<?php echo $base; ?>/public/assets/logo.png" alt="Logo de l'ADIIL">
+        <img src="<?php echo $base; ?>public/assets/logo.png" alt="Logo de l'ADIIL">
     </a>
     <nav>
         <ul>

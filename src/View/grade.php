@@ -7,14 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/grade_style.css">
 
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/grade_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/general_style.css">
 
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
-
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/footer_style.css">
 
 </head>
 

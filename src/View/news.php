@@ -7,12 +7,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <title>Actualités</title>
-     <?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/news_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/news_style.css">
 
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/footer_style.css">
 </head>
 <body class="body_margin">
 <?php
