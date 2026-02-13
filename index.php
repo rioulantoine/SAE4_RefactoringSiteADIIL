@@ -96,12 +96,32 @@ switch ($page) {
         require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
+    case 'login':
+        require_once __DIR__ . '/src/View/Template/header.php';
+        require_once __DIR__ . '/src/View/login.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
+        break;
+
+    case 'logout':
+        require_once __DIR__ . '/src/Controller/api/logout.php';
+        break;
+
+    case 'signin':
+        require_once __DIR__ . '/src/View/Template/header.php';
+        require_once __DIR__ . '/src/View/signin.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
+        break;
+
     case 'item.php':
+        require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/Controller/api/item.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
     case 'cart.php':
+        require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/Controller/api/cart.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
     case 'cart':

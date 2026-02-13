@@ -351,7 +351,7 @@ if (isset($_SESSION['message'])) {
         </button>
 
         <!--Deconnexion-->
-        <form action="" method="post">
+        <form action="<?php echo $base; ?>logout" method="post">
             <input type="hidden" name="deconnexion" value="true">
             <button type="submit">
                     <img src="<?php echo $base; ?>/public/assets/logOut_icon.png" alt="icone de deconnexion">

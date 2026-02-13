@@ -31,7 +31,7 @@
             <button type="submit">Se connecter</button>
         </form>
 
-        <form method="GET" action="<?php echo $base; ?>/signin" id="create-account">
+        <form method="GET" action="<?php echo $base; ?>signin" id="create-account">
             <h2>Pas encore de compte ?</h2>
             <button type="submit">Créez en un</button>
         </form>
@@ -75,7 +75,7 @@
                                 $_SESSION["isAdmin"] = true;
                             }
 
-                        header("Location: " . $base . "/accueil");
+                        header("Location: " . $base . "accueil");
                         exit;
 
                     }else{
