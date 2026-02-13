@@ -50,7 +50,9 @@
                 if($isSubscribed):
                     echo '<button class="subscription" id="passed_subscription">Inscrit</button>';
                 else:?>
-                    <form class="subscription" action="event_subscription.php" method="post">
+                    <form class="subscription" 
+                          action="<?php echo $isLoggedIn ? "event_subscription" : "login"; ?>" 
+                          method="post">    
                         <input type="text" name="eventid" value="<?php echo $eventid?>" hidden>
                         <button type="submit">Inscription</a></button>
                     </form>
