@@ -39,13 +39,6 @@ switch ($page) {
         require_once __DIR__ . '/src/View/shop.php';
         require_once __DIR__ . '/src/View/Template/footer.php';
         break;
-
-    case 'grade':
-        require_once __DIR__ . '/src/View/Template/header.php';
-        require_once __DIR__ . '/src/View/grade.php';
-        require_once __DIR__ . '/src/View/Template/footer.php';
-        break;
-
     case 'agenda':
         require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/agenda.php';
@@ -68,6 +61,14 @@ switch ($page) {
         require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/order.php';
         require_once __DIR__ . '/src/View/Template/footer.php';
+        break;
+
+    case 'grade':
+        require_once __DIR__ . '/src/View/grade.php';
+        break;
+
+    case 'grade_subscription':
+        require_once __DIR__ . '/src/View/grade_subscription.php';
         break;
 
     case 'admin':

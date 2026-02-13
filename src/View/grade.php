@@ -92,7 +92,7 @@ $products = $db->select("SELECT * FROM GRADE WHERE deleted = false ORDER BY prix
                             <?php if (!empty($_SESSION) && !empty($unAdherant)): ?>
                                 <button id="detention">Vous détenez ce grade</button>
                             <?php else: ?>
-                                <a id="buy-button" href="<?php echo $base; ?>src/View/api/grade_subscription.php?id=<?= htmlspecialchars($product['id_grade']) ?>">
+                                <a id="buy-button" href="<?php echo $base; ?>grade_subscription?id=<?= htmlspecialchars($product['id_grade']) ?>">
                                     Acheter
                                 </a>
                             <?php endif; ?>
