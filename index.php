@@ -22,7 +22,7 @@ switch ($page) {
         break;
 
     case 'events':
-        require_once __DIR__ . '/src/View/events.php';
+        require_once __DIR__ . '/src/Controller/ControllerEvents.php';
         break;
 
     case 'news':
