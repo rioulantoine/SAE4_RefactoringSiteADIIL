@@ -38,7 +38,7 @@ $isLoggedIn = isset($_SESSION["userid"]);
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['deconnexion']) && $_POST['deconnexion'] === 'true') {
             session_destroy();
-            header("Location: " . $base . "/index.php"); 
+            header("Location: " . $base . "index.php"); 
             exit();
         }
     }
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         $_SESSION['message_type'] = "error";
     }
     // Recharge la page pour afficher la nouvelle image
-    header("Location: " . $base . "/src/View/account.php");
+    header("Location: " . $base . "src/View/account.php");
     exit;
 }
 ?>
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         }
 
         // Recharger la page
-        header("Location: " . $base . "/src/View/account.php");
+        header("Location: " . $base . "src/View/account.php");
         exit();
     }
     ?>
@@ -187,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         }
 
         // Redirection pour éviter le double envoi du formulaire
-        header("Location: " . $base . "/src/View/account.php");
+        header("Location: " . $base . "src/View/account.php");
         exit();
     }
 ?>
@@ -228,16 +228,16 @@ if (isset($_SESSION['message'])) {
 
             <label id="cadre-pp" for="profilePictureInput">
                 <?php if($infoUser[0]['pp_membre'] == null):?>
-                    <img src="<?php echo $base; ?>/public/admin/ressources/default_images/user.jpg" alt="Photo de profil de l'utilisateur" />
+                    <img src="<?php echo $base; ?>public/admin/ressources/default_images/user.jpg" alt="Photo de profil de l'utilisateur" />
                 <?php else:?>
-                    <img src="<?php echo $base; ?>/public/api/files/<?php echo $infoUser[0]['pp_membre']; ?>" alt="Photo de profil de l'utilisateur" />
+                    <img src="<?php echo $base; ?>public/api/files/<?php echo $infoUser[0]['pp_membre']; ?>" alt="Photo de profil de l'utilisateur" />
                 <?php endif?>
             </label>
 
             <input type="file" id="profilePictureInput" name="file" accept="image/jpeg, image/png, image/webp" style="display: none;" onchange="this.form.submit()">
 
             <button type="button" id="edit-icon" onclick="document.getElementById('profilePictureInput').click()">
-                <img src="<?php echo $base; ?>/public/assets/edit_logo.png" alt="Icone éditer la photo de profil" />
+                <img src="<?php echo $base; ?>public/assets/edit_logo.png" alt="Icone éditer la photo de profil" />
             </button>
         </form>
     </div>
@@ -251,9 +251,9 @@ if (isset($_SESSION['message'])) {
         <?php else: ?>
             <p><?php echo $infoUser[0]['nom_grade']; ?></p>
             <?php if($infoUser[0]['image_grade'] == null):?>
-                <img src="<?php echo $base; ?>/public/admin/ressources/default_images/grade.webp" alt="Image du grade" />
+                <img src="<?php echo $base; ?>public/admin/ressources/default_images/grade.webp" alt="Image du grade" />
             <?php else:?>
-                <img src="<?php echo $base; ?>/public/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur" />
+                <img src="<?php echo $base; ?>public/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur" />
             <?php endif?>
             <div >
             </div>
@@ -312,7 +312,7 @@ if (isset($_SESSION['message'])) {
         </div>
 
         <button type="submit">
-            <img src="<?php echo $base; ?>/public/assets/save_logo.png" alt="Logo enregistrer les modifications"/>
+            <img src="<?php echo $base; ?>public/assets/save_logo.png" alt="Logo enregistrer les modifications"/>
         </button>
     </form>
 
@@ -332,7 +332,7 @@ if (isset($_SESSION['message'])) {
             </div>
         </div>
 
-        <button type="submit"><img src="<?php echo $base; ?>/public/assets/save_logo.png" alt="Logo editer la photo de profil"/></button>
+        <button type="submit"><img src="<?php echo $base; ?>public/assets/save_logo.png" alt="Logo editer la photo de profil"/></button>
     </form>
 </section>
 
@@ -345,7 +345,7 @@ if (isset($_SESSION['message'])) {
         <!--Discord-->
         <button type="button">
             <a href="https://discord.com/login" target="_blank">
-                <img src="<?php echo $base; ?>/public/assets/logo_discord.png" alt="Logo de Discord">
+                <img src="<?php echo $base; ?>public/assets/logo_discord.png" alt="Logo de Discord">
                 Associer mon compte à Discord
             </a>
         </button>
@@ -354,7 +354,7 @@ if (isset($_SESSION['message'])) {
         <form action="<?php echo $base; ?>logout" method="post">
             <input type="hidden" name="deconnexion" value="true">
             <button type="submit">
-                    <img src="<?php echo $base; ?>/public/assets/logOut_icon.png" alt="icone de deconnexion">
+                    <img src="<?php echo $base; ?>public/assets/logOut_icon.png" alt="icone de deconnexion">
                     Déconnexion
             </button>
         </form>
@@ -363,7 +363,7 @@ if (isset($_SESSION['message'])) {
         <form action="<?php echo $base; ?>src/Controller/api/delete_account.php" method="post">
             <input type="hidden" name="delete_account" value="true">
             <button type="submit">
-                <img src="<?php echo $base; ?>/public/assets/delete_icon.png" alt="icone de suppression">
+                <img src="<?php echo $base; ?>public/assets/delete_icon.png" alt="icone de suppression">
                 Supprimer mon compte
             </button>
         </form>

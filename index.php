@@ -15,7 +15,12 @@ if (isset($_SESSION['user']['roles'][0])) {
 }*/
 
 // Router les pages
-require_once __DIR__ . '/src/View/Template/header.php';
+$isAdmin = ($page === 'admin' || $page === 'admin_panel');
+
+if (!$isAdmin) {
+    require_once __DIR__ . '/src/View/Template/header.php';
+}
+
 switch ($page) {
     case 'accueil':
         require_once __DIR__ . '/src/View/accueil.php';
@@ -117,6 +122,9 @@ switch ($page) {
         require_once __DIR__ . '/src/View/Template/erreur.php';
         break;
 }
-require_once __DIR__ . '/src/View/Template/footer.php';
+
+if (!$isAdmin) {
+    require_once __DIR__ . '/src/View/Template/footer.php';
+}
 
 ?>

@@ -15,8 +15,6 @@
 </head>
 <body class="body_margin">
 <?php
-    require_once __DIR__ . '/Template/header.php';
-    require_once __DIR__ . '/../Model/database.php';
     $db = new DB();
     $show = 5;
 
@@ -82,13 +80,11 @@
         </div>
 </section>
 
-    <?php require_once __DIR__ . '/Template/footer.php';?>
-
 <script>
     const BASE_URL = '<?php echo $base; ?>';
 </script>
-<script src="<?php echo $base; ?>/public/scripts/news_details_redirect.js"></script>
-<script src="<?php echo $base; ?>/public/scripts/scroll_to_closest_event.js"></script>
+<script src="<?php echo $base; ?>public/scripts/news_details_redirect.js"></script>
+<script src="<?php echo $base; ?>public/scripts/scroll_to_closest_event.js"></script>
 
 </body>
 </html>
