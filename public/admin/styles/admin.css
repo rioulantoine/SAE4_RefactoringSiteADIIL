@@ -1,5 +1,5 @@
 /* VARIABLES */
-:root{
+:root {
     --bg-color: #0F0F0F;
 
     --nav-text-color: white;
@@ -12,7 +12,7 @@
 */
 
 /* MAIN BODY */
-#main{
+#main {
     background-color: var(--bg-color);
     width: 100%;
     height: 100vh;
@@ -24,7 +24,7 @@
 }
 
 /* NAVIGATION */
-#main nav{
+#main nav {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -32,13 +32,13 @@
     width: var(--nav-width);
 }
 
-#main nav h1{
+#main nav h1 {
     color: var(--nav-text-color);
     font-size: 30px;
     font-weight: bold;
 }
 
-#main nav ul{
+#main nav ul {
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -47,7 +47,8 @@
     user-select: none;
     overflow: auto;
 }
-#main nav ul li{
+
+#main nav ul li {
     width: 100%;
     padding: 15px;
     border-radius: 12px;
@@ -65,23 +66,25 @@
 
     transition-duration: 0.2s;
 }
-#main nav ul li img{
+
+#main nav ul li img {
     width: 24px;
     height: 24px;
 }
 
-#main nav ul li.selected{
+#main nav ul li.selected {
     background-color: rgba(169, 169, 169, 0.15);
 }
 
 /* MAIN */
-#main main{
+#main main {
     width: calc(100% - var(--nav-width));
     border-radius: 35px;
     background-color: var(--background-color);
     overflow: hidden;
 }
-#main main iframe{
+
+#main main iframe {
     width: 100%;
     height: 100%;
     user-select: none;
@@ -89,57 +92,77 @@
 
 /* SCROLL BAR */
 ::-webkit-scrollbar {
-    width: 7px; /* Largeur de la barre */
+    width: 7px;
+    /* Largeur de la barre */
     height: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, #ededed, #cfcfcf); /* Couleur et gradient du curseur */
-    border-radius: 4px; /* Coins arrondis */
+    background: linear-gradient(45deg, #ededed, #cfcfcf);
+    /* Couleur et gradient du curseur */
+    border-radius: 4px;
+    /* Coins arrondis */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, #cccccc, #b0b0b0); /* Couleur au survol */
+    background: linear-gradient(45deg, #cccccc, #b0b0b0);
+    /* Couleur au survol */
 }
 
 ::-webkit-scrollbar-track {
-    background: #1e1e1e; /* Couleur de fond de la piste */
-    border-radius: 4px; /* Coins arrondis de la piste */
+    background: #1e1e1e;
+    /* Couleur de fond de la piste */
+    border-radius: 4px;
+    /* Coins arrondis de la piste */
 }
 
 ::-webkit-scrollbar-track:hover {
-    background: #2e2e2e; /* Couleur au survol de la piste */
+    background: #2e2e2e;
+    /* Couleur au survol de la piste */
+}
+
+#main nav a {
+    color: var(--nav-text-color);
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 /* RESPONSIVE */
 @media screen and (max-width: 1300px) {
-    #main{
+    #main {
         flex-direction: column-reverse;
         gap: 30px;
         padding: 10px;
     }
-    #main nav{
+
+    #main nav {
         width: 100%;
     }
-    #main::after{
+
+    #main::after {
         content: 'ADIIL - Admin';
         color: var(--nav-text-color);
         font-size: 30px;
         font-weight: bold;
         text-align: center;
     }
-    #main nav>h1{
+
+    #main nav>h1 {
         display: none;
     }
-    #main nav>ul{
+
+    #main nav>ul {
         flex-direction: row;
         gap: 15px;
         overflow: auto;
     }
-    #main nav>ul>li{
+
+    #main nav>ul>li {
         height: 60px;
     }
-    #main main{
+
+    #main main {
         width: 100%;
         height: 80vh;
     }

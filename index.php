@@ -1,13 +1,13 @@
 <?php
-
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/Model/database.php';
-
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-$base = $_ENV['BASE_URL'] ?? getenv("BASE_URL");
+$base = getenv("BASE_URL");
+
 session_start();
 $page = $_GET['page'] ?? 'accueil';
+
 
 /*$role = null;
 if (isset($_SESSION['user']['roles'][0])) {
@@ -15,58 +15,63 @@ if (isset($_SESSION['user']['roles'][0])) {
 }*/
 
 // Router les pages
-require_once __DIR__ . '/src/View/Template/header.php';
 switch ($page) {
     case 'accueil':
+        require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/accueil.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
     case 'events':
+        require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/events.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
     case 'news':
+        require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/news.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
     case 'shop':
+        require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/shop.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
-    case 'grade':
-        require_once __DIR__ . '/src/View/grade.php';
+    case 'grades':
+        require_once __DIR__ . '/src/View/Template/header.php';
+        require_once __DIR__ . '/src/View/grades.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
     case 'agenda':
+        require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/agenda.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
     case 'about':
+        require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/about.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
     
     case 'account':
+        require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/account.php';
-        break;
-
-    case 'cart':
-        require_once __DIR__ . '/src/View/cart.php';
-        break;
-
-    case 'order':
-        require_once __DIR__ . '/src/View/order.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
     case 'admin':
         require_once __DIR__ . '/src/View/admin/admin.php';
         break;
 
-    case 'login':
-        require_once __DIR__ . '/src/View/login.php';
-        break;
-
-    case 'signin':
-        require_once __DIR__ . '/src/View/signin.php';
+    case 'about':
+        require_once __DIR__ . '/src/View/Template/header.php';
+        require_once __DIR__ . '/src/View/about.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
         break;
 
     default:
@@ -74,5 +79,4 @@ switch ($page) {
         require_once __DIR__ . '/src/view/Template/erreur.php';
         break;
 }
-require_once __DIR__ . '/src/View/Template/footer.php';
 ?>
