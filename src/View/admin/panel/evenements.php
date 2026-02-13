@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../styles/general.css">
-    <link rel="stylesheet" href="../styles/panels.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/general.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/panels.css">
 
 </head>
 <body>
@@ -34,7 +34,7 @@
 
         </ul>
 
-        <button class="btn-transparent navadd-btn" id="new_btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un événement</button>
+        <button class="btn-transparent navadd-btn" id="new_btn"><img src="<?php echo $base; ?>public/admin/ressources/add.svg" alt="Ajouter">Ajouter un événement</button>
 
     </nav>
 
@@ -147,7 +147,7 @@
                 </div>
                 <div>
                     <img src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg" id="prop_image" alt="Image de l'événement">
-                    <img src="../ressources/edit.svg" id="prop_image_edit" alt="Charger une nouvelle image">
+                    <img src="<?php echo $base; ?>public/admin/ressources/edit.svg" id="prop_image_edit" alt="Charger une nouvelle image">
                 </div>
             </div>
 
@@ -232,8 +232,8 @@
             </div>
 
             <div class="saves-buttons">
-                <button class="btn-transparent btn-blue" id="save_btn"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
-                <button class="btn-transparent btn-red" id="delete_btn"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+                <button class="btn-transparent btn-blue" id="save_btn"><img src="<?php echo $base; ?>public/admin/ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
+                <button class="btn-transparent btn-red" id="delete_btn"><img src="<?php echo $base; ?>public/admin/ressources/delete.svg" alt="Supprimer">Supprimer</button>
             </div>
 
         </div>
@@ -242,8 +242,8 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="module" src="../scripts/toggle.js"></script>
-    <script type="module" src="../scripts/events.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/toggle.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/events.js"></script>
     
 </body>
 </html>

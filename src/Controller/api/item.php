@@ -3,12 +3,11 @@ session_start();
 use model\File;
 use model\Item;
 
-require_once 'DB.php';
-require_once 'tools.php';
-require_once 'filter.php';
-require_once 'models/Item.php';
+require_once __DIR__ . $base . 'src/Model/database.php';
+require_once __DIR__ . $base . 'src/Service/tools.php';
+require_once __DIR__ . $base . 'src/Service/filter.php';
+require_once __DIR__ . $base . 'src/Model/api/Item.php';
 
-// TODO: Remove this line in production
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
@@ -46,7 +45,7 @@ function get_items() : void
 {
     if (isset($_GET['id']))
     {
-        $id = filter::int($_GET['id']);
+        $id = Filter::int($_GET['id']);
         $item = Item::getInstance($id);
 
         if (!$item) {
@@ -83,13 +82,13 @@ function update_item() : void
         return;
     }
 
-    $id = filter::int($_GET['id']);
-    $name = filter::string($data['name'], maxLenght: 100);
-    $xp = filter::int($data['xp']);
-    $stocks = filter::int($data['stocks'], min: -100000);
-    $reduction = filter::bool($data['reduction']);
-    $price = filter::float($data['price']);
-    $categorie = filter::string($data['categorie'], maxLenght: 100);
+    $id = Filter::int($_GET['id']);
+    $name = Filter::string($data['name'], maxLenght: 100);
+    $xp = Filter::int($data['xp']);
+    $stocks = Filter::int($data['stocks'], min: -100000);
+    $reduction = Filter::bool($data['reduction']);
+    $price = Filter::float($data['price']);
+    $categorie = Filter::string($data['categorie'], maxLenght: 100);
 
     $item = Item::getInstance($id);
 
@@ -114,7 +113,7 @@ function update_image() : void
         return;
     }
 
-    $item = Item::getInstance(filter::int($_GET['id']));
+    $item = Item::getInstance(Filter::int($_GET['id']));
 
     if (!$item)
     {
@@ -150,7 +149,7 @@ function delete_item() : void
         return;
     }
 
-    $id = filter::int($_GET['id']);
+    $id = Filter::int($_GET['id']);
     $item = Item::getInstance($id);
 
     if (!$item)

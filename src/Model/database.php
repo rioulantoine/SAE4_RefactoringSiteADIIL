@@ -4,9 +4,9 @@ class DB
 {
     private $host = 'localhost';
     private $port = '3306';
-    private $db = 'sae'; // <- ici
-    private $db_user = 'root'; // <- ici
-    private $db_pass = ''; // <- ici
+    private $db = 'sae';
+    private $db_user = 'root';
+    private $db_pass = '';
 
     public function connect()
     {

@@ -25,9 +25,9 @@
 <?php
 
 // Importer les fichiers
-require_once "header.php";
-require_once 'database.php';
-require_once 'files_save.php';
+require_once __DIR__ . '/../Template/header.php';
+require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/files_save.php';
 
 // Connexion à la base de données
 $db = new DB();
@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 </script>
 
-<?php require_once "footer.php" ?>
+<?php require_once __DIR__ . '/../Template/footer.php' ?>
 
 </body>
 </html>

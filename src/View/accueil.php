@@ -32,7 +32,7 @@
         <section>
             <h2 class="titre_vertical"> ADIIL</h2>
             <div id="index_carrousel">
-                <img src="public/assets/photo_accueil_BDE.png" alt="Carrousel ADIIL">
+                <img src= "<?php echo $base; ?>public/assets/photo_accueil_BDE.png" alt="Carrousel ADIIL">
             </div>
         </section>
 
@@ -73,10 +73,10 @@
                     <h4><?php echo $pod['prenom_membre'];?></h4>
                     <div>
                         <?php if($pod['pp_membre'] == null):?>
-                            <img src="public/admin/ressources/default_images/user.jpg" alt="Profile Picture"
+                            <img src="<?php echo $base; ?>public/admin/ressources/default_images/user.jpg" alt="Profile Picture"
                             class="profile_picture">
                         <?php else:?>
-                            <img src="public/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture"
+                            <img src="<?php echo $base; ?>public/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture"
                                 class="profile_picture">
                         <?php endif?>
                         <?php echo $pod['xp_membre'];?> xp
@@ -149,14 +149,14 @@
                     </h4>
                 </div>
                 <?php endforeach; ?>
-                <h3><a href="<?php echo $base; ?>/src/View/events.php">Voir tous les événements</a></h3>
+                <h3><a href="<?php echo $base; ?>events">Voir tous les événements</a></h3>
             </div>
             <h2 class="titre_vertical">EVENT</h2>
 
         </section>
     </div>
-    <script src="public/scripts/event_details_redirect.js"></script>
-    <script src="public/scripts/bubble.js"></script>
+    <script src="<?php echo $base; ?>public/scripts/event_details_redirect.js"></script>
+    <script src="<?php echo $base; ?>public/scripts/bubble.js"></script>
 </body>
 
 </html>

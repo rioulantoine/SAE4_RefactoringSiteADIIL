@@ -9,9 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../styles/general.css">
-    <link rel="stylesheet" href="../styles/panels.css">
-    <link rel="stylesheet" href="../styles/comptabilite.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/general.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/panels.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/admin/styles/comptabilite.css">
 
 </head>
 <body>
@@ -44,7 +44,7 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="module" src="../scripts/comptabilite.js"></script>
+    <script type="module" src="<?php echo $base; ?>public/admin/scripts/comptabilite.js"></script>
     
 </body>
 </html>

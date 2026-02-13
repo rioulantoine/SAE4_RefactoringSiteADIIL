@@ -35,8 +35,8 @@
 <?php 
 // includes (use safe absolute paths)
 require_once dirname(__DIR__) . '/Model/cart_class.php';
-// temp-site helper kept if still used for file uploads
-require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
+// files_save.php helper
+require_once __DIR__ . '/../Service/files_save.php';
 
 // Connexion à la base de donnees
 $db = new DB();
@@ -94,7 +94,7 @@ $cart = new cart($db);
 
 <?php if (!empty($_SESSION['cart'])) : ?>
 <div id='cart-container'>
-    <form method="POST" action="<?php echo $base; ?>public/api/cart.php?action=update&redirect=<?php echo urlencode($base . 'cart'); ?>" id= "form-quantity">
+    <form method="POST" action="<?php echo $base; ?>cart.php?action=update&redirect=<?php echo urlencode($base . 'cart'); ?>" id= "form-quantity">
     <table>
             <thead>
                 <tr>
@@ -116,7 +116,7 @@ $cart = new cart($db);
                     <td><input type='text' name="cart[quantity][<?=$product['id_article']?>]" value="<?=$_SESSION['cart'][$product['id_article']]?>" onkeydown="pressEnter(event)"></td>
                     <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
                     <td>
-                        <a href="<?php echo $base; ?>public/api/cart.php?action=del&id=<?= $product['id_article'] ?>&redirect=<?php echo urlencode($base . 'cart'); ?>">Supprimer</a>
+                        <a href="<?php echo $base; ?>cart.php?action=del&id=<?= $product['id_article'] ?>&redirect=<?php echo urlencode($base . 'cart'); ?>">Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
