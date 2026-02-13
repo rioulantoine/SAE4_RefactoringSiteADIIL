@@ -24,6 +24,9 @@ switch ($page) {
     case 'events':
         require_once __DIR__ . '/src/Controller/ControllerEvents.php';
         break;
+    case 'event_details':
+        require_once __DIR__ . '/src/Controller/ControllerEventDetails.php';
+        break;
 
     case 'news':
         require_once __DIR__ . '/src/View/news.php';

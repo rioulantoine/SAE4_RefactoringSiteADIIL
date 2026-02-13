@@ -74,7 +74,13 @@ foreach ($events_to_display as $event) {
         'other_classes' => $other_classes,
         'closest_event_id' => $closest_event_id,
         'isPassed' => $isPassed,
+        'isPlaceDisponible' => $db->select(
+            "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
+            "i",
+            [$eventid])[0]['isPlaceDisponible']
     ];
 }
+
+
 
 require_once __DIR__ . '/../View/events.php';

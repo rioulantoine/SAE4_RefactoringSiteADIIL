@@ -47,6 +47,7 @@ class DB
         if (!empty($types))
         {
             $stmt->bind_param($types, ...$args);
+                
         }
         $stmt->execute();
 

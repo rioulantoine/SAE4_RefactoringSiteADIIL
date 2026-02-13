@@ -20,12 +20,12 @@
                 <?php
                     foreach ($events_ready as $event):
                 ?>
-                    <div class="event-box <?php echo "$other_classes";?>" id="<?php echo $closest_event_id ?>">
+                    <div class="event-box <?php echo $event['other_classes'];?>" id="<?php echo $event['closest_event_id'] ?>">
                         <div class="timeline-event">
                             <h4> <?php echo $event['date_affichage'];?></h4>
                             <div class="vertical-line"></div>
-                            <p> <?php echo "$date_pin_label";?></p>
-                            <div class="timeline-marker <?php echo " $date_pin_class" ?>">
+                            <p> <?php echo $event['date_pin_label'];?></p>
+                            <div class="timeline-marker <?php echo  $event['date_pin_class'] ?>">
                                 <div class="time-line"></div>
                             </div>
                         </div>
@@ -36,13 +36,8 @@
                             </div>
                             <h4
                                 <?php
-                                $isPlaceDisponible = $db->select(
-                                    "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
-                                    "i",
-                                    [$event['id_evenement']])[0]['isPlaceDisponible'];
-                                var_dump($isPlaceDisponible);
-                                
-                                if($isPlaceDisponible){
+
+                                if($event['isPlaceDisponible']==1){
                                     $event_subscription_color_class = "event-not-subscribed hover_effect";
                                     $event_subscription_label = "S'inscrire";
                                 }else{
@@ -63,7 +58,7 @@
                                     }
                                 }
                                 
-                                if($isPassed){
+                                if($event['isPassed']){
                                     $event_subscription_color_class = "event-full";
                                     $event_subscription_label = "Passé";
                                 }
@@ -77,8 +72,7 @@
                 <?php endforeach; ?>
         </div>
 </section>
-    <?php require_once __DIR__ . '/Template/footer.php';?>
-    <script src="<?php echo $base; ?>/public/scripts/event_details_redirect.js"></script>
-    <script src="<?php echo $base; ?>/public/scripts/scroll_to_closest_event.js"></script>
+    <script src="<?php echo $base; ?>public/scripts/event_details_redirect.js"></script>
+    <script src="<?php echo $base; ?>public/scripts/scroll_to_closest_event.js"></script>
 </body>
 </html>

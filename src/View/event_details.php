@@ -1,34 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<?php 
-        require_once 'database.php';
-        $db = new DB();
 
-        $show = 8;
-
-        if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
-            $eventid = $_GET['id'];
-            $event = $db->select(
-                "SELECT `nom_evenement`, `xp_evenement`, `places_evenement`, `prix_evenement`, `reductions_evenement`, `lieu_evenement`, `date_evenement`, `image_evenement`, `description_evenement`
-                FROM EVENEMENT WHERE id_evenement = ?",
-                "i",
-                [$eventid]
-            );
-            if(empty($event) || is_null($event)){
-                header("Location: /index.php");
-                exit;
-            }
-            $event = $event[0];
-
-            if (isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show']) {
-                $show = (int) $_GET['show'];
-            }
-
-        }else{
-            header("Location: /index.php");
-            exit;
-        }
-    ?>
 
 <head>
     <meta charset="UTF-8">
@@ -39,27 +11,26 @@
 
     <title><?php echo $event['nom_evenement']?></title>
 
-    <link rel="stylesheet" href="/styles/header_style.css">
-    <link rel="stylesheet" href="/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/footer_style.css">
 
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/event_details_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/event_details_style.css">
 
 
 
 </head>
 
 <body>
-    <?php
-    require_once 'header.php';
-    $isLoggedIn = isset($_SESSION["userid"]);
-?>
     <section class="event-details">
-        <?php if($event['image_evenement'] == null):?>
+        <!-- A modifier si on ajoute un colonne à la base de données 
+        <?php //if($event['image_evenement'] == null):?>
             <img src="/admin/ressources/default_images/event.jpg" alt="Image de l'événement">
-        <?php else:?>
-            <img src="/api/files/<?php echo $event['image_evenement']; ?>" alt="Image de l'événement">
-        <?php endif?>
+        <?php// else:?>
+            <img src="/api/files/<?php //echo $event['image_evenement']; ?>" alt="Image de l'événement">
+        <?php// endif?>-->
+
+        <img src=<?php echo $base . "public/admin/ressources/default_images/event.jpg"?> alt="Image de l'événement">
 
         <h1><?php echo strtoupper($event['nom_evenement']); ?></h1>
 
@@ -100,7 +71,9 @@
         </ul>
 
         <p>
-            <?php echo nl2br(htmlspecialchars($event['description_evenement'])); ?>
+            <!-- A modifier si on ajoute un colonne à la base de données -->
+             <?php echo "Description indisponible pour le moment."?>
+             <!--<?php //echo nl2br(htmlspecialchars($event['description_evenement'])); ?>-->
         </p>
 
     </section>
@@ -180,8 +153,6 @@
 
     </section>
 
-
-    <?php require_once 'footer.php';?>
     <script src="/scripts/open_media.js"></script>
     <script src="/scripts/add_media.js"></script>
     <script src="/scripts/open_gallery.js"></script>
