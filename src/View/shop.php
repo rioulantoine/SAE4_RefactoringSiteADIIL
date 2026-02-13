@@ -11,10 +11,6 @@
     <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
     <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
     <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/footer_style.css">
-
-
-
-
 </head>
 
 
@@ -27,8 +23,6 @@
 
 <!-- Importer les fichiers -->
 <?php 
-require_once __DIR__ . '/Template/header.php';
-require_once dirname(__DIR__) . '/Model/database.php';
 require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
 // Use the project's Model cart class (temp-site cart_class.php is missing)
 require_once dirname(__DIR__) . '/Model/cart_class.php';

@@ -1,165 +1,70 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/src/Model/database.php';
 
-    <title>Accueil</title>
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+$base = $_ENV['BASE_URL'] ?? getenv("BASE_URL");
+session_start();
+$page = $_GET['page'] ?? 'accueil';
 
-    <link rel="stylesheet" href="public/styles/index_style.css">
-    <link rel="stylesheet" href="public/styles/general_style.css">
-    <link rel="stylesheet" href="public/styles/header_style.css">
-    <link rel="stylesheet" href="public/styles/footer_style.css">
-    <link rel="stylesheet" href="public/styles/bubble.css">
+/*$role = null;
+if (isset($_SESSION['user']['roles'][0])) {
+    $role = get_nom_role($_SESSION['user']['roles'][0]);
+}*/
 
-</head>
+// Router les pages
+require_once __DIR__ . '/src/View/Template/header.php';
+switch ($page) {
+    case 'accueil':
+        require_once __DIR__ . '/src/View/accueil.php';
+        break;
 
-<body id="index" class="body_margin">
+    case 'events':
+        require_once __DIR__ . '/src/View/events.php';
+        break;
 
-    <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    case 'news':
+        require_once __DIR__ . '/src/View/news.php';
+        break;
 
-    require_once __DIR__ . '/src/View/Template/header.php';
-    require_once __DIR__ . '/src/Model/database.php';
-    $db = new DB();
-    $isLoggedIn = isset($_SESSION["userid"]);
-    ?>
-    <div id="page-container">
-        <!--H1 A METTRE -->
-        <section>
-            <h2 class="titre_vertical"> ADIIL</h2>
-            <div id="index_carrousel">
-                <img src="public/assets/photo_accueil_BDE.png" alt="Carrousel ADIIL">
-            </div>
-        </section>
+    case 'shop':
+        require_once __DIR__ . '/src/View/shop.php';
+        break;
 
-        <section>
-            <div class="paragraphes">
-                <p>
-                    <b class="underline">L'ADIIL</b>, ou l'<b>Association</b> du <b>Département</b> <b>Informatique</b>
-                    de l'<b>IUT</b> de <b>Laval</b>,
-                    est une organisation étudiante dédiée à créer un environnement propice à l'épanouissement dans le
-                    campus.
-                    Participer a des évèvements, et plus globalement a la vie du département.
-                </p>
-                <p>
-                    L'ADIIL, véritable moteur de la vie étudiante à l'IUT de Laval,
-                    offre un cadre propice à l'épanouissement académique et social des étudiants en informatique.
-                    En participant à ses événements variés, les étudiants enrichissent leur expérience universitaire,
-                    tout en renforçant les liens au sein de la communauté.
-                </p>
-            </div>
-            <h2 class="titre_vertical">L'ASSO</h2>
-        </section>
+    case 'grade':
+        require_once __DIR__ . '/src/View/grade.php';
+        break;
 
-        <section>
-            <h2 class="titre_vertical">SCORES</h2>
+    case 'agenda':
+        require_once __DIR__ . '/src/View/agenda.php';
+        break;
 
-            <div id="podium">
-                <?php
-                $podium = $db->select(
-                    "SELECT prenom_membre, xp_membre, pp_membre FROM MEMBRE ORDER BY xp_membre DESC LIMIT 3;"
-                );
+    case 'about':
+        require_once __DIR__ . '/src/View/about.php';
+        break;
+    
+    case 'account':
+        require_once __DIR__ . '/src/View/account.php';
+        break;
 
-               foreach ([2,1,3] as $member_number):
-                $pod = $podium[$member_number-1];
+    case 'admin':
+        require_once __DIR__ . '/src/View/admin/admin.php';
+        break;
 
-            ?>
-                <div class="podium_unit">
-                    <h3>#0<?php echo $member_number?></h3>
-                    <h4><?php echo $pod['prenom_membre'];?></h4>
-                    <div>
-                        <?php if($pod['pp_membre'] == null):?>
-                            <img src="public/admin/ressources/default_images/user.jpg" alt="Profile Picture"
-                            class="profile_picture">
-                        <?php else:?>
-                            <img src="public/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture"
-                                class="profile_picture">
-                        <?php endif?>
-                        <?php echo $pod['xp_membre'];?> xp
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </section>
+    case 'login':
+        require_once __DIR__ . '/src/View/login.php';
+        break;
 
-        <section>
-            <div class="events-display">
-                <?php
-                    $date = getdate();
-                    $sql_date = $date["year"]."-".$date["mon"]."-".$date["mday"];
-                    $events_to_display = $db->select(
-                        "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement >= ? ORDER BY date_evenement ASC LIMIT 2;",
-                        "s",
-                        [$sql_date]
-                    );
+    case 'signin':
+        require_once __DIR__ . '/src/View/signin.php';
+        break;
 
-                foreach ($events_to_display as $event):
-                    $eventid = $event["id_evenement"];?>
-
-                <div class="event" event-id="<?php echo $eventid;?>">
-                    <div>
-                        <h2><?php echo $event['nom_evenement'];?></h2>
-                        <?php
-                                $moisFr = [1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril', 5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août', 9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'];
-
-                                $event_date = substr($event['date_evenement'], 0, 10);
-                                $event_date_info = getdate(strtotime($event_date));
-                                echo ucwords($event_date_info["mday"]." ".$moisFr[$event_date_info['mon']].", ".$event["lieu_evenement"]);
-                            ?>
-                    </div>
-
-                    <h4 <?php
-                            $isPlaceDisponible = $db->select(
-                                "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
-                                "i",
-                                [$eventid])[0]['isPlaceDisponible'];
-                            
-                            if($isPlaceDisponible){
-                                //editable
-                                $event_subscription_color_class = "event-not-subscribed hover_effect";
-                                $event_subscription_label = "S'inscrire";
-                            }else{
-                                //editable
-                                $event_subscription_color_class = "event-full";
-                                $event_subscription_label = "Complet";
-                            }
-
-                            if($isLoggedIn){
-                                $isSubscribed = !empty($db->select(
-                                "SELECT MEMBRE.id_membre FROM MEMBRE JOIN INSCRIPTION on MEMBRE.id_membre = INSCRIPTION.id_membre WHERE MEMBRE.id_membre = ? AND INSCRIPTION.id_evenement = ? ;",
-                                "ii",
-                                [$_SESSION['userid'], $event["id_evenement"]]
-                                ));
-                                
-                                if($isSubscribed){
-                                    //editable
-                                    $event_subscription_color_class = "event-subscribed";
-                                    $event_subscription_label = "Inscrit";
-                                }
-                            }
-
-                            echo "class=\"$event_subscription_color_class\"";
-                            ?>>
-                        <?php echo $event_subscription_label;?>
-
-                    </h4>
-                </div>
-                <?php endforeach; ?>
-                <h3><a href="<?php echo $base; ?>/src/View/events.php">Voir tous les événements</a></h3>
-            </div>
-            <h2 class="titre_vertical">EVENT</h2>
-
-        </section>
-    </div>
-    <?php require_once __DIR__ . '/src/View/Template/footer.php';?>
-    <script src="public/scripts/event_details_redirect.js"></script>
-    <script src="public/scripts/bubble.js"></script>
-</body>
-
-</html>
+    default:
+        http_response_code(404);
+        require_once __DIR__ . '/src/view/Template/erreur.php';
+        break;
+}
+require_once __DIR__ . '/src/View/Template/footer.php';
+?>

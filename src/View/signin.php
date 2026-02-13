@@ -9,15 +9,14 @@
 
     <?php $base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL/', '/'); ?>
 
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/login_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/general_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>/public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/login_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/footer_style.css">
 
 </head>
     <body>
         <?php 
-            require_once __DIR__ . '/Template/header.php';
-            require_once dirname(__DIR__) . '/Model/database.php';
             $db = new DB();
 
             function format_input($text){
@@ -81,7 +80,7 @@
                         [$lname,$fname,$mail,password_hash($password, PASSWORD_DEFAULT),'defaultPP.png']
                     );
                 }
-                header("Location: " . $base . "/src/View/login.php");
+                header("Location: " . $base . "/login");
                 exit;
             }else{
                 echo 'Utilisateur déjà présent';
