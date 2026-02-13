@@ -1,0 +1,73 @@
+/* 404 page styles aligned with existing theme */
+.error-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6vh 2vw;
+}
+
+.error-card {
+  background-color: #1a1a1a;
+  border-radius: 16px;
+  padding: 6vh 5vw;
+  text-align: center;
+  box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.error-code {
+  font-family: "Koulen", sans-serif;
+  font-size: 6em;
+  letter-spacing: 12px;
+  color: rgb(119, 241, 190);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.error-card h1 {
+  font-family: "Koulen", sans-serif;
+  font-size: 2.5em;
+  letter-spacing: 6px;
+  margin-bottom: 10px;
+}
+
+.error-card p {
+  color: rgb(200, 200, 200);
+  margin-bottom: 24px;
+}
+
+.error-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background-color: rgb(119, 241, 190);
+  color: #1E1E1E;
+  font-weight: bold;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.error-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+  .error-card {
+    padding: 5vh 6vw;
+  }
+
+  .error-code {
+    font-size: 4.5em;
+    letter-spacing: 8px;
+  }
+
+  .error-card h1 {
+    font-size: 2em;
+    letter-spacing: 4px;
+  }
+}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&family=Roboto:wght@100;300&display=swap')
+

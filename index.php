@@ -37,6 +37,10 @@ switch ($page) {
         require_once __DIR__ . '/src/View/grade.php';
         break;
 
+    case 'grade_subscription':
+        require_once __DIR__ . '/src/View/grade_subscription.php';
+        break;
+
     case 'agenda':
         require_once __DIR__ . '/src/View/agenda.php';
         break;
@@ -71,7 +75,7 @@ switch ($page) {
 
     default:
         http_response_code(404);
-        require_once __DIR__ . '/src/view/Template/erreur.php';
+        require_once __DIR__ . '/src/View/Template/erreur.php';
         break;
 }
 require_once __DIR__ . '/src/View/Template/footer.php';

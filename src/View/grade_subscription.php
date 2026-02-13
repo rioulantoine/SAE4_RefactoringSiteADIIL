@@ -6,11 +6,11 @@
     <title>Adhérer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="/styles/grade_subscription_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/grade_subscription_style.css">
 
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/header_style.css">
-    <link rel="stylesheet" href="/styles/footer_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/general_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/header_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/footer_style.css">
 </head>
 
 <body class="body_margin">
@@ -25,16 +25,14 @@
 <?php
 
 // Importer les fichiers
-require_once "header.php";
-require_once 'database.php';
-require_once 'files_save.php';
+require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
 
 // Connexion à la base de données
 $db = new DB();
 
 $isLoggedIn = isset($_SESSION["userid"]);
 if (!$isLoggedIn) {
-    header("Location: /login.php");
+    header("Location: " . $base . "login");
     exit;
 }
 
@@ -43,7 +41,7 @@ $userid = $_SESSION["userid"];
 
 // Vérification que l'ID du grade est fourni dans l'URL
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header("Location: /grade.php");
+    header("Location: " . $base . "grade");
     exit;
 }
 $id_grade = intval($_GET['id']);
@@ -60,7 +58,7 @@ $grade = $db->select(
 if (empty($grade)) {
     $_SESSION['message'] = "Le grade sélectionné n'existe pas.";
     $_SESSION['message_type'] = "error";
-    header("Location: /grade.php");
+    header("Location: " . $base . "grade");
     exit;
 }
 
@@ -90,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['message'] = "Adhésion au grade réussie !";
         $_SESSION['message_type'] = "success";
-        header("Location: /grade.php");
+        header("Location: " . $base . "grade");
         exit;
     } else {
     }
@@ -108,12 +106,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h1>MON ADHESION</h1>
 
 <div>
-    <button id="cart-button">
-        <a href="/grade.php">
-            <img src="/assets/fleche_retour.png" alt="Flèche de retour">
-            Retourner aux grades
-        </a>
-    </button>
+    <a id="cart-button" href="<?php echo $base; ?>grade">
+        <img src="<?php echo $base; ?>public/assets/fleche_retour.png" alt="Fleche de retour">
+        Retourner aux grades
+    </a>
 </div>
 
 <div>
@@ -149,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="paypal">PayPal</option>
         </select><br><br>
         <div id="carte_credit" class="mode_paiement_fields">
-            <form method="POST" action="/grade_subscription.php?id=<?= $id_grade ?>">
+            <form method="POST" action="<?php echo $base; ?>grade_subscription?id=<?= $id_grade ?>">
                 <input type="hidden" name="mode_paiement" value="carte_credit">
 
                 <label for="numero_carte">Numéro de Carte :</label>
@@ -165,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
         <div id="paypal" class="mode_paiement_fields" style="display: none;">
-            <form method="POST" action="/grade_subscription.php?id=<?= $id_grade ?>">
+            <form method="POST" action="<?php echo $base; ?>grade_subscription?id=<?= $id_grade ?>">
                 <input type="hidden" name="mode_paiement" value="paypal">
 
                 <button type="button" id="paypal-button">Se connecter à PayPal</button><br><br>
@@ -191,7 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 </script>
 
-<?php require_once "footer.php" ?>
 
 </body>
 </html>
