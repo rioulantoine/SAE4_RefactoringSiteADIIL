@@ -149,7 +149,7 @@
                     </h4>
                 </div>
                 <?php endforeach; ?>
-                <h3><a href="<?php echo $base; ?>/src/View/events.php">Voir tous les événements</a></h3>
+                <h3><a href="<?php echo $base; ?>events">Voir tous les événements</a></h3>
             </div>
             <h2 class="titre_vertical">EVENT</h2>
 

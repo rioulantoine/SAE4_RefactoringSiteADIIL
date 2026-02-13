@@ -29,6 +29,10 @@ switch ($page) {
         require_once __DIR__ . '/src/View/news.php';
         break;
 
+    case 'news_details':
+        require_once __DIR__ . '/src/View/news_details.php';
+        break;
+
     case 'shop':
         require_once __DIR__ . '/src/View/shop.php';
         break;

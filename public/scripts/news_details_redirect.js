@@ -5,7 +5,8 @@ eventDivs.forEach(div => {
     div.addEventListener('click', (event) => {
         const eventId = div.getAttribute('event-id'); // Récupère l'ID de l'événement
         if (eventId) {
-            const url = `news_details.php?id=${eventId}`;
+            const base = window.BASE_URL || '';
+            const url = `${base}news_details?id=${eventId}`;
 
             // Détecte le clic molette ou Ctrl/Cmd + clic
             if (event.ctrlKey || event.metaKey || event.button === 1) {

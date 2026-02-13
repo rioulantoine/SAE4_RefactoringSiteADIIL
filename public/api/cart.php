@@ -5,7 +5,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 require_once dirname(__DIR__, 2) . '/src/Model/database.php';
 require_once dirname(__DIR__, 2) . '/src/Model/cart_class.php';
 
-$base = rtrim(getenv('BASE_URL') ?: 'http://localhost/SAE4/SAE4_RefactoringSiteADIIL', '/');
 
 $db = new DB();
 $cart = new cart($db);
