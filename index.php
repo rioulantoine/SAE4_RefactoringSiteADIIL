@@ -49,6 +49,14 @@ switch ($page) {
         require_once __DIR__ . '/src/View/account.php';
         break;
 
+    case 'cart':
+        require_once __DIR__ . '/src/View/cart.php';
+        break;
+
+    case 'order':
+        require_once __DIR__ . '/src/View/order.php';
+        break;
+
     case 'admin':
         require_once __DIR__ . '/src/View/admin/admin.php';
         break;

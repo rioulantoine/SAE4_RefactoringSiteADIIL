@@ -23,8 +23,6 @@
 
 <?php
 // includes (use safe absolute paths)
-require_once __DIR__ . '/Template/header.php';
-require_once dirname(__DIR__) . '/Model/database.php';
 require_once dirname(__DIR__, 2) . '/temp-site/files_save.php'; // temporary helper
 require_once dirname(__DIR__) . '/Model/cart_class.php';
 
@@ -36,7 +34,7 @@ $cart = new cart($db);
 
 $isLoggedIn = isset($_SESSION["userid"]);
 if (!$isLoggedIn) {
-    header("Location: " . $base . "/src/View/login.php");
+    header("Location: " . $base . "/login");
     exit;
 }
 
@@ -44,7 +42,7 @@ $userid = $_SESSION["userid"];
 
 // Récupérer le panier
 if (empty($_SESSION['cart'])) {
-    header("Location: " . $base . "/src/View/cart.php");
+    header("Location: " . $base . "/cart");
     exit;
 }
 
@@ -90,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = "Commande réalisée avec succès !";
         $_SESSION['message_type'] = "success";
 
-        header("Location: " . $base . "/src/View/cart.php"); // Rediriger vers le panier
+        header("Location: " . $base . "/cart"); // Rediriger vers le panier
         exit;
     } else {
     }
@@ -105,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div>
     <button id="cart-button" >
-        <a href="<?php echo $base; ?>/src/View/cart.php">
+        <a href="<?php echo $base; ?>/cart">
             <img src="<?php echo $base; ?>/public/assets/fleche_retour.png" alt="Fleche de retour">
             Retourner au panier
         </a>
@@ -177,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="paypal">PayPal</option>
         </select><br><br>
         <div id="carte_credit" class="mode_paiement_fields">
-            <form method="POST" action="<?php echo $base; ?>/src/View/order.php">
+            <form method="POST" action="<?php echo $base; ?>/order">
                 <input type="hidden" name="mode_paiement" value="carte_credit">
 
                 <label for="numero_carte">Numéro de Carte :</label>
@@ -193,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
         <div id="paypal" class="mode_paiement_fields" style="display: none;">
-            <form method="POST" action="<?php echo $base; ?>/src/View/order.php">
+            <form method="POST" action="<?php echo $base; ?>/order">
                 <input type="hidden" name="mode_paiement" value="paypal">
 
                 <button type="button" id="paypal-button">Se connecter à PayPal</button><br><br>
@@ -216,8 +214,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     });
 </script>
-
-<?php require_once __DIR__ . '/Template/footer.php' ?>
 
 </body>
 </html>

@@ -128,7 +128,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
     <div id='cart-info'>
         <button>
-            <a href="<?php echo $base; ?>/src/View/cart.php">
+            <a href="<?php echo $base; ?>/cart">
                 <img src="<?php echo $base; ?>/public/assets/logo_caddie.png" alt="Logo du panier">
                 <p>Panier (<span id="count"><?=$cart->count();?></span>)</p>
             </a>

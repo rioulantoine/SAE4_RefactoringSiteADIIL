@@ -35,8 +35,6 @@
 
 <?php 
 // includes (use safe absolute paths)
-require_once __DIR__ . '/Template/header.php';
-require_once dirname(__DIR__) . '/Model/database.php';
 require_once dirname(__DIR__) . '/Model/cart_class.php';
 // temp-site helper kept if still used for file uploads
 require_once dirname(__DIR__, 2) . '/temp-site/files_save.php';
@@ -89,7 +87,7 @@ $cart = new cart($db);
 
     <div>
         <button id="shop-button" >
-            <a href="<?php echo $base; ?>/src/View/shop.php">
+            <a href="<?php echo $base; ?>/shop">
                 <img src="<?php echo $base; ?>/public/assets/fleche_retour.png" alt="Fleche de retour">
                 Retourner à la boutique
             </a>
@@ -99,7 +97,7 @@ $cart = new cart($db);
 
 <?php if (!empty($_SESSION['cart'])) : ?>
 <div id='cart-container'>
-    <form method="POST" action="<?php echo $base; ?>/public/api/cart.php?action=update&redirect=<?php echo urlencode($base . '/src/View/cart.php'); ?>" id= "form-quantity">
+    <form method="POST" action="<?php echo $base; ?>/public/api/cart.php?action=update&redirect=<?php echo urlencode($base . '/cart'); ?>" id= "form-quantity">
     <table>
             <thead>
                 <tr>
@@ -121,7 +119,7 @@ $cart = new cart($db);
                     <td><input type='text' name="cart[quantity][<?=$product['id_article']?>]" value="<?=$_SESSION['cart'][$product['id_article']]?>" onkeydown="pressEnter(event)"></td>
                     <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
                     <td>
-                        <a href="<?php echo $base; ?>/public/api/cart.php?action=del&id=<?= $product['id_article'] ?>&redirect=<?php echo urlencode($base . '/src/View/cart.php'); ?>">Supprimer</a>
+                        <a href="<?php echo $base; ?>/public/api/cart.php?action=del&id=<?= $product['id_article'] ?>&redirect=<?php echo urlencode($base . '/cart'); ?>">Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -174,7 +172,7 @@ $cart = new cart($db);
     </form>
 </div>
 <div>
-    <form class="subscription" action="<?php echo $base; ?>/src/View/order.php" method="post">
+    <form class="subscription" action="<?php echo $base; ?>/order" method="post">
         <?php
         if (isset($_SESSION['cart'])) {
             // Encodage du panier entier en JSON et transmission dans un seul champ caché
@@ -190,12 +188,6 @@ $cart = new cart($db);
 <?php else : ?>
     <p id="empty-cart">Votre panier est vide</p>
 <?php endif; ?>
-
-
-
-
-
-<?php require_once __DIR__ . '/Template/footer.php' ?>
 
 </body>
 </html>
