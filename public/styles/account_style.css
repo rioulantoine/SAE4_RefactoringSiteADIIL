@@ -440,3 +440,48 @@ H2 {
 #viewAll-form button:hover {
     opacity: 100%;
 }
+
+@media (max-width: 1300px), (max-height: 820px) {
+    #account-personalInfo-form,
+    #account-editPass-form {
+        width: 80%;
+        height: auto;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 20px;
+    }
+
+    #account-personalInfo-form > div,
+    #account-editPass-form > div {
+        width: 100%;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    #account-personalInfo-form div div:first-of-type,
+    #account-personalInfo-form div div:nth-of-type(2),
+    #account-editPass-form div div:first-of-type,
+    #account-editPass-form div div:nth-of-type(2) {
+        width: 100%;
+    }
+
+    #account-personalInfo-form input,
+    #account-personalInfo-form div div:nth-of-type(1) input:nth-of-type(2),
+    #account-personalInfo-form div:nth-of-type(2) input,
+    #account-editPass-form div input {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+    }
+
+    #account-personalInfo-form button,
+    #account-editPass-form button {
+        align-self: center;
+        margin-top: 6px;
+    }
+
+    #account-editPass-form div div:first-of-type p {
+        font-size: 1.2em;
+    }
+}
