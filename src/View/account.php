@@ -159,15 +159,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
             [$_SESSION['userid']]
         );
 
-        if($user[0]['password_membre'] == NULL && $currentPassword == ""){
-            $password_ok = true;
-        }else{
-            $password_ok = password_verify($currentPassword, $user[0]['password_membre']);
-        }
+        if (empty($user)) {
+            $_SESSION['message'] = "Mot de passe actuel incorrect.";
+            $_SESSION['message_type'] = "error";
+        } else {
+            if($user[0]['password_membre'] == NULL && $currentPassword == ""){
+                $password_ok = true;
+            }else{
+                $password_ok = password_verify($currentPassword, $user[0]['password_membre']);
+            }
 
-        if (!empty($user)){
-            // Vérifier la correspondance des nouveaux mots de passe
-            if ($password_ok && $newPassword == $newPasswordVerif ) {
+            if (!$password_ok) {
+                $_SESSION['message'] = "Mot de passe actuel incorrect.";
+                $_SESSION['message_type'] = "error";
+            } elseif ($newPassword != $newPasswordVerif) {
+                $_SESSION['message'] = "Les nouveaux mots de passe ne correspondent pas.";
+                $_SESSION['message_type'] = "error";
+            } else {
                 // Mettre à jour le mot de passe dans la base de données
                 $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                 $db->query(
@@ -178,13 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 
                 $_SESSION['message'] = "Mot de passe mis à jour avec succès !";
                 $_SESSION['message_type'] = "success";
-            } else {
-                $_SESSION['message'] = "Les nouveaux mots de passe ne correspondent pas.";
-                $_SESSION['message_type'] = "error";
             }
-        } else {
-            $_SESSION['message'] = "Mot de passe actuel incorrect.";
-            $_SESSION['message_type'] = "error";
         }
 
         // Redirection pour éviter le double envoi du formulaire
