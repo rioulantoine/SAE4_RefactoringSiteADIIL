@@ -14,6 +14,7 @@ if (isset($_SESSION['user']['roles'][0])) {
     $role = get_nom_role($_SESSION['user']['roles'][0]);
 }*/
 
+
 // Router les pages
 $isAdmin = ($page === 'admin' || $page === 'admin_panel');
 
@@ -124,6 +125,17 @@ switch ($page) {
 
     case 'cart':
         require_once __DIR__ . '/src/View/cart.php';
+        break;
+
+    case 'add_media':
+        require_once __DIR__ . '/src/Controller/api/add_media.php';
+        break;
+
+    case 'my_gallery':
+        require_once __DIR__ . '/src/Controller/ControllerMyGallery.php';
+        break;
+    case 'delete_media':
+        require_once __DIR__ . '/src/Controller/api/delete_media.php';
         break;
 
     default:
