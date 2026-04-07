@@ -1,19 +1,12 @@
-/*******************
-****** FOOTER ******
-********************/
 footer {
     margin: 0;
     margin-top: 15vh;
-    
     display: flex; 
     justify-content: space-between; 
     align-items: center;
-
     background-color: rgb(23, 23, 23);
-
     height: 260px; 
     padding: 35px; 
-
     position: relative;
     bottom: 0px;
     left: 0px;
@@ -28,35 +21,54 @@ footer > div {
     text-align: left;
 }
 
-footer > div  a {
+footer > div a {
     width: fit-content;
     text-decoration: none;
-    font-size: 30px; 
     color: white; 
     font-family: "Inter", sans-serif;
-    font-weight:500;
+    font-weight: 500;
     font-size: 25px;
     opacity: 80%;
+    transition: all 0.2s ease-in-out;
 }
 
-footer > div  a:hover{
+footer > div a:hover {
     opacity: 100%;
 }
 
-footer > h2{
-    font-family: "Koulen","Inter", sans-serif;
+.mail-contact {
+    color: rgb(119, 241, 190) !important;
+    opacity: 1 !important;
+    font-weight: 700 !important;
+}
+
+.insta-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.insta-link img {
+    height: 25px; 
+    width: auto; 
+    display: inline-block; 
+    vertical-align: middle;
+    transition: transform 0.2s ease-in-out;
+}
+
+.insta-link:hover img {
+    transform: scale(1.1);
+}
+
+footer > h2 {
+    font-family: "Koulen", "Inter", sans-serif;
     width: fit-content;
     margin-top: 25px;
     margin-bottom: 25px;
-    
-
     writing-mode: vertical-lr;
     text-orientation: upright;
-
     letter-spacing: -10px;
-
-
     font-weight: 200;
-
     font-size: 2em;
 }

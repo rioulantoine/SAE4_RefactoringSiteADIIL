@@ -51,6 +51,12 @@ switch ($page) {
         require_once __DIR__ . '/src/View/Template/footer.php';
         break;
     
+    case 'faq':
+        require_once __DIR__ . '/src/View/Template/header.php';
+        require_once __DIR__ . '/src/View/faq.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
+        break;
+    
     case 'account':
         require_once __DIR__ . '/src/View/Template/header.php';
         require_once __DIR__ . '/src/View/account.php';
