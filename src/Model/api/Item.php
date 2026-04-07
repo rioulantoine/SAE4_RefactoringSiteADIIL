@@ -31,6 +31,11 @@ class Item extends BaseModel implements JsonSerializable
     public function getImage() : File | null
     {
         $image = $this->DB->select("SELECT image_article FROM ARTICLE WHERE id_article = ?", "i", [$this->id])[0]['image_article'];
+        
+        if (str_starts_with($image, 'http')) {
+            return null;
+        }
+        
         return File::getFile($image);
     }
 
