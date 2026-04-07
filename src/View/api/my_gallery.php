@@ -19,35 +19,6 @@
 
 </head>
 <body>
-<?php 
-        $db = new DB();
-
-        $isLoggedIn = isset($_SESSION["userid"]);
-        $limit = 10;
-
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-            if (isset($_GET["show"]) && ctype_digit($_GET["show"])) {
-                $limit = (int) $_GET["show"];
-            }
-
-            if(isset($_GET['eventid']) && $isLoggedIn){
-
-                $eventid = $_GET['eventid'];
-                $userid = $_SESSION["userid"];
-            }else {
-                header("Location: /index.php");
-                exit;
-            }
-        }
-
-        $event = $db->select(
-            "SELECT `nom_evenement` FROM EVENEMENT WHERE id_evenement = ?",
-            "i",
-            [$eventid]
-        )[0];
-    ?>
-
 
 <section class="user-gallery">
 
@@ -72,11 +43,6 @@
 
            <?php
             
-            $medias = $db->select(
-                "SELECT id_media, url_media FROM `MEDIA` WHERE id_membre = ? and id_evenement = ? ORDER by date_media ASC LIMIT ?;",
-                "iii",
-                [$userid, $eventid, $limit]
-                );
                    
            foreach($medias as $media => $img):?>
                 <div class="media-container">
@@ -100,7 +66,6 @@
     </div>
 
 </section>
-
 
 
 <script src="<?php echo $base; ?>public/scripts/open_media.js"></script>
