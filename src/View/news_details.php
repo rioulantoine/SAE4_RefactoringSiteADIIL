@@ -12,27 +12,6 @@
 </head>
 
 <body class="body_margin">
-<?php 
-require_once __DIR__ . '/../Model/database.php';
-$db = new DB();
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
-    $eventid = $_GET['id'];
-    $event = $db->select(
-        "SELECT * FROM ACTUALITE WHERE id_actualite = ?",
-        "i",
-        [$eventid]
-    );
-    if(empty($event) || is_null($event)){
-        header("Location: " . $base . "accueil");
-        exit;
-    }
-    $event = $event[0];
-}else{
-    header("Location: " . $base . "accueil");
-    exit;
-}
-?>
 
 <section class="event-details">
     <?php if($event['image_actualite'] == null):?>
@@ -44,11 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
 
     <div>
         <h2>
-            <?php
-                $current_date = new DateTime(date("Y-m-d"));
-                $event_date = new DateTime(substr($event['date_actualite'], 0, 10));
-                echo date('d/m/Y', strtotime($event['date_actualite']));
-            ?>
+            <?php echo date('d/m/Y', strtotime($event['date_actualite'])); ?>
         </h2>
     </div>
     <ul></ul>

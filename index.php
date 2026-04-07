@@ -34,11 +34,11 @@ switch ($page) {
         break;
 
     case 'news':
-        require_once __DIR__ . '/src/View/news.php';
+        require_once __DIR__ . '/src/Controller/ControllerNews.php';
         break;
 
     case 'news_details':
-        require_once __DIR__ . '/src/View/news_details.php';
+        require_once __DIR__ . '/src/Controller/ControllerNewsDetails.php';
         break;
 
     case 'shop':
