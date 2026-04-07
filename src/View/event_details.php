@@ -23,12 +23,6 @@
 
 <body>
     <section class="event-details">
-        <!-- A modifier si on ajoute un colonne à la base de données 
-        <?php //if($event['image_evenement'] == null):?>
-            <img src="/admin/ressources/default_images/event.jpg" alt="Image de l'événement">
-        <?php// else:?>
-            <img src="/api/files/<?php //echo $event['image_evenement']; ?>" alt="Image de l'événement">
-        <?php// endif?>-->
 
         <img src=<?php echo $base . "public/admin/ressources/default_images/event.jpg"?> alt="Image de l'événement">
 
@@ -36,17 +30,12 @@
 
         <div>
             <h2>
-                <?php
-                    $current_date = new DateTime(date("Y-m-d"));
-                    $event_date = new DateTime(substr($event['date_evenement'], 0, 10));
-                    echo date('d/m/Y', strtotime($event['date_evenement']));
-                ?>
+                <?php echo date('d/m/Y', strtotime($event['date_evenement'])); ?>
             </h2>
-            <?php if($event_date < $current_date):?>
+
+            <?php if($event_date < $current_date):?>    
                 <button class="subscription" id="passed_subscription">Passé</button>
             <?php else:
-                @$a = $db->select("SELECT * FROM INSCRIPTION WHERE id_evenement = ? AND id_membre = ?;","ii",[$_GET['id'], $_SESSION['userid']]);
-                $isSubscribed = !empty($a);
                 if($isSubscribed):
                     echo '<button class="subscription" id="passed_subscription">Inscrit</button>';
                 else:?>
@@ -72,11 +61,6 @@
             <?php if(boolval($event['reductions_evenement'])){echo "<li><div>💎<h3>-10% pour les membres Diamants</h3></div></li>";} ?>
         </ul>
 
-        <p>
-            <!-- A modifier si on ajoute un colonne à la base de données -->
-             <?php echo "Description indisponible pour le moment."?>
-             <!--<?php //echo nl2br(htmlspecialchars($event['description_evenement'])); ?>-->
-        </p>
 
     </section>
 
@@ -94,12 +78,13 @@
                 [$_SESSION["userid"], $eventid]
             );
             foreach($medias as $media => $img):?>
-            <img src="/api/files/<?php echo trim($img['url_media']);?>" alt="Image Personelle de l'événement">
+            <img src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image Personelle de l'événement">
             <?php endforeach;?>
 
-            <form id="add-media" action="/add_media.php" method="post" enctype="multipart/form-data">
+            <!-- URL relative pour rester dans /SAE4_RefactoringSiteADIIL/ -->
+            <form id="add-media" action="add_media" method="POST" enctype="multipart/form-data">
                 <label for="file-picker">
-                    <img src="/assets/add_media.png" alt="Ajouter un média">
+                    <img src="<?php echo $base; ?>public/assets/add_media.png" alt="Ajouter un média">
                 </label>
                 <input type="hidden" name="eventid" value="<?php echo $eventid?>">
                 <input type="hidden" name="userid" value="<?php echo $_SESSION['userid']?>">
@@ -108,9 +93,10 @@
                 <button type="submit" style="display:none;">Envoyer</button>
             </form>
 
-            <form id="open-gallery" action="/my_gallery.php" method="get">
+            <!-- URL relative pour la galerie personnelle -->
+            <form id="open-gallery" action="my_gallery.php" method="get">
                 <label for="open-gallery-button">
-                    <img src="/assets/explore_gallery.png" alt="Voir ma galerie entière">
+                    <img src="<?php echo $base; ?>public/assets/explore_gallery.png" alt="Voir ma galerie entière">
                 </label>
                 <input type="hidden" name="eventid" value="<?php echo $eventid ?>">
                 <button id="open-gallery-button" type="submit" style="display:none;">Envoyer</button>
@@ -130,7 +116,7 @@
                 [$eventid, $show]
             );
             foreach($medias as $media => $img):?>
-            <img src="/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
+            <img src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
             <?php endforeach;?>
 
 
@@ -155,9 +141,9 @@
 
     </section>
 
-    <script src="/scripts/open_media.js"></script>
-    <script src="/scripts/add_media.js"></script>
-    <script src="/scripts/open_gallery.js"></script>
+    <script src="<?php echo $base; ?>public/scripts/open_media.js"></script>
+    <script src="<?php echo $base; ?>public/scripts/add_media.js"></script>
+    <script src="<?php echo $base; ?>public/scripts/open_gallery.js"></script>
 
 </body>
 
