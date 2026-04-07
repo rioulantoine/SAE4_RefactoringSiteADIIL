@@ -24,40 +24,6 @@
 <!------PHP------>
 <!--------------->
 
-<!-- Importer les fichiers -->
-<?php 
-require_once __DIR__ . '/Template/header.php';
-require_once dirname(__DIR__) . '/Model/database.php';
-require_once __DIR__ . '/../Service/files_save.php';
-
-// Connexion à la base de donnees
-$db = new DB();
-
-
-//Requête SQL
-$products = $db->select("SELECT * FROM GRADE WHERE deleted = false ORDER BY prix_grade");
-
-$currentUserGradeId = null;
-$currentUserReduction = null;
-if (!empty($_SESSION['userid'])) {
-    $currentGrade = $db->select(
-        "SELECT GRADE.id_grade, GRADE.reduction_grade
-         FROM ADHESION
-         INNER JOIN GRADE ON ADHESION.id_grade = GRADE.id_grade
-         WHERE ADHESION.id_membre = ?
-         LIMIT 1",
-        "i",
-        [$_SESSION['userid']]
-    );
-
-    if (!empty($currentGrade)) {
-        $currentUserGradeId = (int) $currentGrade[0]['id_grade'];
-        $currentUserReduction = (float) $currentGrade[0]['reduction_grade'];
-    }
-}
-
-?>
-
 
 
 <!--------------->
@@ -119,9 +85,6 @@ if (!empty($_SESSION['userid'])) {
 <?php endif; ?>
 
 
-
-
-<?php require_once __DIR__ . '/Template/footer.php' ?>
 
 
 </body>

@@ -19,85 +19,6 @@
 
 
 <!--------------->
-<!------PHP------>
-<!--------------->
-
-<?php
-
-// Importer les fichiers
-require_once __DIR__ . '/../Service/files_save.php';
-
-// Connexion à la base de données
-$db = new DB();
-
-$isLoggedIn = isset($_SESSION["userid"]);
-if (!$isLoggedIn) {
-    header("Location: " . $base . "login");
-    exit;
-}
-
-$userid = $_SESSION["userid"];
-
-
-// Vérification que l'ID du grade est fourni dans l'URL
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header("Location: " . $base . "grade");
-    exit;
-}
-$id_grade = intval($_GET['id']);
-
-
-// On récupère les informations du grade
-$grade = $db->select(
-    "SELECT * FROM GRADE WHERE id_grade = ?",
-    "i",
-    [$id_grade]
-);
-
-// Vérifie que le grade existe
-if (empty($grade)) {
-    $_SESSION['message'] = "Le grade sélectionné n'existe pas.";
-    $_SESSION['message_type'] = "error";
-    header("Location: " . $base . "grade");
-    exit;
-}
-
-// Vérifie si l'utilisateur possède déjà un grade
-$currentGrade = $db->select(
-    "SELECT * FROM ADHESION WHERE id_membre = ?",
-    "i",
-    [$userid]
-);
-
-// Gestion de l'achat d'un grade
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['mode_paiement']) && !empty($_POST['mode_paiement'])) {
-        $mode_paiement = $_POST['mode_paiement'];
-        if (!empty($currentGrade)) {
-            $db->query(
-                "DELETE FROM ADHESION WHERE id_membre = ?",
-                "i",
-                [$userid]
-            );
-        }
-        $db->query(
-            "INSERT INTO ADHESION (id_membre, id_grade, prix_adhesion, paiement_adhesion, date_adhesion) VALUES (?, ?, ?, ?, NOW())",
-            "iiss",
-            [$userid, $id_grade, $grade[0]['prix_grade'], $mode_paiement]
-        );
-
-        $_SESSION['message'] = "Adhésion au grade réussie !";
-        $_SESSION['message_type'] = "success";
-        header("Location: " . $base . "grade");
-        exit;
-    } else {
-    }
-}
-?>
-
-
-
-
 <!--------------->
 <!------HTML----->
 <!--------------->
@@ -125,15 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </thead>
             <tbody>
                 <tr>
-                    <td>Grade <?php echo htmlspecialchars($grade[0]['nom_grade']); ?></td>
+                    <td>Grade <?php echo htmlspecialchars($grade['nom_grade']); ?></td>
                     <td>1</td>
-                    <td><?= number_format(htmlspecialchars($grade[0]['prix_grade']), 2, ',', ' ') ?> €</td>
-                    <td><?= number_format(htmlspecialchars($grade[0]['prix_grade']), 2, ',', ' ') ?> €</td>
+                    <td><?= number_format(htmlspecialchars($grade['prix_grade']), 2, ',', ' ') ?> €</td>
+                    <td><?= number_format(htmlspecialchars($grade['prix_grade']), 2, ',', ' ') ?> €</td>
                 </tr>
             </tbody>
         </table>
 
-        <h3>Total &nbsp : &nbsp<?= number_format(htmlspecialchars($grade[0]['prix_grade']), 2, ',', ' ') ?> €</h3>
+        <h3>Total &nbsp : &nbsp<?= number_format(htmlspecialchars($grade['prix_grade']), 2, ',', ' ') ?> €</h3>
     </div>
 
     <div>    

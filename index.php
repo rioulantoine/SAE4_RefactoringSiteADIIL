@@ -46,7 +46,7 @@ switch ($page) {
         break;
 
     case 'grade_subscription':
-        require_once __DIR__ . '/src/View/grade_subscription.php';
+        require_once __DIR__ . '/src/Controller/ControllerGradeSubscription.php';
         break;
 
     case 'agenda':
@@ -72,7 +72,7 @@ switch ($page) {
         break;
 
     case 'grade':
-        require_once __DIR__ . '/src/View/grade.php';
+        require_once __DIR__ . '/src/Controller/ControllerGrade.php';
         break;
 
     case 'mentions-legales':
