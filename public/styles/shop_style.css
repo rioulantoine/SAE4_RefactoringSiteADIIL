@@ -44,6 +44,12 @@ H1 {
     all: unset;
 }
 
+#filter-form fieldset,
+#filter-form details,
+#filter-form div:first-of-type {
+    width: 100%;
+}
+
 #search-input {
     border-radius: 5px;
     border: 2px solid rgb(169, 169, 169);
@@ -68,21 +74,36 @@ H1 {
     display: flex;
     flex-direction: row;
     height: 4vh;
+    align-items: center;
+    gap: 12px;
 }
 
 #filter-form div:first-of-type label{
-    width: 100px;
+    width: auto;
+    white-space: nowrap;
+    color: rgb(119, 241, 190);
+    font-weight: 700;
 }
 
 #filter-form div:first-of-type select{
     all: unset;
     font-size: 16px;
-    border: 2px solid rgb(169, 169, 169);
-    background-color: #1E1E1E;
-    border-radius: 5px;
-    padding: 0.80vh 1.5vh 0.80vh 1vh;
-    background: #1E1E1E url('/assets/chevron_logo.png') no-repeat right 4px center;
+    border: 1px solid rgba(119, 241, 190, 0.18);
+    border-radius: 12px;
+    padding: 12px 44px 12px 14px;
+    background: linear-gradient(180deg, rgba(30, 30, 30, 0.98), rgba(23, 23, 23, 0.98)) url('/assets/chevron_logo.png') no-repeat right 14px center;
     background-size: 12px 12px;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+#filter-form div:first-of-type select:focus {
+    outline: none;
+    border-color: rgb(119, 241, 190);
+    box-shadow: 0 0 0 3px rgba(119, 241, 190, 0.14);
 }
 
 #filter-form button{
@@ -126,6 +147,51 @@ H1 {
 
 #cart-info button p {
     font-size: 2.5em;
+}
+
+@media (max-width: 900px) {
+    #principal-section {
+        flex-direction: column;
+    }
+
+    #filter-form {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    #filter-form fieldset,
+    #filter-form details,
+    #filter-form div:first-of-type,
+    #filter-form button {
+        width: 100%;
+    }
+
+    #filter-form div:first-of-type {
+        flex-direction: column;
+        height: auto;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    #filter-form div:first-of-type select {
+        min-width: 0;
+        width: 100%;
+    }
+
+    #cart-info {
+        margin-right: 0;
+        width: 100%;
+    }
+
+    #cart-info button {
+        width: 100%;
+    }
+
+    #cart-info button p {
+        font-size: 1.8em;
+    }
 }
 
 #message-reduc{
