@@ -29,43 +29,6 @@
 
 
 <!--------------->
-<!------PHP------>
-<!--------------->
-
-<?php 
-// includes (use safe absolute paths)
-require_once dirname(__DIR__) . '/Model/cart_class.php';
-// files_save.php helper
-require_once __DIR__ . '/../Service/files_save.php';
-
-// Connexion à la base de donnees
-$db = new DB();
-
-$cart = new cart($db);
-
-
-?>
-
-<!-- On récupère les produits du panier -->
-<?php
-    $ids = array_keys($_SESSION['cart']);
-    if(empty($ids)){
-        $products = array();
-    }
-    else {
-        //Préparation de la requete SELECT
-        $placeholders = implode(",", array_fill(0, count($ids), "?"));
-        $query = "SELECT * FROM ARTICLE WHERE id_article IN ($placeholders)";
-        $types = str_repeat("i", count($ids));
-        $products = $db->select(
-            $query, 
-            $types, 
-            $ids
-        );
-    }
-?>
-
-<!--------------->
 <!------HTML----->
 <!--------------->
 
@@ -75,11 +38,9 @@ $cart = new cart($db);
     <!-- Affichage du message de succès ou d'erreur -->
     <div>
         <?php
-            if (isset($_SESSION['message'])) {
-                $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
-                echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
-                unset($_SESSION['message']); // Supprimer le message après affichage
-                unset($_SESSION['message_type']); // Supprimer le type après affichage
+            if (!empty($flashMessage)) {
+                $messageStyle = ($flashType === "error") ? "error-message" : "success-message";
+                echo '<div id="' . $messageStyle . '">' . htmlspecialchars($flashMessage) . '</div>';
             }
         ?>
     </div>
@@ -92,7 +53,7 @@ $cart = new cart($db);
     </div>
 </div>
 
-<?php if (!empty($_SESSION['cart'])) : ?>
+<?php if (!empty($cartItems)) : ?>
 <div id='cart-container'>
     <form method="POST" action="<?php echo $base; ?>cart.php?action=update&redirect=<?php echo urlencode($base . 'cart'); ?>" id= "form-quantity">
     <table>
@@ -113,8 +74,8 @@ $cart = new cart($db);
                         <p><?= htmlspecialchars($product['nom_article']) ?></p>
                     </td>
                     <td><?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> €</td>                
-                    <td><input type='text' name="cart[quantity][<?=$product['id_article']?>]" value="<?=$_SESSION['cart'][$product['id_article']]?>" onkeydown="pressEnter(event)"></td>
-                    <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
+                    <td><input type='text' name="cart[quantity][<?=$product['id_article']?>]" value="<?= (int)($cartItems[$product['id_article']] ?? 0) ?>" onkeydown="pressEnter(event)"></td>
+                    <td><?= number_format((float)$product['prix_article'] * (int)($cartItems[$product['id_article']] ?? 0), 2, ',', ' ') ?> €</td>  
                     <td>
                         <a href="<?php echo $base; ?>cart.php?action=del&id=<?= $product['id_article'] ?>&redirect=<?php echo urlencode($base . 'cart'); ?>" onclick="return confirm('Etes-vous sur de vouloir supprimer cet article du panier ?');">Supprimer</a>
                     </td>
@@ -124,46 +85,19 @@ $cart = new cart($db);
             <tfoot>
                 <tr>
                     <th>Nombre d'articles &nbsp : </th>
-                    <td><?=$cart->count()?></td>
+                    <td><?= (int)$cartCount ?></td>
                 </tr>
                 <tr>
                     <th>Total &nbsp : </th>
-                    <td><?= number_format($cart->total(), 2, ',', ' ') ?> €</td>
+                    <td><?= number_format((float)$cartTotal, 2, ',', ' ') ?> €</td>
                 </tr>
                 
-                <?php if (!empty($_SESSION['userid'])) {
-                    // Vérifie l'adhésion de l'utilisateur
-                    $adherant = $db->select(
-                        "SELECT * FROM ADHESION 
-                        INNER JOIN GRADE ON ADHESION.id_grade = GRADE.id_grade 
-                        WHERE ADHESION.id_membre = ? AND reduction_grade > 0",
-                        "i",
-                        [$_SESSION['userid']]
-                    );
-
-                    //récupérer la réduction liée au grade
-                    if (!empty($adherant)) {
-                        $reductionGrade = floatval($adherant[0]["reduction_grade"] ?? 0);
-                        $user_reduction = 1 - ($reductionGrade / 100);
-                        $totalWithReduc = 0;
-
-                        // Calcule le total en tenant compte des réductions applicables
-                        foreach ($products as $product) {
-                            if (!empty($product['reduction_article'])) { // Vérifie si une réduction est applicable
-                                $totalWithReduc += $product['prix_article'] * $_SESSION['cart'][$product['id_article']] * $user_reduction;
-                            } else {
-                                $totalWithReduc += $product['prix_article'] * $_SESSION['cart'][$product['id_article']];
-                            }
-                        }
-                        ?>
-
-                        <tr>
-                            <th style="min-width: 400px">Total après réductions &nbsp : </th>
-                            <td style="min-width: 50px"><?= number_format($totalWithReduc, 2, ',', ' ') ?> €</td>
-                        </tr>
-
-                    <?php }
-                }?>
+                <?php if ($totalWithReduc !== null): ?>
+                    <tr>
+                        <th style="min-width: 400px">Total après réductions &nbsp : </th>
+                        <td style="min-width: 50px"><?= number_format((float)$totalWithReduc, 2, ',', ' ') ?> €</td>
+                    </tr>
+                <?php endif; ?>
             <tfoot>
         </table>
     </form>
@@ -171,9 +105,9 @@ $cart = new cart($db);
 <div>
     <form class="subscription" action="<?php echo $base; ?>order" method="post">
         <?php
-        if (isset($_SESSION['cart'])) {
+        if (!empty($cartItems)) {
             // Encodage du panier entier en JSON et transmission dans un seul champ caché
-            echo '<input type="hidden" name="cart" value="' . htmlspecialchars(json_encode($_SESSION['cart'], JSON_UNESCAPED_UNICODE)) . '">';
+            echo '<input type="hidden" name="cart" value="' . htmlspecialchars(json_encode($cartItems, JSON_UNESCAPED_UNICODE)) . '">';
         }
         ?>
         <button type="submit" id='order-button'>

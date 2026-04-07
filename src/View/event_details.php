@@ -71,13 +71,7 @@
 
         <h3>Mes photos</h3>
         <div class="my-medias">
-            <?php
-            $medias = $db->select(
-                "SELECT url_media FROM `MEDIA` WHERE id_membre = ? and id_evenement = ? ORDER by date_media ASC LIMIT 4;",
-                "ii",
-                [$_SESSION["userid"], $eventid]
-            );
-            foreach($medias as $media => $img):?>
+            <?php foreach($userMedias as $media => $img):?>
             <img src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image Personelle de l'événement">
             <?php endforeach;?>
 
@@ -110,12 +104,7 @@
 
         <div class="general-medias">
 
-            <?php $medias = $db->select(
-                "SELECT url_media FROM `MEDIA` WHERE id_evenement = ? ORDER by date_media ASC LIMIT ? ;",
-                "ii",
-                [$eventid, $show]
-            );
-            foreach($medias as $media => $img):?>
+            <?php foreach($generalMedias as $media => $img):?>
             <img src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
             <?php endforeach;?>
 

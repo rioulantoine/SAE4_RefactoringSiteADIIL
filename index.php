@@ -154,7 +154,7 @@ switch ($page) {
         break;
 
     case 'cart':
-        require_once __DIR__ . '/src/View/cart.php';
+        require_once __DIR__ . '/src/Controller/ControllerCart.php';
         break;
 
     case 'add_media':
