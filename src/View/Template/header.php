@@ -12,7 +12,13 @@
     <a id="accueil" href="<?php echo $base; ?>accueil">
         <img src="<?php echo $base; ?>public/assets/logo.png" alt="Logo de l'ADIIL">
     </a>
-    <nav>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-label="Ouvrir le menu principal">
+    <label for="menu-toggle" class="menu-burger" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+    <nav id="header-nav">
         <ul>
             <li>
                 <a href="<?php echo $base; ?>events">Événements</a>
@@ -58,3 +64,4 @@
         </ul>
     </nav>
 </header>
+<script src="<?php echo $base; ?>public/scripts/header_menu.js"></script>

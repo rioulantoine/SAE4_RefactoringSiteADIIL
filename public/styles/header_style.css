@@ -67,5 +67,139 @@ header a:hover:not(#accueil){
     color: rgb(119, 241, 190);
 }
 
+.menu-toggle,
+.menu-burger {
+    display: none;
+}
+
+.menu-burger {
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgb(119, 241, 190);
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.menu-burger span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: rgb(119, 241, 190);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+@media (max-width: 1024px) {
+    header {
+        height: 84px;
+        padding: 0px 16px;
+    }
+
+    header nav ul {
+        gap: 6px;
+    }
+
+    header a:not(#accueil) {
+        font-size: 1rem;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        height: 72px;
+        align-items: center;
+        padding: 10px 12px;
+    }
+
+    #accueil {
+        height: 32px;
+        margin-top: 0px;
+    }
+
+    .menu-burger {
+        display: inline-flex;
+    }
+
+    nav {
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: auto;
+        display: none;
+        background-color: rgb(23, 23, 23);
+        border-bottom: 2px solid black;
+        padding: 8px 12px 12px 12px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        width: 100%;
+        height: auto;
+        gap: 6px;
+    }
+
+    header nav ul li {
+        width: 100%;
+    }
+
+    header a:not(#accueil) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        font-size: 0.95rem;
+        width: 100%;
+        padding: 8px 12px;
+    }
+
+    #header_admin {
+        font-size: 0.9rem;
+    }
+
+    .menu-toggle:checked + .menu-burger span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle:checked + .menu-burger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle:checked + .menu-burger span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .menu-toggle:checked ~ nav {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 8px 10px;
+    }
+
+    #accueil {
+        height: 28px;
+    }
+
+    header nav ul {
+        gap: 3px;
+    }
+
+    header a:not(#accueil) {
+        min-height: 32px;
+        font-size: 0.85rem;
+        padding: 6px 8px;
+    }
+}
+
 
 
