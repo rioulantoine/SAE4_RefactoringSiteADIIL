@@ -22,9 +22,9 @@
 
 <!-- Importer les fichiers -->
 <?php 
-require_once $base . 'src/Service/files_save.php';
+require_once __DIR__ . '/../Service/files_save.php';
 // Use the project's Model cart class (temp-site cart_class.php is missing)
-require_once $base . 'src/Model/cart_class.php';
+require_once __DIR__ . '/../Model/cart_class.php';  
 
 // Connexion à la base de donnees
 $db = new DB();

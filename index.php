@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/Model/database.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-$base = getenv("BASE_URL");
+$dotenv = Dotenv\Dotenv::createMutable(__DIR__);
+$dotenv->safeLoad();
+$base = $_ENV['BASE_URL'] ?? '/';
 
 session_start();
 $page = $_GET['page'] ?? 'accueil';

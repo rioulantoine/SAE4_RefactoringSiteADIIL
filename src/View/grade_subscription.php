@@ -25,7 +25,7 @@
 <?php
 
 // Importer les fichiers
-require_once $base . 'src/Service/files_save.php';
+require_once __DIR__ . '/../Service/files_save.php';
 
 // Connexion à la base de données
 $db = new DB();
