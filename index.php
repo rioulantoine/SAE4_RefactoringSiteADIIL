@@ -134,7 +134,7 @@ switch ($page) {
         break;
 
     case 'login':
-        require_once __DIR__ . '/src/View/login.php';
+        require_once __DIR__ . '/src/Controller/ControllerLogin.php';
         break;
 
     case 'logout':
@@ -142,7 +142,7 @@ switch ($page) {
         break;
 
     case 'signin':
-        require_once __DIR__ . '/src/View/signin.php';
+        require_once __DIR__ . '/src/Controller/ControllerSignin.php';
         break;
 
     case 'item.php':

@@ -15,25 +15,21 @@
 
 </head>
     <body>
-        <?php 
-            $db = new DB();
-
-            function format_input($text){
-                return htmlspecialchars(trim($text));
-            }
-        ?>
+        <?php if (!empty($errorMessage)): ?>
+            <h3 class="login-error"><?php echo htmlspecialchars($errorMessage); ?></h3>
+        <?php endif; ?>
 
         <form method="POST" action="" class="login-form">
             <h1>S'inscrire</h1>
 
             <label for="mail">Prénom :</label>
-            <input type="text" name="fname">
+            <input type="text" name="fname" value="<?php echo htmlspecialchars($oldFname ?? ''); ?>">
 
             <label for="mail">Nom :</label>
-            <input type="text" name="lname">
+            <input type="text" name="lname" value="<?php echo htmlspecialchars($oldLname ?? ''); ?>">
         
             <label for="mail">Adresse Mail :*</label>
-            <input type="email" name="mail" required>
+            <input type="email" name="mail" value="<?php echo htmlspecialchars($oldMail ?? ''); ?>" required>
 
             <label for="password">Mot de passe :*</label>
             <input type="password" name="password" required>
@@ -43,48 +39,5 @@
 
             <button type="submit">Confirmer</button>
         </form>
-
-        <!-- Gestion de l'inscription -->
-        <?php
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $mail = htmlspecialchars(trim($_POST['mail']));
-
-            $selection_db = $db->select(
-                "SELECT id_membre FROM MEMBRE WHERE email_membre = ?",
-                "s",
-                [$mail]
-            );
-
-            if(empty($selection_db)){
-
-                $password = format_input($_POST['password']);
-                $password_verif = format_input($_POST['password_verif']);
-
-                if($password == $password_verif){
-                    $fname = "N/A";
-                    $lname = "N/A";
-    
-                    if(isset($_POST['fname'])){
-                        $fname = format_input($_POST['fname']);
-                    }
-                    if(isset($_POST['lname'])){
-                        $lname = format_input($_POST['lname']);
-                    }
-
-                    $db->query(
-                        "CALL creationCompte ( ? , ? , ? , ? , ? );",
-                        "sssss",
-                        [$lname,$fname,$mail,password_hash($password, PASSWORD_DEFAULT),'defaultPP.png']
-                    );
-                }
-                header("Location: " . $base . "login");
-                exit;
-            }else{
-                echo 'Utilisateur déjà présent';
-            }
-        }
-        ?>
     </body>
 </html>
