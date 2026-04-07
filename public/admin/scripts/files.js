@@ -63,14 +63,14 @@ export async function openFileDialog(accept = 'image/*') {
  * * @param {string} filename - The name of the file to retrieve the URL for.
  * @returns {string} The URL of the file.
  */
-export function getFileBucketUrl(filename){
-    if (!filename) return '';
-
-    // Si le nom du fichier est déjà une URL complète
-    if (filename.startsWith('http://') || filename.startsWith('https://')) {
+export function getFileBucketUrl(filename) {
+    if (!filename || filename === "N/A" || filename === "default.png") {
+        return "";
+    }
+    
+    if (filename.startsWith('http')) {
         return filename;
     }
 
-    // On enlève le "/" du début pour que le chemin soit relatif à localhost/SAE4_RefactoringSiteADIIL/
-    return `api/files/${filename}`;
+    return '/SAE4_RefactoringSiteADIIL/files/' + filename;
 }
