@@ -23,7 +23,7 @@ if (!$isAdmin) {
 
 switch ($page) {
     case 'accueil':
-        require_once __DIR__ . '/src/View/accueil.php';
+        require_once __DIR__ . '/src/Controller/ControllerAccueil.php';
         break;
 
     case 'events':

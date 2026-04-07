@@ -19,14 +19,6 @@
 
 <body id="index" class="body_margin">
 
-    <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    $db = new DB();
-    $isLoggedIn = isset($_SESSION["userid"]);
-    ?>
     <div id="page-container">
         <!--H1 A METTRE -->
         <section>
@@ -59,12 +51,7 @@
             <h2 class="titre_vertical">SCORES</h2>
 
             <div id="podium">
-                <?php
-                $podium = $db->select(
-                    "SELECT prenom_membre, xp_membre, pp_membre FROM MEMBRE ORDER BY xp_membre DESC LIMIT 3;"
-                );
-
-               foreach ([2,1,3] as $member_number):
+                <?php foreach ([2,1,3] as $member_number):
                 $pod = $podium[$member_number-1];
 
             ?>
@@ -79,7 +66,7 @@
                             <img src="<?php echo $base; ?>public/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture"
                                 class="profile_picture">
                         <?php endif?>
-                        <?php echo $pod['xp_membre'];?> xp
+                        <span class="xp-value <?php echo $pod['xp_size_class'] ?? 'xp-size-default'; ?>"><?php echo $pod['xp_membre']; ?> xp</span>
                     </div>
                 </div>
                 <?php endforeach; ?>
