@@ -106,6 +106,19 @@ H2 {
     margin-top: 2vh;
 }
 
+#cadre-grade.no-grade {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    text-align: center;
+    padding: 8px;
+}
+
+#cadre-grade.no-grade p {
+    margin: 0;
+}
+
 #cadre-grade img{
     width: 100%;
     height: 100%;

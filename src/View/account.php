@@ -246,7 +246,7 @@ if (isset($_SESSION['message'])) {
         <p><?php echo $infoUser[0]['xp_membre']; ?></p>
         <p>XP</p>
     </div>
-    <div id="cadre-grade">
+    <div id="cadre-grade" class="<?php echo empty($infoUser[0]['nom_grade']) ? 'no-grade' : ''; ?>">
         <?php if (empty($infoUser[0]['nom_grade'])): ?>
             <p>Vous n'avez pas de grade</p>
         <?php else: ?>
