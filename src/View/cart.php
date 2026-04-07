@@ -116,7 +116,7 @@ $cart = new cart($db);
                     <td><input type='text' name="cart[quantity][<?=$product['id_article']?>]" value="<?=$_SESSION['cart'][$product['id_article']]?>" onkeydown="pressEnter(event)"></td>
                     <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
                     <td>
-                        <a href="<?php echo $base; ?>cart.php?action=del&id=<?= $product['id_article'] ?>&redirect=<?php echo urlencode($base . 'cart'); ?>">Supprimer</a>
+                        <a href="<?php echo $base; ?>cart.php?action=del&id=<?= $product['id_article'] ?>&redirect=<?php echo urlencode($base . 'cart'); ?>" onclick="return confirm('Etes-vous sur de vouloir supprimer cet article du panier ?');">Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
