@@ -22,7 +22,7 @@ async function fetchData() {
     // Fetch data
     let roles = [];
     try{
-        roles = await requestGET('/meeting.php');
+        roles = await requestGET('/index.php?page=api_meeting');
     } catch (error) {
         toast(error.message, true);
     }
@@ -41,7 +41,7 @@ async function deleteReunion(id_reunion){
     showLoader();
 
     // Send request
-    await requestDELETE(`/meeting.php?id=${id_reunion}`);
+    await requestDELETE(`/index.php?page=api_meeting&id=${id_reunion}`);
     
     /// Update navbar
     refreshNavbar(fetchData, selectReunion);
@@ -65,7 +65,7 @@ async function selectReunion(id_reunion, li){
     showLoader();
 
     // Fetch grade information
-    const role = await requestGET(`/meeting.php?id=${id_reunion}`);
+    const role = await requestGET(`/index.php?page=api_meeting&id=${id_reunion}`);
 
     // Update displayed information
     const url = getFileBucketUrl(role.fichier_reunion);
@@ -116,7 +116,7 @@ new_btn.onclick = async ()=>{
 
     // Send request
     try{
-        const { id_role: id_reunion } =  await requestPOST('/meeting.php', form_data);
+        const { id_role: id_reunion } =  await requestPOST('/index.php?page=api_meeting', form_data);
         refreshNavbar(fetchData, selectReunion, id_reunion);
         toast("Fichier uploadé avec succès");
     } catch (error) {
@@ -125,7 +125,6 @@ new_btn.onclick = async ()=>{
     }
 
 }
-
 
 // Load navbar
 refreshNavbar(fetchData, selectReunion);

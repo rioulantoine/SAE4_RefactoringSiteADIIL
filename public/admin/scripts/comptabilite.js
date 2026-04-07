@@ -21,7 +21,7 @@ async function updateView(){
     addUpdloadButton();
 
     // Fetch data
-    const data = await requestGET('/accounting.php');
+    const data = await requestGET('/index.php?page=api_accounting');
 
     // Add elements
     for (let i = 0; i < data.length; i++) {
@@ -40,9 +40,9 @@ function addAccountingElement(data){
     const container = document.createElement('div');
     container.className = 'file-element';
 
-    // Add icon
+    // Add icon (Chemin corrigé)
     const icon = document.createElement('img');
-    icon.src = '../ressources/sheet.png';
+    icon.src = `public/admin/ressources/sheet.png`;
     container.appendChild(icon);
 
     // Add text
@@ -55,14 +55,15 @@ function addAccountingElement(data){
     text.appendChild(date);
     container.appendChild(text);
 
-    // Add buttons
+    // Add buttons (Chemins corrigés)
     const download_button = document.createElement('button');
     download_button.className = 'btn-transparent btn-blue';
-    download_button.innerHTML = '<img src="../ressources/download.svg">';
+    download_button.innerHTML = `<img src="public/admin/ressources/download.svg">`;
     container.appendChild(download_button);
+    
     const delete_button = document.createElement('button');
     delete_button.className = 'btn-transparent btn-red';
-    delete_button.innerHTML = '<img src="../ressources/delete.svg">';
+    delete_button.innerHTML = `<img src="public/admin/ressources/delete.svg">`;
     container.appendChild(delete_button);
 
     // Append div
@@ -84,7 +85,7 @@ function addAccountingElement(data){
         }).then(async (willDelete) => {
             if (willDelete) {
                 try {
-                    await requestDELETE(`/accounting.php?id=${data.id_comptabilite}`);
+                    await requestDELETE(`/index.php?page=api_accounting&id=${data.id_comptabilite}`);
                     toast("Fichier supprimé avec succès.");
                     updateView();
                 } catch (error) {
@@ -99,9 +100,9 @@ function addAccountingElement(data){
 
 function addUpdloadButton(){
 
-    // Add "upload file" button
+    // Add "upload file" button (Chemin corrigé)
     const upload_button = document.createElement('button');
-    upload_button.innerHTML = '<img src="../ressources/download.svg"><p>Upload file</p>';
+    upload_button.innerHTML = `<img src="public/admin/ressources/download.svg"><p>Upload file</p>`;
     upload_button.className = 'btn-transparent btn-blue upload-button';
     main_content.appendChild(upload_button);
 
@@ -146,7 +147,7 @@ async function uploadFile(file, name, date){
 
     // Send request
     try{
-        await requestPOST('/accounting.php', form_data);
+        await requestPOST('/index.php?page=api_accounting', form_data);
         toast("Fichier uploadé avec succès");
         updateView();
     } catch (error) {

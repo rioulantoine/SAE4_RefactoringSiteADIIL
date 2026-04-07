@@ -14,8 +14,16 @@ export async function getFullFilepath(filename, defaultFile) {
     }
 
     const fullFilePath = getFileBucketUrl(filename);
+    
+    // Si c'est une URL externe (ex: http://files.bdeinfo.fr/...), on la retourne directement.
+    // Cela évite que le fetch() ci-dessous échoue à cause des sécurités CORS du navigateur.
+    if (fullFilePath.startsWith('http://') || fullFilePath.startsWith('https://')) {
+        return fullFilePath;
+    }
+
     try {
-        const response = await fetch(fullFilePath);
+        // Utilisation de la méthode HEAD pour juste vérifier l'existence sans télécharger tout le fichier
+        const response = await fetch(fullFilePath, { method: 'HEAD' }); 
         if (!response.ok) {
             return defaultFile;
         }
@@ -52,10 +60,17 @@ export async function openFileDialog(accept = 'image/*') {
 
 /**
  * Retrieves the URL of a file stored in the file bucket.
- * 
- * @param {string} filename - The name of the file to retrieve the URL for.
+ * * @param {string} filename - The name of the file to retrieve the URL for.
  * @returns {string} The URL of the file.
  */
 export function getFileBucketUrl(filename){
-    return `/api/files/${filename}`;
+    if (!filename) return '';
+
+    // Si le nom du fichier est déjà une URL complète
+    if (filename.startsWith('http://') || filename.startsWith('https://')) {
+        return filename;
+    }
+
+    // On enlève le "/" du début pour que le chemin soit relatif à localhost/SAE4_RefactoringSiteADIIL/
+    return `api/files/${filename}`;
 }

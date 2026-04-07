@@ -1,23 +1,20 @@
 <?php
-session_start();
 use model\Role;
 
-require_once 'filter.php';
-require_once 'models/Role.php';
-require_once 'DB.php';
-require_once 'tools.php';
+// Chemins corrigés avec __DIR__
+require_once __DIR__ . '/../../Service/filter.php';
+require_once __DIR__ . '/../../Model/api/Role.php';
+require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/tools.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
-
 tools::checkPermission('p_role');
 
-
 $methode = $_SERVER['REQUEST_METHOD'];
-
 
 switch ($methode) {
     case 'GET':                      # READ
@@ -44,19 +41,19 @@ switch ($methode) {
 function get_role() : void
 {
     if (isset($_GET['id'])) {
-        // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
+        // Si un ID est précisé, on renvoie les infos du rôle
         $id = filter::int($_GET['id']);
 
         $data = Role::getInstance($id);
 
         if (!$data) {
             http_response_code(404);
-            echo json_encode(["message" => "User not found"]);
+            echo json_encode(["message" => "Role not found"]);
             return;
         }
 
     } else {
-        // Sinon, on renvoie la liste de tous les utilisateurs. On va juste préciser si ils ont des rôles ou non
+        // Sinon, on renvoie la liste de tous les rôles
         $data = Role::bulkFetch();
     }
 
@@ -108,8 +105,6 @@ function update_role() : void
 
     http_response_code(200);
     echo json_encode($role);
-
-
 }
 
 function delete_role() : void
@@ -135,4 +130,3 @@ function delete_role() : void
     http_response_code(200);
     echo json_encode(['message' => 'Role deleted']);
 }
-

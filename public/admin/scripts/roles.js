@@ -33,7 +33,7 @@ async function fetchData() {
     // Fetch data
     let roles = [];
     try{
-        roles = await requestGET('/role.php');
+        roles = await requestGET('/index.php?page=api_roles');
     } catch (error) {
         toast(error.message, true);
     }
@@ -47,8 +47,6 @@ async function fetchData() {
  * Saves the grade information.
  *
  * @param {number} id_role - The ID of the role to be saved.
- * @returns {Promise<void>} A promise that resolves when the grade is successfully saved.
- * @throws Will alert an error message if the request fails.
  */
 async function saveRole(id_role){
 
@@ -75,7 +73,7 @@ async function saveRole(id_role){
 
     // Send data
     try {
-        await requestPUT('/role.php?id=' + id_role.toString(), data);
+        await requestPUT('/index.php?page=api_roles&id=' + id_role.toString(), data);
         toast('Role mis à jour avec succès.');
         selectRole(id_role);
     } catch (error) {
@@ -96,7 +94,7 @@ async function deleteRole(id_role){
     showLoader();
 
     // Send request
-    await requestDELETE(`/role.php?id=${id_role}`);
+    await requestDELETE(`/index.php?page=api_roles&id=${id_role}`);
     
     /// Update navbar
     refreshNavbar(fetchData, selectRole);
@@ -110,7 +108,6 @@ async function deleteRole(id_role){
  * Loads and displays grade information based on the provided grade ID.
  *
  * @param {number} id_role - The ID of the grade to be selected.
- * @returns {Promise<void>} A promise that resolves when the grade information has been fetched and displayed.
  */
 async function selectRole(id_role, li){
 
@@ -121,7 +118,7 @@ async function selectRole(id_role, li){
     showLoader();
 
     // Fetch grade information
-    const role = await requestGET(`/role.php?id=${id_role}`);
+    const role = await requestGET(`/index.php?page=api_roles&id=${id_role}`);
 
     // Update displayed information
     prop_nom_role.value = role.nom_role;
@@ -180,7 +177,7 @@ new_btn.onclick = async ()=>{
 
     // Create new grade
     try {
-        const { id_role } = await requestPOST('/role.php');
+        const { id_role } = await requestPOST('/index.php?page=api_roles');
         refreshNavbar(fetchData, selectRole, id_role);
     } catch (error) {
         toast(error.message, true);

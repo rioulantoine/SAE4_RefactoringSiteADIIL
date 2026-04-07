@@ -31,7 +31,7 @@ async function fetchData() {
     // Fetch data
     let events = [];
     try{
-        events = await requestGET('/event.php');
+        events = await requestGET('/index.php?page=api_event');
     } catch (error) {
         toast('Erreur lors du chargement des evenements.', true);
     }
@@ -45,7 +45,6 @@ async function fetchData() {
  * Saves the event information.
  *
  * @param {number} id_event - The ID of the event to be saved.
- * @returns {Promise<void>} A promise that resolves when the event is successfully saved.
  */
 async function saveEvent(id_event){
 
@@ -66,7 +65,7 @@ async function saveEvent(id_event){
 
     // Send data
     try {
-        await requestPUT('/event.php?id=' + id_event.toString(), data);
+        await requestPUT('/index.php?page=api_event&id=' + id_event.toString(), data);
         toast('Evenement mis à jour avec succès.');
         selectEvent(id_event);
     } catch (error) {
@@ -87,7 +86,7 @@ async function deleteEvent(id_event){
     showLoader();
 
     // Send request
-    await requestDELETE(`/event.php?id=${id_event}`);
+    await requestDELETE(`/index.php?page=api_event&id=${id_event}`);
     
     /// Update navbar
     refreshNavbar(fetchData, selectEvent);
@@ -101,7 +100,6 @@ async function deleteEvent(id_event){
  * Loads and displays event information based on the provided event ID.
  *
  * @param {number} id_event - The ID of the event to be selected.
- * @returns {Promise<void>} A promise that resolves when the event information has been fetched and displayed.
  */
 async function selectEvent(id_event, li){
 
@@ -112,10 +110,10 @@ async function selectEvent(id_event, li){
     showLoader();
 
     // Fetch event information
-    const event = await requestGET(`/event.php?id=${id_event}`);
+    const event = await requestGET(`/index.php?page=api_event&id=${id_event}`);
 
     // Update displayed information
-    prop_image.src = await getFullFilepath(event.image_evenement, '../ressources/default_images/event.jpg');
+    prop_image.src = await getFullFilepath(event.image_evenement, 'public/admin/ressources/default_images/event.jpg');
     prop_name.value = event.nom_evenement;
     prop_desc.value = event.description_evenement;
     prop_xp.value = event.xp_evenement;
@@ -166,8 +164,8 @@ async function selectEvent(id_event, li){
 
         // Send data
         try {
-            await requestPATCH('/event.php?id=' + id_event.toString(), image);
-            toast('Image mis à jour avec succès.');
+            await requestPATCH('/index.php?page=api_event&id=' + id_event.toString(), image);
+            toast('Image mise à jour avec succès.');
         } catch (error) {
             toast(error.message, true);
         }
@@ -193,7 +191,7 @@ new_btn.onclick = async ()=>{
 
     // Create new event
     try {
-        const { id_evenement } = await requestPOST('/event.php');
+        const { id_evenement } = await requestPOST('/index.php?page=api_event');
         refreshNavbar(fetchData, selectEvent, id_evenement);
     } catch (error) {
         toast("Erreur lors de la création de l'évenement", true);

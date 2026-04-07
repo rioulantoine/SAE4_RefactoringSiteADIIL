@@ -1,12 +1,13 @@
 <?php
-session_start();
 use model\Event;
 use model\File;
 
-require_once 'DB.php';
-require_once 'tools.php';
-require_once 'filter.php';
-require_once 'models/Event.php';
+// Chemins corrigés
+require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/tools.php';
+require_once __DIR__ . '/../../Service/filter.php';
+require_once __DIR__ . '/../../Model/api/Event.php';
+require_once __DIR__ . '/../../Model/api/File.php'; // Requis pour update_image
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
@@ -73,6 +74,13 @@ function create_event() : void
 function update_event() : void
 {
     $data = json_decode(file_get_contents('php://input'), true);
+    
+    if(!isset($_GET['id'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'ID is missing']);
+        return;
+    }
+
     $event = Event::getInstance($_GET['id']);
 
     if (!$event) {
@@ -89,6 +97,12 @@ function update_event() : void
 
 function update_image() : void
 {
+    if(!isset($_GET['id'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'ID is missing']);
+        return;
+    }
+    
     $event = Event::getInstance($_GET['id']);
 
     if (!$event) {
@@ -111,6 +125,12 @@ function update_image() : void
 
 function delete_event() : void
 {
+    if(!isset($_GET['id'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'ID is missing']);
+        return;
+    }
+    
     $event = Event::getInstance($_GET['id']);
 
     if (!$event) {

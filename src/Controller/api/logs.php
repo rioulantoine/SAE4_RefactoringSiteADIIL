@@ -1,7 +1,7 @@
 <?php
-session_start();
 
-require_once 'tools.php';
+// Chemin absolu corrigé
+require_once __DIR__ . '/../../Service/tools.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);

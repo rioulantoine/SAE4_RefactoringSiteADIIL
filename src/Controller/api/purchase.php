@@ -1,9 +1,8 @@
 <?php
-session_start();
 
-require_once 'DB.php';
-require_once 'tools.php';
-
+// Chemins corrigés avec __DIR__
+require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/tools.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
@@ -28,9 +27,6 @@ switch ($methode) {
 
 function get_purchase() : void {
     $db = new DB();
-
-    $data = $db->select("SELECT H.*, M.nom_membre, M.prenom_membre FROM HISTORIQUE_COMPLET as H INNER JOIN MEMBRE M on H.id_membre = M.id_membre");
-
+    $data = $db->select("SELECT *, nom_utilisateur AS nom_membre FROM HISTORIQUE");
     echo json_encode(array_reverse($data));
 }
-

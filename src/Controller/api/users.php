@@ -1,26 +1,23 @@
 <?php
-session_start();
 use model\File;
 use model\Member;
 
-require_once 'models/Member.php';
-require_once 'models/File.php';
-require_once 'filter.php';
+// Correction des chemins avec __DIR__
+require_once __DIR__ . '/../../Model/api/Member.php';
+require_once __DIR__ . '/../../Model/api/File.php';
+require_once __DIR__ . '/../../Service/filter.php';
 
-require_once 'DB.php';
-require_once 'tools.php';
+require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/tools.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
-
 tools::checkPermission('p_utilisateur');
 
-
 $methode = $_SERVER['REQUEST_METHOD'];
-
 
 # On accepte le format multipart/form-data UNIQUEMENT sur les requetes POST et PATCH
 # Sinon, il faudrait coder un parser de multipart/form-data
@@ -89,7 +86,6 @@ function create_user() : void
 
 function update_user() : void
 {
-
     $data = json_decode(file_get_contents('php://input'), true);
 
     if (!isset($data['name'], $data['firstname'], $data['email'], $data['tp'], $data['xp'], $_GET['id'])) {
@@ -112,7 +108,6 @@ function update_user() : void
 
         http_response_code(200);
         echo json_encode($user->toJsonWithRoles());
-
 
     } else {
         http_response_code(404);
@@ -180,5 +175,3 @@ function delete_user() :void
     http_response_code(200);
     echo json_encode(["message" => "User deleted"]);
 }
-
-

@@ -1,15 +1,15 @@
 <?php
-session_start();
 use model\File;
 use model\Meeting;
 use model\Member;
 
-require_once 'filter.php';
-require_once 'models/File.php';
-require_once 'models/Meeting.php';
-require_once 'models/Member.php';
-require_once 'DB.php';
-require_once 'tools.php';
+// Chemins absolus corrigés
+require_once __DIR__ . '/../../Service/filter.php';
+require_once __DIR__ . '/../../Model/api/File.php';
+require_once __DIR__ . '/../../Model/api/Meeting.php';
+require_once __DIR__ . '/../../Model/api/Member.php';
+require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/tools.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
@@ -104,4 +104,3 @@ function delete_meeting() : void
         }
     }
 }
-

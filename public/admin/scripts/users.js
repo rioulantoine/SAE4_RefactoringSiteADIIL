@@ -27,7 +27,7 @@ async function fetchData() {
     // Fetch data
     let users = [];
     try{
-        users = await requestGET('/users.php');
+        users = await requestGET('/index.php?page=api_users');
     } catch (error) {
         toast('Erreur lors du chargement des utilisateurs.', true);
     }
@@ -37,14 +37,12 @@ async function fetchData() {
         .filter(user => user.prenom_membre !== 'N/A')
         .map(user => ({label: user.prenom_membre + ' ' + user.nom_membre.toUpperCase(), id: user.id_membre}));
 
-    }
+}
 
 /**
  * Saves the user information.
  *
  * @param {number} id_user - The ID of the user to be saved.
- * @returns {Promise<void>} A promise that resolves when the user is successfully saved.
- * @throws Will alert an error message if the request fails.
  */
 async function saveUser(id_user){
 
@@ -63,10 +61,10 @@ async function saveUser(id_user){
 
     // Send data
     try {
-        await requestPUT('/users.php?id=' + id_user.toString(), data);
+        await requestPUT('/index.php?page=api_users&id=' + id_user.toString(), data);
         const roles = {roles: Array.from(prop_roles.children).filter(role => role.classList.contains('selected')).map(role => parseInt(role.getAttribute('id')))}
-        await requestPUT('/userole.php?id=' + id_user.toString(), roles);
-        toast('Utiliateur mis à jour avec succès.');
+        await requestPUT('/index.php?page=api_userole&id=' + id_user.toString(), roles);
+        toast('Utilisateur mis à jour avec succès.');
         selectUser(id_user);
     } catch (error) {
         toast(error.message, true);
@@ -86,7 +84,7 @@ async function deleteUser(id_user){
     showLoader();
 
     // Send request
-    await requestDELETE(`/users.php?id=${id_user}`);
+    await requestDELETE(`/index.php?page=api_users&id=${id_user}`);
     
     /// Update navbar
     refreshNavbar(fetchData, selectUser);
@@ -97,10 +95,9 @@ async function deleteUser(id_user){
 }
 
 /**
- * Loads and displays grade information based on the provided grade ID.
+ * Loads and displays user information based on the provided user ID.
  *
- * @param {number} id_member - The ID of the grade to be selected.
- * @returns {Promise<void>} A promise that resolves when the grade information has been fetched and displayed.
+ * @param {number} id_member - The ID of the member to be selected.
  */
 async function selectUser(id_member, li){
 
@@ -110,8 +107,8 @@ async function selectUser(id_member, li){
     // Show loader
     showLoader();
 
-    // Fetch grade information
-    const user = await requestGET(`/users.php?id=${id_member}`);
+    // Fetch user information
+    const user = await requestGET(`/index.php?page=api_users&id=${id_member}`);
 
     // Update displayed information
     prop_img.src = await getFullFilepath(user.pp_membre, '../ressources/default_images/user.jpg');
@@ -164,8 +161,8 @@ async function selectUser(id_member, li){
 
         // Send data
         try {
-            await requestPATCH('/users.php?id=' + id_member.toString(), image);
-            toast('Image mis à jour avec succès.');
+            await requestPATCH('/index.php?page=api_users&id=' + id_member.toString(), image);
+            toast('Image mise à jour avec succès.');
         } catch (error) {
             toast(error.message, true);
         }
@@ -180,8 +177,8 @@ async function selectUser(id_member, li){
         prop_roles.removeChild(prop_roles.firstChild);
 
     // Add roles
-    const roles = await requestGET('/role.php'); // Get all roles
-    const user_roles = (await requestGET(`/userole.php?id=${id_member}`)).map(role => role.id_role); // Get user roles;
+    const roles = await requestGET('/index.php?page=api_roles'); // Get all roles
+    const user_roles = (await requestGET(`/index.php?page=api_userole&id=${id_member}`)).map(role => role.id_role); // Get user roles;
     roles.forEach(role => {
 
         // Create role button
@@ -224,7 +221,7 @@ new_btn.onclick = async ()=>{
 
     // Create new user
     try {
-        const { id_membre } = await requestPOST('/users.php');
+        const { id_membre } = await requestPOST('/index.php?page=api_users');
         refreshNavbar(fetchData, selectUser, id_membre);
     } catch (error) {
         toast(error.message, true);
