@@ -129,8 +129,11 @@ switch ($page) {
         require_once __DIR__ . '/src/Controller/api/add_media.php';
         break;
 
-    case 'my_gallery.php':
+    case 'my_gallery':
         require_once __DIR__ . '/src/View/api/my_gallery.php';
+        break;
+    case 'delete_media':
+        require_once __DIR__ . '/src/Controller/api/delete_media.php';
         break;
 
     default:

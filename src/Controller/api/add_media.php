@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'], $_POST['user
             );
         }
 
-        header("Location: my_gallery.php?eventid=".$_POST["eventid"]);
+        header("Location: my_gallery?eventid=".$_POST["eventid"]);
         exit();
 
     }else{

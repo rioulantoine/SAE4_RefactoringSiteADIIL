@@ -83,7 +83,7 @@
                     <img src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']); ?>" alt="Image Personnelle de l'événement">
                     <div class="delete-icon">
 
-                        <form class="delete-media" action="<?php echo $base; ?>delete_media.php" method="post">
+                        <form class="delete-media" action="<?php echo $base; ?>delete_media" method="post">
                             <label for="del-media">
                                 <img src="<?php echo $base; ?>public/assets/delete_icon.png" alt="poubelle">
                             </label>

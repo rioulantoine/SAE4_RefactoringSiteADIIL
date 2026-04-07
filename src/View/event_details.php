@@ -94,7 +94,7 @@
             </form>
 
             <!-- URL relative pour la galerie personnelle -->
-            <form id="open-gallery" action="my_gallery.php" method="get">
+            <form id="open-gallery" action="my_gallery" method="get">
                 <label for="open-gallery-button">
                     <img src="<?php echo $base; ?>public/assets/explore_gallery.png" alt="Voir ma galerie entière">
                 </label>
