@@ -79,12 +79,12 @@ H2 {
 }
 
 #account-generalInfo div:nth-of-type(2) p:nth-child(1){
-    font-size: 75px;
+    font-size: clamp(2rem, 8vh, 4.7rem);
     font-weight: 500;
 }
 
 #account-generalInfo div:nth-of-type(2) p:nth-child(2){
-    font-size: 45px;
+    font-size: clamp(1.2rem, 4.5vh, 2.8rem);
 }
 
 #account-generalInfo div:nth-of-type(3){
@@ -95,13 +95,13 @@ H2 {
 }
 
 #account-generalInfo div:nth-of-type(3) p{
-    font-size: 35px;
+    font-size: clamp(1.1rem, 3.6vh, 2.2rem);
     font-weight: 500;
 }
 
 #cadre-grade {
-    width: 200px;
-    height: 200px;
+    width: clamp(120px, 18vh, 240px);
+    height: clamp(120px, 18vh, 240px);
     overflow: hidden;
     margin-top: 2vh;
 }
