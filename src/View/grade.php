@@ -37,6 +37,25 @@ $db = new DB();
 //Requête SQL
 $products = $db->select("SELECT * FROM GRADE WHERE deleted = false ORDER BY prix_grade");
 
+$currentUserGradeId = null;
+$currentUserReduction = null;
+if (!empty($_SESSION['userid'])) {
+    $currentGrade = $db->select(
+        "SELECT GRADE.id_grade, GRADE.reduction_grade
+         FROM ADHESION
+         INNER JOIN GRADE ON ADHESION.id_grade = GRADE.id_grade
+         WHERE ADHESION.id_membre = ?
+         LIMIT 1",
+        "i",
+        [$_SESSION['userid']]
+    );
+
+    if (!empty($currentGrade)) {
+        $currentUserGradeId = (int) $currentGrade[0]['id_grade'];
+        $currentUserReduction = (float) $currentGrade[0]['reduction_grade'];
+    }
+}
+
 ?>
 
 
@@ -81,16 +100,10 @@ $products = $db->select("SELECT * FROM GRADE WHERE deleted = false ORDER BY prix
                     <div>
                         <p id="adhesion-status">
 
-                            <?php
-                            if (!empty($_SESSION['userid'])) {
-                                $unAdherant = $db->select("SELECT * FROM GRADE INNER JOIN ADHESION ON GRADE.id_grade = ADHESION.id_grade INNER JOIN MEMBRE ON ADHESION.id_membre = MEMBRE.id_membre WHERE GRADE.id_grade = ? AND MEMBRE.id_membre = ?;",
-                                "ii",
-                                [$product['id_grade'], $_SESSION['userid']]
-                                );
-                                ?>
-                            <?php } ?>
-                            <?php if (!empty($_SESSION) && !empty($unAdherant)): ?>
+                            <?php if ($currentUserGradeId !== null && (int)$product['id_grade'] === $currentUserGradeId): ?>
                                 <button id="detention">Vous détenez ce grade</button>
+                            <?php elseif ($currentUserReduction !== null && (float)$product['reduction_grade'] < $currentUserReduction): ?>
+                                <button id="detention" disabled>Grade inférieur indisponible</button>
                             <?php else: ?>
                                 <a id="buy-button" href="<?php echo $base; ?>grade_subscription?id=<?= htmlspecialchars($product['id_grade']) ?>">
                                     Acheter

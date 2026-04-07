@@ -57,7 +57,7 @@
                 ?>
                     <div class="event-box"  id="<?php echo $closest_event_id ?>">
                         <div class="timeline-event">
-                            <h4> <?php echo ucwords($joursFr[$event_date_info['wday']]." ".$event_date_info["mday"]." ".$moisFr[$event_date_info['mon']]);?></h4>
+                            <h4> <?php echo ucwords($joursFr[$event_date_info['wday']]." ".$event_date_info["mday"]." ".$moisFr[$event_date_info['mon']]." ".$event_date_info['year']);?></h4>
                             <div class="vertical-line"></div>
                         </div>
                         <div class="event" event-id="<?php echo $eventid;?>">

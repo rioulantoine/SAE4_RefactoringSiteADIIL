@@ -187,11 +187,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 </script>
 
-<<<<<<< HEAD
-=======
-
-<?php require_once __DIR__ . '/Template/footer.php' ?>
->>>>>>> admin
-
 </body>
 </html>

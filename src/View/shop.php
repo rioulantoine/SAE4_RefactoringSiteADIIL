@@ -161,7 +161,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                     <div>
                         <p id="stock-status">
                             <?php if ((int)$product['stock_article'] > 0 || (int)$product['stock_article'] < 0): ?>
-<a class="addCart" id="add-to-cart-button" href="<?php echo $base; ?>cart.php?action=add&id=<?= htmlspecialchars($product['id_article']) ?>&redirect=<?php echo urlencode($base . 'shop'); ?>">                                    Ajouter au panier
+                                <a class="addCart" id="add-to-cart-button" href="<?php echo $base; ?>public/api/cart.php?action=add&id=<?= htmlspecialchars($product['id_article']) ?>">                                    Ajouter au panier
                                 </a>
                             <?php else: ?>
                                 <button id="out-of-stock">Épuisé</button>

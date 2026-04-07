@@ -134,3 +134,50 @@ div:nth-of-type(2) div:nth-of-type(2) div {
     margin-top: 50px;
     font-weight: bold;
 }
+
+#carte_credit form {
+    display: grid;
+    grid-template-columns: 190px minmax(240px, 1fr);
+    column-gap: 18px;
+    row-gap: 14px;
+    align-items: center;
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+#carte_credit form br {
+    display: none;
+}
+
+#carte_credit form label {
+    margin-right: 0;
+    justify-self: end;
+}
+
+#carte_credit form input {
+    width: 100%;
+    height: 44px;
+    padding: 10px 12px;
+}
+
+#carte_credit #finalise-order-button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    #carte_credit form {
+        grid-template-columns: 1fr;
+        row-gap: 10px;
+    }
+
+    #carte_credit form label {
+        justify-self: start;
+    }
+
+    #carte_credit #finalise-order-button {
+        width: 100%;
+        max-width: 320px;
+    }
+}

@@ -53,6 +53,7 @@
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
+    flex-wrap: wrap;
     gap: 10vw;
 }
 
@@ -62,6 +63,7 @@
     flex-direction: column;
 
     width: 200px;
+    min-width: 0;
 
     text-wrap: nowrap;
     white-space: nowrap;
@@ -99,6 +101,27 @@
     justify-content: space-between;
     font-size: 35px;
     width: inherit;
+}
+
+.xp-value {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.1;
+}
+
+.xp-size-default {
+    font-size: 35px;
+}
+
+.xp-size-lg {
+    font-size: 30px;
+}
+
+.xp-size-xl {
+    font-size: 24px;
 }
 
 .podium_unit:nth-child(1) > div{

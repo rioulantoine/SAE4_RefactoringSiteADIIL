@@ -18,12 +18,12 @@ if (isset($_SESSION['user']['roles'][0])) {
 $isAdmin = ($page === 'admin' || $page === 'admin_panel');
 
 if (!$isAdmin) {
-    require_once __DIR__ . '/src/View/Template/header.php';
+    require_once __DIR__ . '/src/Controller/ControllerHeader.php';
 }
 
 switch ($page) {
     case 'accueil':
-        require_once __DIR__ . '/src/View/accueil.php';
+        require_once __DIR__ . '/src/Controller/ControllerAccueil.php';
         break;
 
     case 'events':
@@ -80,7 +80,9 @@ switch ($page) {
     case 'admin':
         require_once __DIR__ . '/src/View/admin/admin.php';
         break;
-        
+    case 'mentions-legales':
+        require_once __DIR__ . '/src/View/mentions_legales.php';
+        break;
     case 'admin_panel':
         $panel = $_GET['panel'] ?? 'chat';
         $validPanels = [

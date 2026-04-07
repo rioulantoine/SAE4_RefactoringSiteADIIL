@@ -4,6 +4,7 @@
 
 H2 {
     text-align: center;
+    width: 100%;
     font-size: 4.5em;
     letter-spacing: 15px;
     line-height: 100px;
@@ -78,12 +79,12 @@ H2 {
 }
 
 #account-generalInfo div:nth-of-type(2) p:nth-child(1){
-    font-size: 75px;
+    font-size: clamp(2rem, 8vh, 4.7rem);
     font-weight: 500;
 }
 
 #account-generalInfo div:nth-of-type(2) p:nth-child(2){
-    font-size: 45px;
+    font-size: clamp(1.2rem, 4.5vh, 2.8rem);
 }
 
 #account-generalInfo div:nth-of-type(3){
@@ -94,15 +95,28 @@ H2 {
 }
 
 #account-generalInfo div:nth-of-type(3) p{
-    font-size: 35px;
+    font-size: clamp(1.1rem, 3.6vh, 2.2rem);
     font-weight: 500;
 }
 
 #cadre-grade {
-    width: 200px;
-    height: 200px;
+    width: clamp(120px, 18vh, 240px);
+    height: clamp(120px, 18vh, 240px);
     overflow: hidden;
     margin-top: 2vh;
+}
+
+#cadre-grade.no-grade {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    text-align: center;
+    padding: 8px;
+}
+
+#cadre-grade.no-grade p {
+    margin: 0;
 }
 
 #cadre-grade img{
@@ -265,31 +279,36 @@ H2 {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    width: 60%;
-    height: 6vh;
+    width: min(92%, 980px);
+    height: auto;
     align-self: center;
     margin: auto;
     margin-bottom: 11.69vh;
+    gap: 14px;
+    flex-wrap: wrap;
 }
 
 #buttons-section button{
     display: flex;
     flex-direction: row;
-    padding: 1vh;
+    padding: 10px 12px;
     border-radius: 10px;
     border: none;
-    font-size: 1em;
+    font-size: clamp(0.82rem, 0.9vw, 1rem);
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     cursor: pointer;
+    gap: 8px;
+    line-height: 1.2;
+    text-align: center;
 }
 
 
 
 /*** ---> Discord***/
 #buttons-section > button:first-of-type {
-    width: 23vh;
-    height: 6vh;
+    width: clamp(180px, 23vw, 280px);
+    min-height: 52px;
     background-color:  rgb(91, 101, 234);
     color: white;
 }
@@ -305,31 +324,31 @@ H2 {
 }
 
 #buttons-section > button:first-of-type img {
-    width: 40px;
-    height: 40px;
-    margin: 1vh;
+    width: clamp(24px, 2.4vw, 34px);
+    height: clamp(24px, 2.4vw, 34px);
+    margin: 0;
 }
 
 
 /*** ---> Déconnexion***/
 
 #buttons-section form:first-of-type button {
-    width: 18vh;
-    height: 6vh;
+    width: clamp(165px, 18vw, 230px);
+    min-height: 52px;
     background-color:  rgb(119, 241, 190);
     color: #1E1E1E;
 }
 
 #buttons-section form:first-of-type button img {
-    width: 30px;
-    height: 30px;
+    width: clamp(22px, 2.2vw, 30px);
+    height: clamp(22px, 2.2vw, 30px);
 }
 
 /*** ---> Supprimer mon compte***/
 
 #buttons-section form:nth-of-type(2) button {
-    width: 23vh;
-    height: 6vh;
+    width: clamp(190px, 23vw, 290px);
+    min-height: 52px;
     background-color:  rgb(234, 91, 91);
     color: white;
 }
@@ -337,16 +356,34 @@ H2 {
 #buttons-section form:nth-of-type(2) button {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     color: inherit;
-    width: 100%;
-    height: 100%;
 }
 
 #buttons-section form:nth-of-type(2) button img {
-    width: 30px;
-    height: 30px;
-    margin: 0.5vh;
+    width: clamp(22px, 2.2vw, 30px);
+    height: clamp(22px, 2.2vw, 30px);
+    margin: 0;
+}
+
+@media (max-width: 980px), (max-height: 760px) {
+    #buttons-section {
+        width: 88%;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #buttons-section > button:first-of-type,
+    #buttons-section form:first-of-type button,
+    #buttons-section form:nth-of-type(2) button {
+        width: 100%;
+        max-width: 360px;
+    }
+
+    #buttons-section button {
+        font-size: 0.9rem;
+    }
 }
 
 
@@ -425,4 +462,49 @@ H2 {
 
 #viewAll-form button:hover {
     opacity: 100%;
+}
+
+@media (max-width: 1300px), (max-height: 820px) {
+    #account-personalInfo-form,
+    #account-editPass-form {
+        width: 80%;
+        height: auto;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 20px;
+    }
+
+    #account-personalInfo-form > div,
+    #account-editPass-form > div {
+        width: 100%;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    #account-personalInfo-form div div:first-of-type,
+    #account-personalInfo-form div div:nth-of-type(2),
+    #account-editPass-form div div:first-of-type,
+    #account-editPass-form div div:nth-of-type(2) {
+        width: 100%;
+    }
+
+    #account-personalInfo-form input,
+    #account-personalInfo-form div div:nth-of-type(1) input:nth-of-type(2),
+    #account-personalInfo-form div:nth-of-type(2) input,
+    #account-editPass-form div input {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+    }
+
+    #account-personalInfo-form button,
+    #account-editPass-form button {
+        align-self: center;
+        margin-top: 6px;
+    }
+
+    #account-editPass-form div div:first-of-type p {
+        font-size: 1.2em;
+    }
 }

@@ -88,6 +88,14 @@ H1 {
     color: white;
 }
 
+#cart-container a[href*="action=del"] {
+    color: #ff4d4d;
+}
+
+#cart-container a[href*="action=del"]:hover {
+    color: #ff1f1f;
+}
+
 #article-cell {
     display: flex;
     flex-direction: row;

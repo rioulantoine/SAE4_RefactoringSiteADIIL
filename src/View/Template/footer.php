@@ -1,10 +1,10 @@
 <!-- HEADER -->
 <footer>
     <div>
-        <a>Nous contacter</a>
-        <a href="/about.php">Nous rejoindre</a>
-        <a href="/news.php">Le département</a>
-        <a>Mentions légales</a>
+        <a href="mailto:association.adiil@gmail.com">Nous contacter</a>
+        <a href="<?php echo $base; ?>about">Nous rejoindre</a>
+        <a href="<?php echo $base; ?>news">Les actualités</a>
+        <a href="<?php echo $base; ?>mentions-legales">Mentions légales</a>
     </div>
     <h2>ADIIL</h2>
 </footer>

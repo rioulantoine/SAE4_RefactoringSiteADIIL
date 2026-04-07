@@ -1,0 +1,77 @@
+#mentions-legales-page {
+    max-width: 980px;
+    margin: 0 auto 80px auto;
+}
+
+#mentions-legales-page h1 {
+    text-align: center;
+    font-size: 4.5em;
+    letter-spacing: 10px;
+    line-height: 100px;
+    font-weight: 500;
+    font-family: "Koulen", sans-serif;
+    margin-bottom: 32px;
+}
+
+.legal-card {
+    background-color: rgb(23, 23, 23);
+    border: 1px solid rgba(119, 241, 190, 0.18);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.legal-card h2 {
+    color: rgb(119, 241, 190);
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+.legal-card p {
+    font-size: 1.05em;
+    line-height: 1.45;
+    margin-bottom: 10px;
+}
+
+.legal-card ul {
+    padding-left: 22px;
+}
+
+.legal-card li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.legal-card a {
+    color: rgb(119, 241, 190);
+    text-decoration: none;
+}
+
+.legal-card a:hover {
+    text-decoration: underline;
+}
+
+.legal-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.legal-links-grid a {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    padding: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.legal-links-grid a:hover {
+    background-color: rgba(119, 241, 190, 0.12);
+}
+
+.legal-last-update {
+    margin-top: 24px;
+    color: #9a9a9a;
+    font-size: 0.95em;
+}

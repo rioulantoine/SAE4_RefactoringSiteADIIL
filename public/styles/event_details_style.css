@@ -17,6 +17,14 @@ footer{
 .event-details{
     position: relative;
     width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 600px);
+    grid-template-areas:
+        "title media"
+        "meta media"
+        "text text";
+    column-gap: 28px;
+    align-items: start;
 }
 
 .event-details h1{
@@ -25,8 +33,9 @@ footer{
     letter-spacing: 15px;
     line-height: 100px;
     font-weight: 500;
-    width: 60%;
+    width: 100%;
     margin-bottom: 30px;
+    grid-area: title;
 }
 
 .event-details h2{
@@ -41,29 +50,35 @@ footer{
     position: relative;
     z-index: 1;
 }
+
+.event-details .news-details-title {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
 .event-details > div{
-    margin-left: 8vw;
+    margin-left: 0;
     margin-bottom: 20px;
-    width: fit-content;
+    width: 100%;
     display: flex;
     align-content: center;
     flex-direction: column;
     gap: 30px;
+    grid-area: meta;
 }
 
 .event-details img{
-    position: absolute;
+    position: static;
     border-radius: 15px;
 
-    width: 600px;
-    height: 350px;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
 
     border: 2px white solid;
     object-fit: cover;
-    z-index: -1;
-
-    right: 0px;
-    top: -20px;
+    z-index: 1;
+    grid-area: media;
+    justify-self: end;
 }
 
 .event-details button{
@@ -109,15 +124,55 @@ footer{
 }
 
 .event-details p{
-    width: 70%;
+    width: 100%;
     font-size: 1.5em;
 
     text-align: justify;
 
-    margin: auto;
-    margin-top: 15vh;
+    margin: 20px 0 0 0;
 
     line-height: 40px;
+    grid-area: text;
+}
+
+@media (max-width: 1200px) {
+    .event-details {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "media"
+            "title"
+            "meta"
+            "text";
+    }
+
+    .event-details img {
+        display: block;
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        margin: 0 auto 20px auto;
+        justify-self: center;
+    }
+
+    .event-details h1 {
+        width: 100%;
+        line-height: 1.1;
+    }
+
+    .event-details .news-details-title {
+        max-width: 100%;
+    }
+
+    .event-details > div {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .event-details p {
+        width: 100%;
+        margin-top: 40px;
+        margin-left: 0;
+    }
 }
 
 
