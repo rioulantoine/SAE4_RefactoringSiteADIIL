@@ -80,7 +80,9 @@ switch ($page) {
     case 'admin':
         require_once __DIR__ . '/src/View/admin/admin.php';
         break;
-        
+    case 'mentions-legales':
+        require_once __DIR__ . '/src/View/mentions_legales.php';
+        break;
     case 'admin_panel':
         $panel = $_GET['panel'] ?? 'chat';
         $validPanels = [
