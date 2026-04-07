@@ -24,6 +24,7 @@
  <!-- Importer les fichiers -->
 <?php 
 require_once __DIR__ . '/../Service/files_save.php';
+require_once __DIR__ . '/../Model/database.php';
 
 // Connexion à la base de donnees
 $db = new DB();
