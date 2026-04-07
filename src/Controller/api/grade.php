@@ -2,48 +2,54 @@
 use model\File;
 use model\Grade;
 
-// Chemins corrigés
 require_once __DIR__ . '/../../Model/database.php';
 require_once __DIR__ . '/../../Service/tools.php';
 require_once __DIR__ . '/../../Service/filter.php';
 require_once __DIR__ . '/../../Model/api/Grade.php';
-require_once __DIR__ . '/../../Model/api/File.php'; // Ajout nécessaire pour la fonction update_image
+require_once __DIR__ . '/../../Model/api/File.php';
 
-// TODO: Remove this line in production
-ini_set('display_errors', 1);
-
+ob_start();
+ini_set('display_errors', 0);
 header('Content-Type: application/json');
 
-tools::checkPermission('p_grade');
+set_error_handler(function($severity, $message, $file, $line) {
+    throw new \ErrorException($message, 0, $severity, $file, $line);
+});
 
-$methode = $_SERVER['REQUEST_METHOD'];
+try {
+    tools::checkPermission('p_grade');
 
+    $methode = $_SERVER['REQUEST_METHOD'];
 
-switch ($methode) {
-    case 'GET':                      # READ
-        get_grades();
-        break;
-    case 'POST':                     # CREATE
-        create_grade();
-        break;
-    case 'PUT':                      # UPDATE (données seulement)
-        if (tools::methodAccepted('application/json')) {
-            update_grade();
-        }
-        break;
-    case 'PATCH':                    # UPDATE (image seulement)
-            update_image();
-        break;
-    case 'DELETE':                   # DELETE
-        delete_grade();
-        break;
-
-    default:
-        # 405 Method Not Allowed
-        http_response_code(405);
-        break;
+    switch ($methode) {
+        case 'GET':
+            get_grades();
+            break;
+        case 'POST':
+            if (isset($_GET['action']) && $_GET['action'] === 'update_image') {
+                update_image();
+            } else {
+                create_grade();
+            }
+            break;
+        case 'PUT':
+            if (tools::methodAccepted('application/json')) {
+                update_grade();
+            }
+            break;
+        case 'DELETE':
+            delete_grade();
+            break;
+        default:
+            http_response_code(405);
+            break;
+    }
+} catch (\Throwable $e) {
+    @ob_clean();
+    http_response_code(500);
+    echo json_encode(['error' => 'Erreur PHP : ' . $e->getMessage()]);
+    exit;
 }
-
 
 function get_grades() : void
 {
@@ -54,16 +60,19 @@ function get_grades() : void
 
         if ($grades === null) {
             http_response_code(404);
+            @ob_clean();
             echo json_encode(['error' => 'Grade not found']);
-            return;
+            exit;
         }
         
     } else {
         $grades = Grade::bulkFetch();
     }
 
+    http_response_code(200);
+    @ob_clean();
     echo json_encode($grades);
-
+    exit;
 }
 
 function create_grade() : void
@@ -71,24 +80,28 @@ function create_grade() : void
     $grade = Grade::create("Nouveau grade", "Ceci est un nouveau grade", 10.99, null, 0);
 
     http_response_code(201);
-    echo $grade;
+    @ob_clean();
+    echo json_encode($grade->jsonSerialize());
+    exit;
 }
 
 function update_grade() : void
 {
     if (!isset($_GET['id'])) {
         http_response_code(400);
+        @ob_clean();
         echo json_encode(['error' => 'Please provide an id']);
-        return;
+        exit;
     }
 
     $input = file_get_contents('php://input');
     $data = json_decode($input, true);
 
-    if (!isset($_GET['id'], $data['name'], $data['description'], $data['price'], $data['reduction'])) {
+    if (!isset($data['name'], $data['description'], $data['price'], $data['reduction'])) {
         http_response_code(400);
+        @ob_clean();
         echo json_encode(['error' => 'Incomplete data']);
-        return;
+        exit;
     }
     
     $id = filter::int($_GET['id']);
@@ -101,23 +114,26 @@ function update_grade() : void
 
     if ($grade === null) {
         http_response_code(404);
+        @ob_clean();
         echo json_encode(['error' => 'Grade not found']);
-        return;
+        exit;
     }
 
     $grade->update($name, $description, $price, $reduction);
 
     http_response_code(200);
-    echo $grade;
+    @ob_clean();
+    echo json_encode($grade->jsonSerialize());
+    exit;
 }
-
 
 function update_image() : void
 {
     if (!isset($_GET['id'])) {
         http_response_code(400);
+        @ob_clean();
         echo json_encode(['error' => 'Please provide an id']);
-        return;
+        exit;
     }
 
     $id = filter::int($_GET['id']);
@@ -125,30 +141,41 @@ function update_image() : void
 
     if ($grade === null) {
         http_response_code(404);
+        @ob_clean();
         echo json_encode(['error' => 'Grade not found']);
-        return;
+        exit;
     }
 
     $image = File::saveImage();
 
     if (!$image) {
         http_response_code(400);
+        @ob_clean();
         echo json_encode(['error' => 'Image could not be processed']);
-        return;
+        exit;
+    }
+
+    $oldImage = $grade->jsonSerialize()['image_grade'];
+    if ($oldImage !== 'default.png' && $oldImage !== 'N/A' && !str_starts_with($oldImage, 'http')) {
+        $deleteFile = File::getFile($oldImage);
+        $deleteFile?->deleteFile();
     }
 
     $grade->updateImage($image);
 
-    echo json_encode($grade);
-
+    http_response_code(200);
+    @ob_clean();
+    echo json_encode($grade->jsonSerialize());
+    exit;
 }
 
 function delete_grade() : void
 {
     if (!isset($_GET['id'])) {
         http_response_code(400);
+        @ob_clean();
         echo json_encode(['error' => 'Please provide an id']);
-        return;
+        exit;
     }
 
     $id = filter::int($_GET['id']);
@@ -156,12 +183,15 @@ function delete_grade() : void
 
     if ($grade === null) {
         http_response_code(404);
+        @ob_clean();
         echo json_encode(['error' => 'Grade not found']);
-        return;
+        exit;
     }
 
-    $grade->delete();
+    @$grade->delete();
 
     http_response_code(200);
+    @ob_clean();
     echo json_encode(['message' => 'Grade deleted']);
+    exit;
 }

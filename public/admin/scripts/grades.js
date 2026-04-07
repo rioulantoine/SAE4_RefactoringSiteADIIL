@@ -1,14 +1,12 @@
 import { refreshNavbar } from "./navbar.js";
-import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from './ajax.js';
+import { requestGET, requestPUT, requestDELETE, requestPOST } from './ajax.js';
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
-import { getFullFilepath, openFileDialog } from "./files.js";
+import { openFileDialog } from "./files.js";
 
-// Show skeleton
 showPropertieSkeleton();
 
-// Get inputs
 const prop_image_grade = document.getElementById('prop_image_grade');
 const prop_nom_grade = document.getElementById('prop_nom_grade');
 const prop_description_grade_grade = document.getElementById('prop_description_grade_grade');
@@ -18,35 +16,18 @@ const save_btn = document.getElementById('save_btn');
 const delete_btn = document.getElementById('delete_btn');
 const new_btn = document.getElementById('new_btn');
 
-/**
- * Reloads the navigation bar with grade items.
- */
 async function fetchData() {
-
-    // Fetch data
     let grades = [];
     try{
-        grades = await requestGET('/index.php?page=api_grade');
+        grades = await requestGET('/SAE4_RefactoringSiteADIIL/index.php?page=api_grade');
     } catch (error) {
         toast('Erreur lors du chargement des grades.', true);
     }
-
-    // Transform data to navbar items
     return grades.map(grade => ({label: grade.nom_grade, id: grade.id_grade}));
-
 }
 
-/**
- * Saves the grade information.
- *
- * @param {number} id_grade - The ID of the grade to be saved.
- */
 async function saveGrade(id_grade){
-
-    // Show loader
     showLoader();
-
-    // Create data
     const data = {
         name: prop_nom_grade.value,
         description: prop_description_grade_grade.value,
@@ -54,68 +35,47 @@ async function saveGrade(id_grade){
         reduction: prop_reduction_grade.value
     };
 
-    // Send data
     try {
-        await requestPUT('/index.php?page=api_grade&id=' + id_grade.toString(), data);
+        await requestPUT('/SAE4_RefactoringSiteADIIL/index.php?page=api_grade&id=' + id_grade.toString(), data);
         toast('Grade mis à jour avec succès.');
         selectGrade(id_grade);
     } catch (error) {
         toast(error.message, true);
     }
-
-    // Stop loader
     hideLoader();
-
 }
 
-/**
- * Deletes the grade from the DB.
-*/
 async function deleteGrade(id_grade){
-
-    // Show loader
     showLoader();
-
-    // Send request
-    await requestDELETE(`/index.php?page=api_grade&id=${id_grade}`);
-    
-    /// Update navbar
+    await requestDELETE(`/SAE4_RefactoringSiteADIIL/index.php?page=api_grade&id=${id_grade}`);
     refreshNavbar(fetchData, selectGrade);
-
-    // Deleted message
     toast('Grade supprimé avec succès.');
-
 }
 
-/**
- * Loads and displays grade information based on the provided grade ID.
- *
- * @param {number} id_grade - The ID of the grade to be selected.
- */
 async function selectGrade(id_grade, li){
-
-    // Show skeleton
     showPropertieSkeleton();
-
-    // Show loader
     showLoader();
 
-    // Fetch grade information
-    const grade = await requestGET(`/index.php?page=api_grade&id=${id_grade}`);
+    const grade = await requestGET(`/SAE4_RefactoringSiteADIIL/index.php?page=api_grade&id=${id_grade}`);
+    const defaultImagePath = '/SAE4_RefactoringSiteADIIL/public/admin/ressources/default_images/grade.webp';
 
-    // Update displayed information
-    prop_image_grade.src = await getFullFilepath(grade.image_grade, 'public/admin/ressources/default_images/grade.webp');
+    if (grade.image_grade && grade.image_grade.startsWith('http')) {
+        prop_image_grade.src = grade.image_grade;
+    } else if (grade.image_grade && grade.image_grade !== "default.png" && grade.image_grade !== "N/A") {
+        prop_image_grade.src = '/SAE4_RefactoringSiteADIIL/files/' + grade.image_grade;
+    } else {
+        prop_image_grade.src = defaultImagePath;
+    }
+
     prop_nom_grade.value = grade.nom_grade;
     prop_description_grade_grade.value = grade.description_grade;
     prop_prix_grade.value = grade.prix_grade;
     prop_reduction_grade.value = grade.reduction_grade;
 
-    // Update save button
     save_btn.onclick = ()=>{
         saveGrade(id_grade);
     };
 
-    // Delete button
     delete_btn.onclick = ()=>{
         swal({
             title: "Êtes vous sûr ?",
@@ -131,61 +91,53 @@ async function selectGrade(id_grade, li){
           });
     };
 
-    // Update name
     prop_nom_grade.onkeyup = ()=>{
-        li.textContent = prop_nom_grade.value;
+        if(li) li.textContent = prop_nom_grade.value;
     };
 
-    // Update image
     document.getElementById('prop_image_edit').onclick = async ()=>{
-        
-        // Get file form
         const image = await openFileDialog();
-
-        // Update image src
         const url = URL.createObjectURL(image);
         prop_image_grade.src = url;
 
-        // Show loader
         showLoader();
 
-        // Send data
         try {
-            await requestPATCH('/index.php?page=api_grade&id=' + id_grade.toString(), image);
+            const formData = new FormData();
+            formData.append('file', image);
+
+            const response = await fetch('/SAE4_RefactoringSiteADIIL/index.php?page=api_grade&action=update_image&id=' + id_grade.toString(), {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Image non traitée');
+            }
+
             toast('Image mise à jour avec succès.');
         } catch (error) {
             toast(error.message, true);
         }
 
-        // Stop loader
         hideLoader();
-
     };
 
-    // Hide loader
     hideLoader();
-
-    // Hide skeleton
     hidePropertieSkeleton();
-    
 }
 
-// Handle new grade
 new_btn.onclick = async ()=>{
-
-    // Show loader
     showLoader();
-
-    // Create new grade
     try {
-        const id = await requestPOST('/index.php?page=api_grade');
-        refreshNavbar(fetchData, selectGrade, id);
+        const result = await requestPOST('/SAE4_RefactoringSiteADIIL/index.php?page=api_grade');
+        refreshNavbar(fetchData, selectGrade, result.id_grade);
     } catch (error) {
         toast('Erreur lors de la création du grade.', true);
         hideLoader();
     }
-
 };
 
-// Load navbar
 refreshNavbar(fetchData, selectGrade);

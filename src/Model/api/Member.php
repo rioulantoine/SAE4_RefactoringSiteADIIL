@@ -8,21 +8,16 @@ use JsonSerializable;
 require_once __DIR__ . '/BaseModel.php';
 require_once __DIR__ . '/Role.php';
 
-
 class Member extends BaseModel implements JsonSerializable
 {
     public function delete() : void
     {
         $this->getProfilePic()?->deleteFile();
 
-        // On supprime tous les roles de l'utilisateur
         $this->DB->query("DELETE FROM ASSIGNATION WHERE id_membre = ?", "i", [$this->id]);
-
-        // /** @lang SQL */ permet d'afficher sur PHPStorm la coloration syntaxique SQL
-        $this->DB->query(/** @lang SQL */"CALL suppressionCompte(?)", "i", [$this->id]);
+        $this->DB->query("CALL suppressionCompte(?)", "i", [$this->id]);
     }
 
-    // TODO: Create an Image type ($pp)
     public function update(string $nom, string $prenom, string $email, string $tp, int $xp) : Member
     {
         $this->DB->query("UPDATE MEMBRE SET nom_membre = ?, prenom_membre = ?, email_membre = ?, tp_membre = ?, xp_membre = ? WHERE id_membre = ?", "ssssii", [$nom, $prenom, $email, $tp, $xp, $this->id]);
@@ -40,8 +35,10 @@ class Member extends BaseModel implements JsonSerializable
     public static function create(string $nom, string $prenom, string $email, File | null $pp, string $tp) : Member
     {
         $DB = new \DB();
+        
+        $ppPath = $pp !== null ? $pp->getFileName() : "default.png";
 
-        $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, pp_membre, tp_membre) VALUES (?,?,?,?,?)", "sssss", [$nom, $prenom, $email, $pp, $tp]);
+        $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, pp_membre, tp_membre) VALUES (?,?,?,?,?)", "sssss", [$nom, $prenom, $email, $ppPath, $tp]);
 
         return new Member($id);
     }
@@ -68,47 +65,41 @@ class Member extends BaseModel implements JsonSerializable
 
     public function getProfilePic(): File | null
     {
-        return File::getFile($this->toJson()["pp_membre"]);
+        $pp = $this->toJson()["pp_membre"];
+        
+        if (str_starts_with($pp, 'http')) {
+            return null;
+        }
+        
+        return File::getFile($pp);
     }
 
     public function setRoles(array $roles): bool
     {
         $rolesObjects = [];
         foreach ($roles as $role) {
-            $role = Role::getInstance(filter::int($role));
-            if (is_null($role)) {
+            $roleObj = Role::getInstance(\filter::int($role));
+            if (is_null($roleObj)) {
                 return false;
             }
-            $rolesObjects[] = $role;
+            $rolesObjects[] = $roleObj;
         }
 
-        // On supprime les rôles actuels
         $this->DB->query("DELETE FROM ASSIGNATION WHERE id_membre = ?", "i", [$this->id]);
 
-        // On ajoute les nouveaux rôles
-        foreach ($rolesObjects as $role) {
-            $role->addMember($this);
+        foreach ($rolesObjects as $roleObj) {
+            $roleObj->addMember($this);
         }
 
         return true;
     }
 
-
     public static function bulkFetch(): array
     {
-        // Retourne un tableau de tous les membres au format JSON, et non sous forme d'objet
-        // Les roles ne sont pas inclus non plus.
-        // Il faut utiliser la méthode fetch() pour obtenir l'objet membre, ainsi que les roles
-
         $DB = new \DB();
-        $result = $DB->select("SELECT * FROM MEMBRE");
-
-        return $result;
+        return $DB->select("SELECT * FROM MEMBRE");
     }
 
-    /**
-     * @return Role[]
-    **/
     public function getRoles(): array
     {
         $result = $this->DB->select("SELECT id_role
@@ -126,14 +117,11 @@ class Member extends BaseModel implements JsonSerializable
     public function toJsonWithRoles() : array
     {
         $data =  $this->toJson();
-
-        // Pour chaque role, on applique la méthode get() pour obtenir le role sous forme de json
         $data["roles"] = [];
 
         foreach ($this->getRoles() as $role) {
             $data["roles"][] = $role->toJson();
         }
-
 
         return $data;
     }
@@ -148,6 +136,3 @@ class Member extends BaseModel implements JsonSerializable
         return $this->toJsonWithRoles();
     }
 }
-
-
-

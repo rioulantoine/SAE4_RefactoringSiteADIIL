@@ -9,29 +9,25 @@ require_once __DIR__ . '/BaseModel.php';
 
 class Event extends BaseModel implements JsonSerializable
 {
-
     public function delete() : void
     {
         $this->DB->query("UPDATE EVENEMENT SET deleted=true WHERE id_evenement = ?", "i", [$this->id]);
     }
 
-    public function update(string $nom, string $description, int $xp, int $places, bool $reductions, float $prix, string $lieu, string $date) : Event
+    public function update(string $nom, int $xp, int $places, float $prix, bool $reductions, string $lieu, string $date) : Event
     {
-        $this->DB->query("UPDATE EVENEMENT SET nom_evenement = ?, xp_evenement = ?, places_evenement = ?, reductions_evenement = ?, prix_evenement = ?, lieu_evenement = ?, date_evenement = ?, description_evenement = ? WHERE id_evenement = ?", "siiidsssi", [$nom, $xp, $places, $reductions, $prix, $lieu, $date, $description, $this->id]);
+        $this->DB->query("UPDATE EVENEMENT SET nom_evenement = ?, xp_evenement = ?, places_evenement = ?, prix_evenement = ?, reductions_evenement = ?, lieu_evenement = ?, date_evenement = ? WHERE id_evenement = ?", "siiidssi", [$nom, $xp, $places, $prix, $reductions, $lieu, $date, $this->id]);
 
         return $this;
     }
 
     public function getImage() : File | null
     {
-        $image = $this->DB->select("SELECT image_evenement FROM EVENEMENT WHERE id_evenement = ?", "i", [$this->id])[0]['image_evenement'];
-        return File::getFile($image);
+        return null;
     }
 
     public function updateImage(File $image) : Event
     {
-        $this->DB->query("UPDATE EVENEMENT SET image_evenement = ? WHERE id_evenement = ?", "si", [$image->getFileName(), $this->id]);
-
         return $this;
     }
 
@@ -48,44 +44,15 @@ class Event extends BaseModel implements JsonSerializable
         return new Event($id);
     }
 
-    public static function create(string $nom, string $description, int $xp, int $places, bool $reductions, float $prix, string $lieu, string $date) : Event
+    public static function create(string $nom, int $xp, int $places, float $prix, bool $reductions, string $lieu, string $date) : Event
     {
         $DB = new \DB();
-        $id = $DB->query("INSERT INTO EVENEMENT (nom_evenement, xp_evenement, places_evenement, reductions_evenement, prix_evenement, lieu_evenement, date_evenement, description_evenement)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)", "siiidsss", [$nom, $xp, $places, $reductions, $prix, $lieu, $date, $description]);
+        
+        $id = $DB->query("INSERT INTO EVENEMENT (nom_evenement, xp_evenement, places_evenement, prix_evenement, reductions_evenement, lieu_evenement, date_evenement)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)", "siiidss", [$nom, $xp, $places, $prix, $reductions, $lieu, $date]);
 
         return new Event($id);
     }
-
-    public static function fetchFiltered(string $search = '', bool $onlyAvailable = false, int $limit = 100) : array
-    {
-        $DB = new \DB();
-        $sql = "SELECT E.*, 
-                (E.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION I WHERE I.id_evenement = E.id_evenement)) as remaining_places
-                FROM EVENEMENT E 
-                WHERE E.deleted = false";
-        
-        $params = [];
-        $types = "";
-
-        if (!empty($search)) {
-            $sql .= " AND E.nom_evenement LIKE ?";
-            $params[] = "%$search%";
-            $types .= "s";
-        }
-
-        if ($onlyAvailable) {
-            // On utilise HAVING car remaining_places est un alias calculé
-            $sql .= " HAVING remaining_places > 0";
-        }
-
-        $sql .= " ORDER BY E.date_evenement ASC LIMIT ?";
-        $params[] = $limit;
-        $types .= "i";
-
-        return $DB->select($sql, $types, $params);
-    }
-
 
     public static function bulkFetch() : array
     {
@@ -97,11 +64,10 @@ class Event extends BaseModel implements JsonSerializable
     public function jsonSerialize(): array
     {
         return $this->DB->select("SELECT * FROM EVENEMENT WHERE id_evenement = ?", "i", [$this->id])[0];
-
     }
 
     public function __toString() : string
     {
-        return json_encode($this);
+        return json_encode($this->jsonSerialize());
     }
 }
