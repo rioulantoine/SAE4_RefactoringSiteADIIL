@@ -52,6 +52,11 @@ header a:hover:not(#accueil){
     background-color: rgb(119, 241, 190);
 }
 
+header a.header-link-active:not(#accueil) {
+    color: rgb(23, 23, 23);
+    background-color: rgb(119, 241, 190);
+}
+
 #accueil {
     height: 40px;
 }

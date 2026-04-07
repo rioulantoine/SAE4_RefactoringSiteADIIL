@@ -18,7 +18,7 @@ if (isset($_SESSION['user']['roles'][0])) {
 $isAdmin = ($page === 'admin' || $page === 'admin_panel');
 
 if (!$isAdmin) {
-    require_once __DIR__ . '/src/View/Template/header.php';
+    require_once __DIR__ . '/src/Controller/ControllerHeader.php';
 }
 
 switch ($page) {
