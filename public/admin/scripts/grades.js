@@ -26,7 +26,7 @@ async function fetchData() {
     // Fetch data
     let grades = [];
     try{
-        grades = await requestGET('/grade.php');
+        grades = await requestGET('/index.php?page=api_grade');
     } catch (error) {
         toast('Erreur lors du chargement des grades.', true);
     }
@@ -40,8 +40,6 @@ async function fetchData() {
  * Saves the grade information.
  *
  * @param {number} id_grade - The ID of the grade to be saved.
- * @returns {Promise<void>} A promise that resolves when the grade is successfully saved.
- * @throws Will alert an error message if the request fails.
  */
 async function saveGrade(id_grade){
 
@@ -58,7 +56,7 @@ async function saveGrade(id_grade){
 
     // Send data
     try {
-        await requestPUT('/grade.php?id=' + id_grade.toString(), data);
+        await requestPUT('/index.php?page=api_grade&id=' + id_grade.toString(), data);
         toast('Grade mis à jour avec succès.');
         selectGrade(id_grade);
     } catch (error) {
@@ -79,7 +77,7 @@ async function deleteGrade(id_grade){
     showLoader();
 
     // Send request
-    await requestDELETE(`/grade.php?id=${id_grade}`);
+    await requestDELETE(`/index.php?page=api_grade&id=${id_grade}`);
     
     /// Update navbar
     refreshNavbar(fetchData, selectGrade);
@@ -93,7 +91,6 @@ async function deleteGrade(id_grade){
  * Loads and displays grade information based on the provided grade ID.
  *
  * @param {number} id_grade - The ID of the grade to be selected.
- * @returns {Promise<void>} A promise that resolves when the grade information has been fetched and displayed.
  */
 async function selectGrade(id_grade, li){
 
@@ -104,10 +101,10 @@ async function selectGrade(id_grade, li){
     showLoader();
 
     // Fetch grade information
-    const grade = await requestGET(`/grade.php?id=${id_grade}`);
+    const grade = await requestGET(`/index.php?page=api_grade&id=${id_grade}`);
 
     // Update displayed information
-    prop_image_grade.src = await getFullFilepath(grade.image_grade, '../ressources/default_images/grade.webp');
+    prop_image_grade.src = await getFullFilepath(grade.image_grade, 'public/admin/ressources/default_images/grade.webp');
     prop_nom_grade.value = grade.nom_grade;
     prop_description_grade_grade.value = grade.description_grade;
     prop_prix_grade.value = grade.prix_grade;
@@ -154,8 +151,8 @@ async function selectGrade(id_grade, li){
 
         // Send data
         try {
-            await requestPATCH('/grade.php?id=' + id_grade.toString(), image);
-            toast('Image mis à jour avec succès.');
+            await requestPATCH('/index.php?page=api_grade&id=' + id_grade.toString(), image);
+            toast('Image mise à jour avec succès.');
         } catch (error) {
             toast(error.message, true);
         }
@@ -181,7 +178,7 @@ new_btn.onclick = async ()=>{
 
     // Create new grade
     try {
-        const id = await requestPOST('/grade.php');
+        const id = await requestPOST('/index.php?page=api_grade');
         refreshNavbar(fetchData, selectGrade, id);
     } catch (error) {
         toast('Erreur lors de la création du grade.', true);

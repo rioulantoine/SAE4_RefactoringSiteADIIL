@@ -62,6 +62,12 @@ switch ($page) {
         require_once __DIR__ . '/src/View/about.php';
         break;
     
+    case 'faq':
+        require_once __DIR__ . '/src/View/Template/header.php';
+        require_once __DIR__ . '/src/View/faq.php';
+        require_once __DIR__ . '/src/View/Template/footer.php';
+        break;
+    
     case 'account':
         require_once __DIR__ . '/src/View/account.php';
         break;
@@ -98,6 +104,47 @@ switch ($page) {
              require_once __DIR__ . "/src/View/admin/panel/unauthorized.php";
         }
         break;
+
+    //routes api du panel admin
+    case 'api_news':
+        require_once __DIR__ . '/src/Controller/api/news.php';
+        break;
+    case 'api_item':
+        require_once __DIR__ . '/src/Controller/api/item.php';
+        break;
+    case 'api_users':
+        require_once __DIR__ . '/src/Controller/api/users.php';
+        break;
+
+    case 'api_userole':
+        require_once __DIR__ . '/src/Controller/api/userole.php';
+        break;
+
+    case 'api_roles':
+        require_once __DIR__ . '/src/Controller/api/role.php';
+        break;
+    case 'api_grade':
+        require_once __DIR__ . '/src/Controller/api/grade.php';
+        break;
+    case 'api_event':
+        require_once __DIR__ . '/src/Controller/api/event.php';
+        break;
+    case 'api_accounting':
+        require_once __DIR__ . '/src/Controller/api/accounting.php';
+        break;
+    case 'api_meeting':
+        require_once __DIR__ . '/src/Controller/api/meeting.php';
+        break;
+    case 'api_purchase':
+        require_once __DIR__ . '/src/Controller/api/purchase.php';
+        break;
+    case 'api_logs':
+        require_once __DIR__ . '/src/Controller/api/logs.php';
+        break;
+
+
+
+
 
     case 'about':
         require_once __DIR__ . '/src/View/about.php';

@@ -1,12 +1,12 @@
 <?php
-session_start();
 use model\File;
 use model\Item;
 
-require_once __DIR__ . $base . 'src/Model/database.php';
-require_once __DIR__ . $base . 'src/Service/tools.php';
-require_once __DIR__ . $base . 'src/Service/filter.php';
-require_once __DIR__ . $base . 'src/Model/api/Item.php';
+require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/tools.php';
+require_once __DIR__ . '/../../Service/filter.php';
+require_once __DIR__ . '/../../Model/api/Item.php';
+require_once __DIR__ . '/../../Model/api/File.php';
 
 ini_set('display_errors', 1);
 
@@ -86,7 +86,9 @@ function update_item() : void
     $name = Filter::string($data['name'], maxLenght: 100);
     $xp = Filter::int($data['xp']);
     $stocks = Filter::int($data['stocks'], min: -100000);
-    $reduction = Filter::bool($data['reduction']);
+    
+    // ATTENTION : Le modèle attend un float/double pour la réduction dans le SQL
+    $reduction = (float)Filter::bool($data['reduction']); 
     $price = Filter::float($data['price']);
     $categorie = Filter::string($data['categorie'], maxLenght: 100);
 

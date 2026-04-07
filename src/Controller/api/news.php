@@ -1,14 +1,14 @@
 <?php
-session_start();
 use model\File;
 use model\News;
 use model\Role;
 
-require_once 'filter.php';
-require_once 'models/News.php';
-require_once 'DB.php';
-require_once 'tools.php';
-require_once 'models/File.php';
+// Nouveaux chemins basés sur ton arborescence exacte
+require_once __DIR__ . '/../../Service/filter.php';
+require_once __DIR__ . '/../../Model/api/News.php';
+require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/tools.php';
+require_once __DIR__ . '/../../Model/api/File.php'; // Idem ici
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
@@ -47,8 +47,6 @@ switch ($methode) {
         break;
 }
 
-
-
 function get_news() : void
 {
     if (isset($_GET['id'])) {
@@ -57,7 +55,7 @@ function get_news() : void
 
         if ($news == null) {
             http_response_code(404);
-            echo json_encode(['error' => 'Role not found']);
+            echo json_encode(['error' => 'News not found']);
             return;
         }
         echo $news;
@@ -81,7 +79,7 @@ function update_news() : void
 
     if ($news == null) {
         http_response_code(404);
-        echo json_encode(['error' => 'Role not found']);
+        echo json_encode(['error' => 'News not found']);
         return;
     }
 
@@ -103,7 +101,7 @@ function update_image() : void
 
     if ($news == null) {
         http_response_code(404);
-        echo json_encode(['error' => 'Role not found']);
+        echo json_encode(['error' => 'News not found']);
         return;
     }
 
@@ -135,4 +133,3 @@ function delete_news() : void
     http_response_code(200);
     echo json_encode(['message' => 'News deleted']);
 }
-

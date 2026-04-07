@@ -10,8 +10,8 @@ const toggle_grades =  document.getElementById('toggle_grades');
 const toggle_events = document.getElementById('toggle_events');
 const userSearch = document.getElementById('userSearch');
 
-// Values
-const default_data = await requestGET('/purchase.php');
+// Values (Correction de la route API)
+const default_data = await requestGET('/index.php?page=api_purchase');
 default_data.forEach(item => {
     item.user = item.nom_membre.toUpperCase() + ' ' + item.prenom_membre;
 });

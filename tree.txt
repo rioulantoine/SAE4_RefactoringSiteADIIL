@@ -1,0 +1,89 @@
+Structure du dossier
+Le numéro de série du volume est D4BA-DD94
+C:\USERS\AARON\DESKTOP\XAMPP\HTDOCS\SAE4_REFACTORINGSITEADIIL\SRC
++---Controller
+¦   ¦   cart_add.php
+¦   ¦   
+¦   +---api
+¦           accounting.php
+¦           add_media.php
+¦           cart.php
+¦           delete_account.php
+¦           delete_media.php
+¦           event.php
+¦           grade.php
+¦           item.php
+¦           logout.php
+¦           logs.php
+¦           meeting.php
+¦           news.php
+¦           purchase.php
+¦           role.php
+¦           userole.php
+¦           users.php
+¦           
++---Model
+¦   ¦   cart_class.php
+¦   ¦   database.php
+¦   ¦   
+¦   +---api
+¦           Accounting.php
+¦           BaseModel.php
+¦           Event.php
+¦           File.php
+¦           Grade.php
+¦           Item.php
+¦           Meeting.php
+¦           Member.php
+¦           News.php
+¦           Role.php
+¦           
++---Service
+¦       files_save.php
+¦       filter.php
+¦       permissions.php
+¦       tools.php
+¦       
++---View
+    ¦   about.php
+    ¦   account.php
+    ¦   accueil.php
+    ¦   agenda.php
+    ¦   cart.php
+    ¦   events.php
+    ¦   faq.php
+    ¦   grade.php
+    ¦   grade_subscription.php
+    ¦   login.php
+    ¦   news.php
+    ¦   news_details.php
+    ¦   order.php
+    ¦   shop.php
+    ¦   signin.php
+    ¦   
+    +---admin
+    ¦   ¦   admin.php
+    ¦   ¦   
+    ¦   +---panel
+    ¦           actualites.php
+    ¦           boutique.php
+    ¦           chat.php
+    ¦           comptabilite.php
+    ¦           evenements.php
+    ¦           grades.php
+    ¦           history.php
+    ¦           logs.php
+    ¦           reunions.php
+    ¦           roles.php
+    ¦           unauthorized.php
+    ¦           utilisateurs.php
+    ¦           
+    +---api
+    ¦       event_details.php
+    ¦       event_subscription.php
+    ¦       my_gallery.php
+    ¦       
+    +---Template
+            footer.php
+            header.php
+            

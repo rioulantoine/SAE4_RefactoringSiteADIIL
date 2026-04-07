@@ -29,7 +29,7 @@ async function fetchData() {
     // Fetch data
     let articles = [];
     try{
-        articles = await requestGET('/item.php');
+        articles = await requestGET('/index.php?page=api_item');
     } catch (error) {
         toast('Erreur lors du chargement des articles.', true);
     }
@@ -62,7 +62,7 @@ async function saveArticle(id_article){
 
     // Send data
     try {
-        await requestPUT('/item.php?id=' + id_article.toString(), data);
+        await requestPUT('/index.php?page=api_item&id=' + id_article.toString(), data);
         toast('Article mis à jour avec succès.');
         selectArticle(id_article);
     } catch (error) {
@@ -83,7 +83,7 @@ async function deleteArticle(id_article){
     showLoader();
 
     // Send request
-    await requestDELETE(`/item.php?id=${id_article}`);
+    await requestDELETE(`/index.php?page=api_item&id=${id_article}`);
     
     /// Update navbar
     refreshNavbar(fetchData, selectArticle);
@@ -108,7 +108,7 @@ async function selectArticle(id_article, li){
     showLoader();
 
     // Fetch grade information
-    const article = await requestGET(`/item.php?id=${id_article}`);
+    const article = await requestGET(`/index.php?page=api_item&id=${id_article}`);
 
     // Update displayed information
     prop_image.src = await getFullFilepath(article.image_article, '../ressources/default_images/boutique.png');
@@ -160,7 +160,7 @@ async function selectArticle(id_article, li){
 
         // Send data
         try {
-            await requestPATCH('/item.php?id=' + id_article.toString(), image);
+            await requestPATCH('/index.php?page=api_item&id=' + id_article.toString(), image);
             toast('Image mis à jour avec succès.');
         } catch (error) {
             toast(error.message, true);
@@ -187,7 +187,7 @@ new_btn.onclick = async ()=>{
 
     // Create new article
     try {
-        const id = await requestPOST('/item.php');
+        const id = await requestPOST('/index.php?page=api_item');
         refreshNavbar(fetchData, selectArticle, id);
     } catch (error) {
         toast("Erreur lors de la création de l'article", true);

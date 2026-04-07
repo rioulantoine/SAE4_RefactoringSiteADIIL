@@ -291,8 +291,12 @@
         </div>
 
         <div class="saves-buttons">
-            <button class="btn-transparent btn-blue" id="save_btn"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
-            <button class="btn-transparent btn-red" id="delete_btn"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+            <button class="btn-transparent btn-blue" id="save_btn">
+                <img src="<?php echo $base; ?>public/admin/ressources/save.svg" alt="Sauvegarde">Sauvegarder
+            </button>
+            <button class="btn-transparent btn-red" id="delete_btn">
+                <img src="<?php echo $base; ?>public/admin/ressources/delete.svg" alt="Supprimer">Supprimer
+            </button>
         </div>
 
         </div>

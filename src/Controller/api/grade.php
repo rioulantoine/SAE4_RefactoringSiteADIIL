@@ -1,13 +1,13 @@
 <?php
-session_start();
 use model\File;
 use model\Grade;
 
-require_once 'DB.php';
-require_once 'tools.php';
-require_once 'filter.php';
-require_once 'models/Grade.php';
-require_once 'filter.php';
+// Chemins corrigés
+require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/tools.php';
+require_once __DIR__ . '/../../Service/filter.php';
+require_once __DIR__ . '/../../Model/api/Grade.php';
+require_once __DIR__ . '/../../Model/api/File.php'; // Ajout nécessaire pour la fonction update_image
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
@@ -165,4 +165,3 @@ function delete_grade() : void
     http_response_code(200);
     echo json_encode(['message' => 'Grade deleted']);
 }
-
