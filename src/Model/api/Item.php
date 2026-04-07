@@ -9,18 +9,21 @@ require_once __DIR__ . '/File.php';
 
 class Item extends BaseModel implements JsonSerializable
 {
-    public static function create(string $name, int $xp, int $stocks, float $reduction, float $price, File | null $image, string $categorie_article) : Item
+    public static function create(string $name, int $xp, int $stocks, float $reduction, float $price, File | null $image) : Item
     {
         $DB = new \DB();
 
-        $id = $DB->query("INSERT INTO ARTICLE (nom_article, xp_article, stock_article, reduction_article, prix_article, image_article, categorie_article)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)", "siiidss", [$name, $xp, $stocks, $reduction, $price, $image, $categorie_article]);
+        $imagePath = $image !== null ? $image->getFileName() : "default.png";
+
+        $id = $DB->query("INSERT INTO ARTICLE (nom_article, xp_article, stock_article, reduction_article, prix_article, image_article)
+                    VALUES (?, ?, ?, ?, ?, ?)", "siiids", [$name, $xp, $stocks, $reduction, $price, $imagePath]);
+        
         return new Item($id);
     }
 
-    public function update(string $name, int $xp, int $stocks, float $reduction, float $price, string $categorie_article) : Item
+    public function update(string $name, int $xp, int $stocks, float $reduction, float $price) : Item
     {
-        $this->DB->query("UPDATE ARTICLE SET nom_article = ?, xp_article = ?, stock_article = ?, reduction_article = ?, prix_article = ?, categorie_article = ? WHERE id_article = ?", "siiidsi", [$name, $xp, $stocks, $reduction, $price, $categorie_article, $this->id]);
+        $this->DB->query("UPDATE ARTICLE SET nom_article = ?, xp_article = ?, stock_article = ?, reduction_article = ?, prix_article = ? WHERE id_article = ?", "siiidi", [$name, $xp, $stocks, $reduction, $price, $this->id]);
 
         return $this;
     }

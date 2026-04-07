@@ -8,17 +8,11 @@ $base = $_ENV['BASE_URL'] ?? '/';
 session_start();
 $page = $_GET['page'] ?? 'accueil';
 
-
-/*$role = null;
-if (isset($_SESSION['user']['roles'][0])) {
-    $role = get_nom_role($_SESSION['user']['roles'][0]);
-}*/
-
-
-// Router les pages
 $isAdmin = ($page === 'admin' || $page === 'admin_panel');
 
-if (!$isAdmin) {
+$isApi = str_starts_with($page, 'api_') || in_array($page, ['logout', 'item.php', 'cart.php', 'add_media', 'delete_media']);
+
+if (!$isAdmin && !$isApi) {
     require_once __DIR__ . '/src/Controller/ControllerHeader.php';
 }
 
@@ -34,6 +28,7 @@ switch ($page) {
     case 'event_details':
         require_once __DIR__ . '/src/Controller/ControllerEventDetails.php';
         break;
+        
     case 'event_subscription':
         require_once __DIR__ . '/src/Controller/ControllerEventSubscription.php';
         break;
@@ -80,16 +75,14 @@ switch ($page) {
         require_once __DIR__ . '/src/View/grade.php';
         break;
 
-    case 'grade_subscription':
-        require_once __DIR__ . '/src/View/grade_subscription.php';
+    case 'mentions-legales':
+        require_once __DIR__ . '/src/View/mentions_legales.php';
         break;
 
     case 'admin':
         require_once __DIR__ . '/src/View/admin/admin.php';
         break;
-    case 'mentions-legales':
-        require_once __DIR__ . '/src/View/mentions_legales.php';
-        break;
+
     case 'admin_panel':
         $panel = $_GET['panel'] ?? 'chat';
         $validPanels = [
@@ -115,11 +108,9 @@ switch ($page) {
     case 'api_users':
         require_once __DIR__ . '/src/Controller/api/users.php';
         break;
-
     case 'api_userole':
         require_once __DIR__ . '/src/Controller/api/userole.php';
         break;
-
     case 'api_roles':
         require_once __DIR__ . '/src/Controller/api/role.php';
         break;
@@ -140,14 +131,6 @@ switch ($page) {
         break;
     case 'api_logs':
         require_once __DIR__ . '/src/Controller/api/logs.php';
-        break;
-
-
-
-
-
-    case 'about':
-        require_once __DIR__ . '/src/View/about.php';
         break;
 
     case 'login':
@@ -181,6 +164,7 @@ switch ($page) {
     case 'my_gallery':
         require_once __DIR__ . '/src/Controller/ControllerMyGallery.php';
         break;
+        
     case 'delete_media':
         require_once __DIR__ . '/src/Controller/api/delete_media.php';
         break;
@@ -191,8 +175,7 @@ switch ($page) {
         break;
 }
 
-if (!$isAdmin) {
+if (!$isAdmin && !$isApi) {
     require_once __DIR__ . '/src/View/Template/footer.php';
 }
-
 ?>
