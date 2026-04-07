@@ -1,86 +1,119 @@
 <?php
 
+require_once __DIR__ . '/../Model/api/Event.php';
 
-
+use model\Event;
 
 $db = new DB();
-$isLoggedIn = isset($_SESSION["userid"]);
-$show = 5;
+$isLoggedIn = isset($_SESSION['userid']);
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show']) && is_numeric($_GET['show'])) {
-    $show = (int) $_GET['show'];
-}
+$show = isset($_GET['show']) && is_numeric($_GET['show']) ? (int) $_GET['show'] : 5;
+$search = $_GET['search'] ?? '';
+$available = isset($_GET['available']);
 
-
-
-$date = getdate();
-$sql_date = $date["year"]."-".$date["mon"]."-".$date["mday"];
+$currentDate = new DateTime(date('Y-m-d'));
 $joursFr = [0 => 'Dimanche', 1 => 'Lundi', 2 => 'Mardi', 3 => 'Mercredi', 4 => 'Jeudi', 5 => 'Vendredi', 6 => 'Samedi'];
 $moisFr = [1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril', 5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août', 9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'];
-$current_date = new DateTime(date("Y-m-d"));
 
-$events_to_display = $db->select(
-    "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement >= ? AND deleted = false ORDER BY date_evenement ASC;",
-    "s",
-    [$sql_date]
-);
-$passed_events = $db->select(
-    "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement < ? AND deleted = false ORDER BY date_evenement ASC LIMIT ?;",
-    "si",
-    [$sql_date, $show]
-);
+$events = Event::fetchFiltered($search, $available, 1000);
 
-$events_to_display = array_merge($events_to_display, $passed_events);
+usort($events, function ($a, $b) {
+    return strtotime($b['date_evenement']) <=> strtotime($a['date_evenement']);
+});
 
+if (empty($search)) {
+    $upcomingEvents = [];
+    $passedEvents = [];
 
-$closest_event_id = "";
+    foreach ($events as $event) {
+        $eventDate = new DateTime(substr($event['date_evenement'], 0, 10));
+        if ($eventDate < $currentDate) {
+            $passedEvents[] = $event;
+        } else {
+            $upcomingEvents[] = $event;
+        }
+    }
+
+    $events = array_merge($upcomingEvents, array_slice($passedEvents, 0, $show));
+}
+
+$closestUpcomingEventId = null;
+$closestUpcomingTimestamp = null;
+foreach ($events as $event) {
+    $eventDate = new DateTime(substr($event['date_evenement'], 0, 10));
+    if ($eventDate >= $currentDate) {
+        $timestamp = strtotime($event['date_evenement']);
+        if ($closestUpcomingTimestamp === null || $timestamp < $closestUpcomingTimestamp) {
+            $closestUpcomingTimestamp = $timestamp;
+            $closestUpcomingEventId = (int) $event['id_evenement'];
+        }
+    }
+}
 
 $events_ready = [];
-foreach ($events_to_display as $event) {
-    $eventid = $event["id_evenement"];
-    $event_date = substr($event['date_evenement'], 0, 10);
-    $event_date_info = getdate(strtotime($event_date));
-    $event_date_obj = new DateTime($event_date);
-    $other_classes = "";
-    $isPassed = false;
-    $date_pin_class = "";
-    $date_pin_label = "";
-    $closest_event_id = "";
+foreach ($events as $event) {
+    $eventId = (int) $event['id_evenement'];
+    $eventDateRaw = substr($event['date_evenement'], 0, 10);
+    $eventDateInfo = getdate(strtotime($eventDateRaw));
+    $eventDateObj = new DateTime($eventDateRaw);
+    $isPassed = $eventDateObj < $currentDate;
 
-    if ($event_date_obj < $current_date) {
-        $date_pin_class = "passed";
-        $date_pin_label = "Passé";
-        $other_classes = 'passed';
-        $isPassed = true;
-        
-    } elseif ($event_date_obj == $current_date) {
-        $date_pin_class = "today";
-        $date_pin_label = "Aujourd'hui";
-        $closest_event_id = "closest-event";
+    if ($isPassed) {
+        $datePinClass = 'passed';
+        $datePinLabel = 'Passé';
+        $otherClasses = 'passed';
+    } elseif ($eventDateObj == $currentDate) {
+        $datePinClass = 'today';
+        $datePinLabel = "Aujourd'hui";
+        $otherClasses = '';
     } else {
-        $date_pin_class = "upcoming";
-        $date_pin_label = "A venir";
-        $closest_event_id = "closest-event";
-        
+        $datePinClass = 'upcoming';
+        $datePinLabel = 'À venir';
+        $otherClasses = '';
+    }
+
+    $remaining = (int)$event['places_evenement'] - (int)($db->select(
+        'SELECT COUNT(*) as count FROM INSCRIPTION WHERE id_evenement = ?',
+        'i',
+        [$eventId]
+    )[0]['count']);
+
+    if ($isPassed) {
+        $subscriptionClass = 'event-full';
+        $subscriptionLabel = 'Passé';
+    } elseif ($remaining <= 0) {
+        $subscriptionClass = 'event-full';
+        $subscriptionLabel = 'Complet';
+    } else {
+        $subscriptionClass = 'event-not-subscribed hover_effect';
+        $subscriptionLabel = "S'inscrire";
+    }
+
+    if ($isLoggedIn && !$isPassed) {
+        $isSubscribed = !empty($db->select(
+            'SELECT id_membre FROM INSCRIPTION WHERE id_membre = ? AND id_evenement = ?',
+            'ii',
+            [$_SESSION['userid'], $eventId]
+        ));
+
+        if ($isSubscribed) {
+            $subscriptionClass = 'event-subscribed';
+            $subscriptionLabel = 'Inscrit';
+        }
     }
 
     $events_ready[] = [
-        'id_evenement' => $eventid,
+        'id_evenement' => $eventId,
         'nom_evenement' => $event['nom_evenement'],
         'lieu_evenement' => $event['lieu_evenement'],
-        'date_affichage' => ucwords($joursFr[$event_date_info['wday']].' '.$event_date_info["mday"].' '.$moisFr[$event_date_info['mon']].' '.$event_date_info["year"]),
-        'date_pin_class' => $date_pin_class,
-        'date_pin_label' => $date_pin_label,
-        'other_classes' => $other_classes,
-        'closest_event_id' => $closest_event_id,
-        'isPassed' => $isPassed,
-        'isPlaceDisponible' => $db->select(
-            "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
-            "i",
-            [$eventid])[0]['isPlaceDisponible']
+        'date_affichage' => ucwords($joursFr[$eventDateInfo['wday']] . ' ' . $eventDateInfo['mday'] . ' ' . $moisFr[$eventDateInfo['mon']] . ' ' . $eventDateInfo['year']),
+        'date_pin_class' => $datePinClass,
+        'date_pin_label' => $datePinLabel,
+        'other_classes' => $otherClasses,
+        'closest_event_id' => ($closestUpcomingEventId !== null && $eventId === $closestUpcomingEventId) ? 'closest-event' : '',
+        'subscription_class' => $subscriptionClass,
+        'subscription_label' => $subscriptionLabel,
     ];
 }
-
-
 
 require_once __DIR__ . '/../View/events.php';
