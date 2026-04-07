@@ -51,6 +51,7 @@ C:\USERS\AARON\DESKTOP\XAMPP\HTDOCS\SAE4_REFACTORINGSITEADIIL\SRC
     ¦   agenda.php
     ¦   cart.php
     ¦   events.php
+    ¦   faq.php
     ¦   grade.php
     ¦   grade_subscription.php
     ¦   login.php
