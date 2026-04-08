@@ -21,14 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $db = new DB();
     if(isset($_POST["price"], $_POST["eventid"])){
-        if (isset($_POST['remember_payment']) && $_POST['remember_payment'] === '1' && isset($_POST['numero_carte'], $_POST['expiration'])) {
+        $mode_paiement = $_POST['mode_paiement'] ?? 'carte_credit';
+
+        if ($mode_paiement === 'carte_credit' && isset($_POST['remember_payment']) && $_POST['remember_payment'] === '1' && isset($_POST['numero_carte'], $_POST['expiration'])) {
             $_SESSION['saved_payment_info_event'] = [
                 'numero_carte' => $_POST['numero_carte'],
                 'expiration' => $_POST['expiration'],
             ];
         }
 
-        createEventSubscription($db, $userid, $eventid, $_POST["price"]);
+        createEventSubscription($db, $userid, $eventid, $_POST["price"], $mode_paiement);
         $xp = getEventSubscriptionXp($db, $eventid)[0]['xp_evenement'];
         addEventXp($db, $xp, $userid);
         header("Location: $base/events");

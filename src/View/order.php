@@ -80,6 +80,7 @@
         <select id="mode_paiement" name="mode_paiement" required>
             <option value="carte_credit">Carte de Crédit</option>
             <option value="paypal">PayPal</option>
+            <option value="especes">Espèces</option>
         </select><br><br>
         <div id="carte_credit" class="mode_paiement_fields">
             <form method="POST" action="<?php echo $base; ?>order">
@@ -111,6 +112,18 @@
                 <button type="submit" id="finalise-order-button">Valider la commande</button>
             </form>
         </div>
+        <div id="especes" class="mode_paiement_fields" style="display: none;">
+            <form method="POST" action="<?php echo $base; ?>order">
+                <input type="hidden" name="mode_paiement" value="especes">
+
+                <p>
+                    Vous avez choisi le paiement en espèces.<br>
+                    Le paiement devra être effectué directement auprès d'un membre du BDE.
+                </p><br><br>
+                    
+                <button type="submit" id="finalise-order-button">Valider la commande</button>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -120,9 +133,15 @@
         if (modePaiement === 'carte_credit') {
             document.getElementById('carte_credit').style.display = 'block';
             document.getElementById('paypal').style.display = 'none';
+            document.getElementById('especes').style.display = 'none';
         } else if (modePaiement === 'paypal') {
             document.getElementById('carte_credit').style.display = 'none';
             document.getElementById('paypal').style.display = 'block';
+            document.getElementById('especes').style.display = 'none';
+        } else if (modePaiement === 'especes') {
+            document.getElementById('carte_credit').style.display = 'none';
+            document.getElementById('paypal').style.display = 'none';
+            document.getElementById('especes').style.display = 'block';
         }
     });
 </script>

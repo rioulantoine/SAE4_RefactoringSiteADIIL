@@ -31,13 +31,13 @@ function getEventSubscriptionXp($db, $eventid)
     );
 }
 
-function createEventSubscription($db, $userid, $eventid, $price)
+function createEventSubscription($db, $userid, $eventid, $price, $paymentMode = 'carte_credit')
 {
     $db->query(
         "INSERT INTO `INSCRIPTION` (`id_membre`, `id_evenement`, `date_inscription`, `paiement_inscription`, `prix_inscription`)
-        VALUES (?, ?, NOW(), 'WEB', ?);",
-        "iid",
-        [$userid, $eventid, $price]
+        VALUES (?, ?, NOW(), ?, ?);",
+        "iiss",
+        [$userid, $eventid, $paymentMode, $price]
     );
 }
 
