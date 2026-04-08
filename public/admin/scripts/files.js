@@ -11,7 +11,7 @@ const BASE_URL = ((window.base || (window.parent && window.parent.base) || '')).
 
 export async function getFullFilepath(filename, defaultFile) {
     // Vérifiez si le filename est invalide (vide, null ou "N/A")
-    if (!filename || filename === "N/A") {
+    if (!filename || filename === "N/A" || filename === "default.png") {
         return defaultFile;
     }
 
@@ -74,5 +74,6 @@ export function getFileBucketUrl(filename) {
         return filename;
     }
 
-    return BASE_URL ? window.location.origin + BASE_URL + 'files/' + filename : window.location.origin + '/files/' + filename;
+    const normalizedBase = BASE_URL ? (BASE_URL.endsWith('/') ? BASE_URL : BASE_URL + '/') : '/';
+    return window.location.origin + normalizedBase + 'files/' + filename;
 }

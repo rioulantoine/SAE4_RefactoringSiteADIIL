@@ -1,18 +1,19 @@
 <?php
 namespace model;
 
-use Filter;
 use model\Role;
 use JsonSerializable;
 
 require_once __DIR__ . '/BaseModel.php';
 require_once __DIR__ . '/Role.php';
+require_once __DIR__ . '/File.php';
 
 class Member extends BaseModel implements JsonSerializable
 {
     public function delete() : void
     {
-        $this->getProfilePic()?->deleteFile();
+        $pp = $this->getProfilePic();
+        if ($pp) $pp->deleteFile();
 
         $this->DB->query("DELETE FROM ASSIGNATION WHERE id_membre = ?", "i", [$this->id]);
         $this->DB->query("CALL suppressionCompte(?)", "i", [$this->id]);
@@ -43,12 +44,12 @@ class Member extends BaseModel implements JsonSerializable
         return new Member($id);
     }
 
-    public function toJson(): array
+    public function getData(): array
     {
         $result = $this->DB->select("SELECT id_membre, nom_membre, prenom_membre, email_membre, xp_membre, discord_token_membre, pp_membre, tp_membre, (SELECT COUNT(*) FROM ASSIGNATION WHERE MEMBRE.id_membre = ASSIGNATION.id_membre) as nb_roles
                                       FROM MEMBRE WHERE id_membre = ?", "i", [$this->id]);
 
-        return $result[0];
+        return !empty($result) ? $result[0] : [];
     }
 
     public static function getInstance($id) : ?Member
@@ -65,9 +66,11 @@ class Member extends BaseModel implements JsonSerializable
 
     public function getProfilePic(): File | null
     {
-        $pp = $this->toJson()["pp_membre"];
+        $data = $this->getData();
+        if (empty($data)) return null;
+        $pp = $data["pp_membre"];
         
-        if (str_starts_with($pp, 'http')) {
+        if (!$pp || str_starts_with($pp, 'http') || $pp === 'default.png') {
             return null;
         }
         
@@ -76,19 +79,13 @@ class Member extends BaseModel implements JsonSerializable
 
     public function setRoles(array $roles): bool
     {
-        $rolesObjects = [];
-        foreach ($roles as $role) {
-            $roleObj = Role::getInstance(\filter::int($role));
-            if (is_null($roleObj)) {
-                return false;
-            }
-            $rolesObjects[] = $roleObj;
-        }
-
         $this->DB->query("DELETE FROM ASSIGNATION WHERE id_membre = ?", "i", [$this->id]);
 
-        foreach ($rolesObjects as $roleObj) {
-            $roleObj->addMember($this);
+        foreach ($roles as $roleId) {
+            $roleObj = Role::getInstance((int)$roleId);
+            if ($roleObj) {
+                $this->DB->query("INSERT INTO ASSIGNATION (id_membre, id_role) VALUES (?, ?)", "ii", [$this->id, $roleObj->id]);
+            }
         }
 
         return true;
@@ -102,37 +99,30 @@ class Member extends BaseModel implements JsonSerializable
 
     public function getRoles(): array
     {
-        $result = $this->DB->select("SELECT id_role
-                               FROM ASSIGNATION
-                               WHERE ASSIGNATION.id_membre = ?", "i", [$this->id]);
+        $result = $this->DB->select("SELECT id_role FROM ASSIGNATION WHERE id_membre = ?", "i", [$this->id]);
 
         $roles = [];
         foreach ($result as $role) {
-            $roles[] = Role::getInstance($role["id_role"]);
+            $roleObj = Role::getInstance($role["id_role"]);
+            if ($roleObj) {
+                $roles[] = $roleObj->jsonSerialize();
+            }
         }
 
         return $roles;
     }
 
-    public function toJsonWithRoles() : array
+    public function jsonSerialize(): array
     {
-        $data =  $this->toJson();
-        $data["roles"] = [];
-
-        foreach ($this->getRoles() as $role) {
-            $data["roles"][] = $role->toJson();
-        }
+        $data = $this->getData();
+        if (empty($data)) return [];
+        $data["roles"] = $this->getRoles();
 
         return $data;
     }
 
     public function __toString()
     {
-        return json_encode($this->toJsonWithRoles());
-    }
-
-    public function jsonSerialize(): array
-    {
-        return $this->toJsonWithRoles();
+        return json_encode($this->jsonSerialize());
     }
 }

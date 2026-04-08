@@ -1,5 +1,5 @@
 import { refreshNavbar } from "./navbar.js";
-import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from './ajax.js';
+import { requestGET, requestPUT, requestDELETE, requestPOST } from './ajax.js';
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
@@ -16,130 +16,103 @@ const delete_btn = document.getElementById('delete_btn');
 const new_btn = document.getElementById('new_btn');
 
 async function fetchData() {
-
     let actualites = [];
-    try{
+    try {
+        // On retire BASE_URL ici car ajax.js s'en occupe
         actualites = await requestGET('/index.php?page=api_news');
     } catch (error) {
         toast('Erreur lors du chargement des actualites.', true);
     }
-
-    return actualites.map(actualite => ({label: actualite.titre_actualite, id: actualite.id_actualite}));
-
+    return actualites.map(a => ({label: a.titre_actualite, id: a.id_actualite}));
 }
 
 async function saveNews(id_news){
-
     showLoader();
-
     const data = {
         name: prop_name.value,
         description: prop_content.value,
         date: prop_date.value
     };
-
     try {
         await requestPUT('/index.php?page=api_news&id=' + id_news.toString(), data);
-        toast('Actualité mis à jour avec succès.');
+        toast('Actualité mise à jour avec succès.');
         selectNews(id_news);
     } catch (error) {
         toast(error.message, true);
     }
-
     hideLoader();
-
 }
 
 async function deleteNews(id_news){
-
     showLoader();
-
-    await requestDELETE(`/index.php?page=api_news&id=${id_news}`);
-    
-    refreshNavbar(fetchData, selectNews);
-
-    toast('Actualité supprimé avec succès.');
-
+    try {
+        await requestDELETE(`/index.php?page=api_news&id=${id_news}`);
+        refreshNavbar(fetchData, selectNews);
+        toast('Actualité supprimée.');
+    } catch (error) {
+        toast(error.message, true);
+    }
+    hideLoader();
 }
 
 async function selectNews(id_news, li){
-
     showPropertieSkeleton();
-
     showLoader();
+    try {
+        const news = await requestGET(`/index.php?page=api_news&id=${id_news}`);
+        const baseUrl = (window.base || window.parent?.base || '').replace(/\/$/, '');
+        const defaultImagePath = window.location.origin + baseUrl + '/public/admin/ressources/default_images/actualite.png';
 
-    const news = await requestGET(`/index.php?page=api_news&id=${id_news}`);
-
-    if (news.image_actualite) {
-        prop_image.src = await getFullFilepath(news.image_actualite, 'none');
-    } else {
-        prop_image.hidden = true;
-    }
-    prop_name.value = news.titre_actualite;
-    prop_date.value = news.date_actualite.split(" ")[0];
-    prop_content.value = news.contenu_actualite;
-
-    save_btn.onclick = ()=>{
-        saveNews(id_news);
-    };
-
-    delete_btn.onclick = ()=>{
-        swal({
-            title: "Êtes vous sûr ?",
-            text: "Cette action est définitive",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-                deleteNews(id_news);
-            }
-          });
-    };
-
-    prop_name.onkeyup = ()=>{
-        li.textContent = prop_name.value;
-    };
-
-    document.getElementById('prop_img_edit').onclick = async ()=>{
+        prop_image.src = await getFullFilepath(news.image_actualite, defaultImagePath);
+        prop_image.hidden = false;
         
-        const image = await openFileDialog();
+        prop_name.value = news.titre_actualite;
+        prop_date.value = news.date_actualite ? news.date_actualite.split(" ")[0] : "";
+        prop_content.value = news.contenu_actualite;
 
-        const url = URL.createObjectURL(image);
-        prop_image.src = url;
+        save_btn.onclick = () => saveNews(id_news);
+        delete_btn.onclick = () => {
+            swal({ title: "Sûr ?", text: "Définitif", icon: "warning", buttons: true, dangerMode: true })
+            .then((willDelete) => { if (willDelete) deleteNews(id_news); });
+        };
+        prop_name.onkeyup = () => { if(li) li.textContent = prop_name.value; };
 
-        showLoader();
-
-        try {
-            await requestPATCH('/index.php?page=api_news&id=' + id_news.toString(), image);
-            toast('Image mis à jour avec succès.');
-        } catch (error) {
-            toast(error.message, true);
-        }
-
-        hideLoader();
-
-    };
-
+        document.getElementById('prop_img_edit').onclick = async () => {
+            const image = await openFileDialog();
+            prop_image.src = URL.createObjectURL(image);
+            showLoader();
+            const formData = new FormData();
+            formData.append('file', image);
+            try {
+                await requestPOST('/index.php?page=api_news&action=update_image&id=' + id_news, formData);
+                toast('Image mise à jour.');
+            } catch (error) { toast(error.message, true); }
+            hideLoader();
+        };
+    } catch (e) { toast("Erreur sélection"); }
     hideLoader();
-
     hidePropertieSkeleton();
-    
 }
 
-new_btn.onclick = async ()=>{
-
+new_btn.onclick = async () => {
     showLoader();
-
     try {
-        const { id_actualite } = await requestPOST('/index.php?page=api_news');
-        refreshNavbar(fetchData, selectNews, id_actualite);
+        const res = await requestPOST('/index.php?page=api_news');
+        let createdId = null;
+
+        if (Array.isArray(res) && res.length > 0) {
+            createdId = res.reduce((highest, item) => {
+                return item.id_actualite > highest ? item.id_actualite : highest;
+            }, 0);
+        } else {
+            createdId = res?.id_actualite ?? null;
+        }
+
+        refreshNavbar(fetchData, selectNews, createdId);
     } catch (error) {
-        toast("Erreur lors de la création de l'actualtié", true);
+        toast("Erreur lors de la création", true);
         hideLoader();
     }
-
 };
 
 refreshNavbar(fetchData, selectNews);
