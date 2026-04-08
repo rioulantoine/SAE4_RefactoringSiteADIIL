@@ -142,6 +142,43 @@ footer {
   grid-area: text;
 }
 
+.delete-icon {
+  position: absolute;
+
+  right: 2px;
+  bottom: 5.8px;
+
+  padding: 6px 3px 1px 5px;
+  border-bottom-right-radius: 13px;
+  border-top-left-radius: 13px;
+
+  text-align: right;
+  background-color: #a12727;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+
+  opacity: 50%;
+  transition: all 0.2s ease;
+}
+
+.delete-icon:hover {
+  opacity: 80% !important;
+  transform: scale(1.02) !important;
+}
+
+.delete-icon img {
+  object-fit: cover;
+
+  width: 30px !important;
+  height: 30px !important;
+
+  border-radius: 0;
+  border: none;
+  cursor: crosshair;
+}
+.media-container {
+  position: relative;
+}
+
 @media (max-width: 1200px) {
   .event-details {
     grid-template-columns: 1fr;

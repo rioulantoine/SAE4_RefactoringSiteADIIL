@@ -112,7 +112,7 @@
         <div class="general-medias">
             <?php if (!tools::hasPermission('p_evenement')){ ?>
                 <?php foreach($generalMedias as $media => $img):?>
-                <img src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
+                <img class="image-collection" src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
                 <?php endforeach;?>
             <!-- suppression d'un image dans la galerie -->
             <?php }else{ ?>
