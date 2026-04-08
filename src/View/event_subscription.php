@@ -130,8 +130,6 @@
     });
 </script>
 
-
-
-
+<script src="<?php echo $base; ?>public/scripts/payment_validation.js"></script>
 </body>
 </html>
