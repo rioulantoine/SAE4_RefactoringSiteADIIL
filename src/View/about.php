@@ -72,6 +72,18 @@
         <img src="<?php echo $base; ?>public/assets/photo_julien.png" alt="Photo de Julien Dauvergne" />
     </div>
 
+    <div class="eligibilite-bloc">
+        <h2 class='titre_section_apropos'>Conditions d'éligibilité</h2>
+        <p>Pour devenir membre du BDE ADIIL, il faut être étudiant au département informatique de l'IUT de Laval. Nous encourageons tous les étudiants à rejoindre notre équipe, quelle que soit leur année d'étude ou leur expérience. Nous valorisons la diversité des profils et des idées, car c'est ce qui fait la richesse de notre association.</p>
+    </div>
+
+    <div class="eligibilite-bloc">
+        <h2 class='titre_section_apropos'>Conditions d'adhésion</h2>
+        <p>
+            Pour adhérer au BDE, vous devez simplement remplir un formulaire d'inscription disponible dans notre bureau . L'adhésion est ouverte à tous les étudiants du département informatique, et nous encourageons vivement la participation de chacun. En devenant membre, vous aurez l'opportunité de contribuer à l'organisation d'événements, de partager vos idées et de faire partie d'une communauté dynamique.
+        </p>
+    </div>
+
 </section>
 
 
