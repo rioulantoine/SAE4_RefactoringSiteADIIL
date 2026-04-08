@@ -6,9 +6,12 @@ use model\Event;
 
 $db = new DB();
 $isLoggedIn = isset($_SESSION['userid']);
+$show = 5;
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show']) && is_numeric($_GET['show'])) {
+    $show = (int) $_GET['show'];
+}
 
-$show = isset($_GET['show']) && is_numeric($_GET['show']) ? (int) $_GET['show'] : 5;
-$search = $_GET['search'] ?? '';
+    $search = $_GET['search'] ?? '';
 $available = isset($_GET['available']);
 
 $currentDate = new DateTime(date('Y-m-d'));
@@ -45,14 +48,14 @@ foreach ($events as $event) {
         $timestamp = strtotime($event['date_evenement']);
         if ($closestUpcomingTimestamp === null || $timestamp < $closestUpcomingTimestamp) {
             $closestUpcomingTimestamp = $timestamp;
-            $closestUpcomingEventId = (int) $event['id_evenement'];
+            $closestUpcomingEventId = $event['id_evenement'];
         }
     }
 }
 
 $events_ready = [];
 foreach ($events as $event) {
-    $eventId = (int) $event['id_evenement'];
+    $eventId = $event['id_evenement'];
     $eventDateRaw = substr($event['date_evenement'], 0, 10);
     $eventDateInfo = getdate(strtotime($eventDateRaw));
     $eventDateObj = new DateTime($eventDateRaw);
@@ -72,7 +75,7 @@ foreach ($events as $event) {
         $otherClasses = '';
     }
 
-    $remaining = (int)$event['places_evenement'] - (int)($db->select(
+    $remaining = $event['places_evenement'] - (int)($db->select(
         'SELECT COUNT(*) as count FROM INSCRIPTION WHERE id_evenement = ?',
         'i',
         [$eventId]

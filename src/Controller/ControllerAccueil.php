@@ -8,7 +8,7 @@ $podium = $db->select(
 );
 
 foreach ($podium as &$member) {
-    $xpLength = strlen((string) $member['xp_membre']);
+    $xpLength = strlen($member['xp_membre']);
     $member['xp_size_class'] = 'xp-size-default';
 
     if ($xpLength >= 8) {
@@ -27,7 +27,7 @@ $eventsToDisplay = $db->select(
 );
 
 foreach ($eventsToDisplay as &$event) {
-    $eventid = (int) $event['id_evenement'];
+    $eventid = $event['id_evenement'];
 
     $isPlaceDisponible = $db->select(
         "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",

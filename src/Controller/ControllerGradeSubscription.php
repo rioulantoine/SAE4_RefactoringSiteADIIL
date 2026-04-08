@@ -10,14 +10,14 @@ if (!$isLoggedIn) {
     exit;
 }
 
-$userid = (int) $_SESSION['userid'];
+$userid = $_SESSION['userid'];
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header('Location: ' . $base . 'grade');
     exit;
 }
 
-$id_grade = (int) $_GET['id'];
+$id_grade = $_GET['id'];
 $grade = getGradeById($db, $id_grade);
 
 if (empty($grade)) {
@@ -30,7 +30,7 @@ if (empty($grade)) {
 $currentGrade = getCurrentAdhesion($db, $userid);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['mode_paiement'])) {
-    $mode_paiement = (string) $_POST['mode_paiement'];
+    $mode_paiement = $_POST['mode_paiement'];
 
     if (!empty($currentGrade)) {
         deleteCurrentAdhesion($db, $userid);
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['mode_paiement'])) {
         $db,
         $userid,
         $id_grade,
-        (float) $grade['prix_grade'],
+        $grade['prix_grade'],
         $mode_paiement
     );
 

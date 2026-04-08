@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($mailOk && $passwordOk) {
-            $memberId = (int) $user['id_membre'];
+            $memberId = $user['id_membre'];
             $_SESSION['userid'] = $memberId;
 
             if ($modelLogin->hasAssignedRole($memberId)) {

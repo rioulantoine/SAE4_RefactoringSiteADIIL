@@ -12,7 +12,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     exit;
 }
 
-$eventid = (int) $_GET['id'];
+$eventid = $_GET['id'];
 $event = modelEventDetailsGetEventById($db, $eventid);
 
 if (empty($event)) {
@@ -20,8 +20,8 @@ if (empty($event)) {
     exit;
 }
 
-if (isset($_GET['show']) && is_numeric($_GET['show']) && (int)$_GET['show'] > 0) {
-    $show = (int) $_GET['show'];
+if (isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show'] > 0) {
+    $show = $_GET['show'];
 }
 
 $current_date = new DateTime(date('Y-m-d'));
@@ -31,7 +31,7 @@ $isSubscribed = false;
 $userMedias = [];
 
 if ($isLoggedIn) {
-    $userId = (int) $_SESSION['userid'];
+    $userId = $_SESSION['userid'];
     $isSubscribed = modelEventDetailsIsUserSubscribed($db, $eventid, $userId);
     $userMedias = modelEventDetailsGetUserMedias($db, $eventid, $userId, 4);
 }

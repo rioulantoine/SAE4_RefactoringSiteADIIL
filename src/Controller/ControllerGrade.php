@@ -9,11 +9,11 @@ $currentUserGradeId = null;
 $currentUserReduction = null;
 
 if (!empty($_SESSION['userid'])) {
-    $currentGrade = getUserGrade($db, (int) $_SESSION['userid']);
+    $currentGrade = getUserGrade($db, $_SESSION['userid']);
 
     if (!empty($currentGrade)) {
-        $currentUserGradeId = (int) $currentGrade['id_grade'];
-        $currentUserReduction = (float) $currentGrade['reduction_grade'];
+        $currentUserGradeId = $currentGrade['id_grade'];
+        $currentUserReduction = $currentGrade['reduction_grade'];
     }
 }
 
