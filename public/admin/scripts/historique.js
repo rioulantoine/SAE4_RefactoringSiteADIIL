@@ -1,5 +1,5 @@
 // Imports
-import { requestGET } from './ajax.js';
+import { requestGET, requestPATCH } from './ajax.js';
 import { getToggleStatus } from './toggle.js';
 
 // DOM Elements
@@ -55,7 +55,7 @@ function loadData(){
         row.appendChild(utilisateurCell);
 
         const dateCell = document.createElement('td');
-        dateCell.textContent = item.date_transaction.split(' ')[0];
+        dateCell.textContent = item.date_transaction?.split(' ')[0] ?? '';
         row.appendChild(dateCell);
 
         const quantiteCell = document.createElement('td');
@@ -63,12 +63,45 @@ function loadData(){
         row.appendChild(quantiteCell);
 
         const prixCell = document.createElement('td');
-        prixCell.textContent = parseFloat(item.montant).toFixed(2) + ' €';
+        prixCell.textContent = parseFloat(item.montant || 0).toFixed(2) + ' €';
         row.appendChild(prixCell);
 
         const paiementCell = document.createElement('td');
-        paiementCell.textContent = item.mode_paiement;
+        paiementCell.textContent = item.mode_paiement || '';
         row.appendChild(paiementCell);
+
+        const recupereValue = String(item.recupere ?? item.statut ?? '').trim();
+        const statusText = item.statut || (recupereValue === '1' || recupereValue.toLowerCase() === 'true' ? 'Récupéré' : 'Non récupéré');
+
+        const statusCell = document.createElement('td');
+        statusCell.textContent = statusText;
+        row.appendChild(statusCell);
+
+        const actionCell = document.createElement('td');
+        const isCommande = String(item.type_transaction || '').toLowerCase() === 'commande';
+        const commandId = item.id_commande ?? item.id_commande;
+
+        if (isCommande && commandId != null) {
+            const button = document.createElement('button');
+            button.className = 'status-button';
+            button.textContent = statusText === 'Récupéré' ? 'Marquer non récupéré' : 'Marquer récupéré';
+            button.addEventListener('click', async () => {
+                button.disabled = true;
+                try {
+                    const updated = await requestPATCH(`/index.php?page=api_purchase&id=${commandId}`, { recupere: statusText !== 'Récupéré' });
+                    item.recupere = updated.recupere;
+                    item.statut = updated.statut;
+                    loadData();
+                } catch (error) {
+                    console.error(error);
+                    button.disabled = false;
+                }
+            });
+            actionCell.appendChild(button);
+        } else {
+            actionCell.textContent = '-';
+        }
+        row.appendChild(actionCell);
 
         tbody.appendChild(row);
     });
