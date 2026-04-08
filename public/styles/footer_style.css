@@ -42,6 +42,17 @@ footer > div a:hover {
     font-weight: 700 !important;
 }
 
+.social-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+}
+
+.social-links .insta-link {
+    display: inline-flex;
+}
+
 .insta-link {
     display: flex;
     align-items: center;
@@ -50,7 +61,7 @@ footer > div a:hover {
 }
 
 .insta-link img {
-    height: 25px; 
+    height: 36px; 
     width: auto; 
     display: inline-block; 
     vertical-align: middle;
