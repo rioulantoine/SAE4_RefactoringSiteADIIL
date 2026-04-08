@@ -64,7 +64,7 @@ switch ($page) {
         break;
     
     case 'account':
-        require_once __DIR__ . '/src/View/account.php';
+        require_once __DIR__ . '/src/Controller/ControllerAccount.php';
         break;
 
     case 'order':
