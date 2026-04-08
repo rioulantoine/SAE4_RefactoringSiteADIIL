@@ -46,8 +46,8 @@ class Event extends BaseModel implements JsonSerializable
     public static function fetchFiltered(string $search = '', bool $onlyAvailable = false, int $limit = 100) : array
     {
         $DB = new \DB();
-        $sql = "SELECT E., 
-                (E.places_evenement - (SELECT COUNT() FROM INSCRIPTION I WHERE I.id_evenement = E.id_evenement)) as remaining_places
+        $sql = "SELECT E.*, 
+                (E.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION I WHERE I.id_evenement = E.id_evenement)) as remaining_places
                 FROM EVENEMENT E 
                 WHERE E.deleted = false";
 
