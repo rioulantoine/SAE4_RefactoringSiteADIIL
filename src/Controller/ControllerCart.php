@@ -45,6 +45,7 @@ if (!empty($_SESSION['userid']) && !empty($products)) {
 
 $flashMessage = $_SESSION['message'] ?? null;
 $flashType = $_SESSION['message_type'] ?? null;
-unset($_SESSION['message'], $_SESSION['message_type']);
+unset($_SESSION['message']);
+unset($_SESSION['message_type']);
 
 require_once __DIR__ . '/../View/cart.php';
