@@ -35,7 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
+$flashMessage = $_SESSION['message'] ?? null;
+$flashType = $_SESSION['message_type'] ?? null;
+unset($_SESSION['message']);
+unset($_SESSION['message_type']);
 $products = getShopProducts($db, $searchTerm, $filters, $orderBy);
 
 require_once __DIR__ . '/../View/shop.php';

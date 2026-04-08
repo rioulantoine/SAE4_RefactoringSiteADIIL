@@ -74,7 +74,6 @@ switch ($action) {
 
 // Support simple redirect for non-AJAX flows + flash message in session
 if (isset($_GET['redirect'])) {
-    // Enregistrer le message de réponse en "flash" pour l'afficher dans la vue
     $_SESSION['message'] = $response['message'] ?? '';
     $_SESSION['message_type'] = (!empty($response['error'])) ? 'error' : 'success';
 

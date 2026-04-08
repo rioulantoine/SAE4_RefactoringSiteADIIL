@@ -57,6 +57,14 @@
         </button>
     </div>
 </div>
+<div id="shop-message">
+    <?php
+        if (!empty($flashMessage)) {
+            $messageStyle = ($flashType === "error") ? "error-message" : "success-message";
+            echo '<div class="' . $messageStyle . '">' . htmlspecialchars($flashMessage) . '</div>';
+        }
+    ?>
+</div>
 
 
 <p id='message-reduc'>
