@@ -19,8 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mediaid'], $_POST['ev
             );
         }
         
-        // Recharge la page pour afficher la nouvelle image
-        header("Location: my_gallery?eventid=".$_POST["eventid"]);
+        // Redirige en fonction de l'origine de la suppression
+        $redirect = $_POST['redirect'] ?? 'my_gallery';
+
+        if ($redirect === 'event_details') {
+            header("Location: " . $base . "event_details?id=" . $_POST["eventid"]);
+        } else {
+            header("Location: my_gallery?eventid=" . $_POST["eventid"]);
+        }
         exit();
 
     }else{

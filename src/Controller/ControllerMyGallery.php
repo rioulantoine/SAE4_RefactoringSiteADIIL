@@ -18,7 +18,7 @@ $db = new DB();
                 $eventid = $_GET['eventid'];
                 $userid = $_SESSION["userid"];
             }else {
-                header("Location: /index.php");
+                header("Location:".$base."/");
                 exit;
             }
         }

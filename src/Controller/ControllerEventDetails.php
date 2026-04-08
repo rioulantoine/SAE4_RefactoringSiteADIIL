@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../Model/ModelEventDetails.php';
+require_once __DIR__ . '/../Service/tools.php';
 
 $isLoggedIn = isset($_SESSION['userid']);
 $db = new DB();
@@ -23,6 +24,8 @@ if (empty($event)) {
 if (isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show'] > 0) {
     $show = $_GET['show'];
 }
+
+if(isset($_GET['eventid']) && $isLoggedIn){$eventid = $_GET['eventid'];}
 
 $current_date = new DateTime(date('Y-m-d'));
 $event_date = new DateTime(substr($event['date_evenement'], 0, 10));

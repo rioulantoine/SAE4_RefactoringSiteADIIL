@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<?php echo $base; ?>public/styles/footer_style.css">
 
     <link rel="stylesheet" href="<?php echo $base; ?>public/styles/general_style.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/event_details_style.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>public/styles/event_details_style.css"> 
 
 
 
@@ -88,6 +88,7 @@
                 </label>
                 <input type="hidden" name="eventid" value="<?php echo $eventid?>">
                 <input type="hidden" name="userid" value="<?php echo $_SESSION['userid']?>">
+                <input type="hidden" name="redirect" value="event_details">
 
                 <input type="file" id="file-picker" name="file" accept="image/jpeg, image/png, image/webp" hidden>
                 <button type="submit" style="display:none;">Envoyer</button>
@@ -109,10 +110,29 @@
         <h3>Collection Generale</h3>
 
         <div class="general-medias">
+            <?php if (!tools::hasPermission('p_evenement')){ ?>
+                <?php foreach($generalMedias as $media => $img):?>
+                <img src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
+                <?php endforeach;?>
+            <!-- suppression d'un image dans la galerie -->
+            <?php }else{ ?>
+                <?php foreach($generalMedias as $media => $img):?>
+                    <div class="media-container">
+                        <img src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']); ?>" alt="Image Personnelle de l'événement">
+                        <div class="delete-icon">
+                            <form class="delete-media" action="<?php echo $base; ?>delete_media" method="post">
+                                <label for="del-media">
+                                    <img src="<?php echo $base; ?>public/assets/delete_icon.png" alt="poubelle">
+                                </label>
+                                <input type="hidden" name="mediaid" value="<?php echo $img['id_media']?>">
+                                <input type="hidden" name="eventid" value="<?php echo $eventid?>">
+                                <input type="hidden" name="redirect" value="event_details">
 
-            <?php foreach($generalMedias as $media => $img):?>
-            <img src="<?php echo $base; ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
-            <?php endforeach;?>
+                                <button type="submit" style="display:none;">Envoyer</button>
+                            </form>
+                        </div>
+                    </div>
+                <?php endforeach;}?>    
 
 
         </div>
@@ -139,6 +159,7 @@
     <script src="<?php echo $base; ?>public/scripts/open_media.js"></script>
     <script src="<?php echo $base; ?>public/scripts/add_media.js"></script>
     <script src="<?php echo $base; ?>public/scripts/open_gallery.js"></script>
+    <script src="<?php echo $base; ?>public/scripts/delete_media.js"></script>
 
 </body>
 

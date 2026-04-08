@@ -55,6 +55,7 @@
                             </label>
                             <input type="hidden" name="mediaid" value="<?php echo $img['id_media']?>">
                             <input type="hidden" name="eventid" value="<?php echo $eventid?>">
+                            <input type="hidden" name="redirect" value="my_gallery">
 
                             <button type="submit" style="display:none;">Envoyer</button>
                         </form>
