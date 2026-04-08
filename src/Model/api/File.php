@@ -24,7 +24,7 @@ class File implements JsonSerializable
 
     public static function getFile(string | null $fileName): File | null
     {
-        if (!is_null($fileName) && file_exists('files/' . $fileName)) {
+        if (!is_null($fileName) && file_exists('public/api/files/' . $fileName)) {
             return new File($fileName);
         }
 
@@ -43,8 +43,8 @@ class File implements JsonSerializable
             $extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
             $name = tools::generateUUID() . '.' . $extension;
 
-            if (move_uploaded_file($_FILES['file']['tmp_name'], 'files/' . $name)) {
-                chmod('files/' . $name, 0644);
+            if (move_uploaded_file($_FILES['file']['tmp_name'], 'public/api/files/' . $name)) {
+                chmod('public/api/files/' . $name, 0644);
                 return new File($name);
             }
             return null;
@@ -77,7 +77,7 @@ class File implements JsonSerializable
             $extension = $extensions[$mimeType] ?? 'bin';
             $name = tools::generateUUID() . '.' . $extension;
 
-            if (rename($tempFile, 'files/' . $name)) {
+            if (rename($tempFile, 'public/api/files/' . $name)) {
                 return new File($name);
             }
 
@@ -123,18 +123,18 @@ class File implements JsonSerializable
         $extension = $extensions[$mimeType];
         $name = tools::generateUUID() . '.' . $extension;
 
-        if (!is_dir('files')) {
-            mkdir('files', 0777, true);
+        if (!is_dir('public/api/files')) {
+            mkdir('public/api/files', 0777, true);
         }
 
         if ($isRaw) {
-            if (rename($tmpFile, 'files/' . $name)) {
-                chmod('files/' . $name, 0644);
+            if (rename($tmpFile, 'public/api/files/' . $name)) {
+                chmod('public/api/files/' . $name, 0644);
                 return new File($name);
             }
         } else {
-            if (move_uploaded_file($tmpFile, 'files/' . $name)) {
-                chmod('files/' . $name, 0644);
+            if (move_uploaded_file($tmpFile, 'public/api/files/' . $name)) {
+                chmod('public/api/files/' . $name, 0644);
                 return new File($name);
             }
         }
@@ -145,8 +145,8 @@ class File implements JsonSerializable
 
     public function deleteFile() : bool
     {
-        if (file_exists('files/' . $this->fileName)) {
-            unlink('files/' . $this->fileName);
+        if (file_exists('public/api/files/' . $this->fileName)) {
+            unlink('public/api/files/' . $this->fileName);
             return true;
         }
 

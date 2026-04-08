@@ -70,7 +70,7 @@ async function selectEvent(id_event, li){
     if (event.image_evenement && event.image_evenement.startsWith('http')) {
         prop_image.src = event.image_evenement;
     } else if (event.image_evenement && event.image_evenement !== "default.png") {
-        prop_image.src = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + event.image_evenement;
+        prop_image.src = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/' + event.image_evenement;
     } else {
         prop_image.src = defaultImagePath;
     }

@@ -41,7 +41,7 @@ async function selectReunion(id_reunion, li){
     try {
         const meeting = await requestGET(`/index.php?page=api_meeting&id=${id_reunion}`);
         
-        const fileUrl = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + meeting.fichier_reunion;
+        const fileUrl = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/' + meeting.fichier_reunion;
         pdf_preview.src = fileUrl;
 
         download_btn.onclick = ()=>{

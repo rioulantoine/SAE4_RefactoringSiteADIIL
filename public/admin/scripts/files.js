@@ -23,16 +23,8 @@ export async function getFullFilepath(filename, defaultFile) {
         return fullFilePath;
     }
 
-    try {
-        // Utilisation de la méthode HEAD pour juste vérifier l'existence sans télécharger tout le fichier
-        const response = await fetch(fullFilePath, { method: 'HEAD' }); 
-        if (!response.ok) {
-            return defaultFile;
-        }
-        return fullFilePath;
-    } catch {
-        return defaultFile;
-    }
+    // Retourner directement le chemin sans vérification, car nous savons que les fichiers existent
+    return fullFilePath;
 }
 
 /**
@@ -75,5 +67,5 @@ export function getFileBucketUrl(filename) {
     }
 
     const normalizedBase = BASE_URL ? (BASE_URL.endsWith('/') ? BASE_URL : BASE_URL + '/') : '/';
-    return window.location.origin + normalizedBase + 'files/' + filename;
+    return window.location.origin + normalizedBase + 'public/api/files/' + filename;
 }

@@ -72,7 +72,22 @@ function get_news() : void
 function create_news() : void
 {
     $id_membre = isset($_SESSION['userid']) ? filter::int($_SESSION['userid']) : 1;
-    $news = News::create("Nouvelle actualité", "Description", date("Y-m-d H:i:s"), $id_membre, null);
+    
+    $titre = isset($_POST['titre']) ? filter::string($_POST['titre'], maxLenght: 100) : "Nouvelle actualité";
+    $contenu = isset($_POST['contenu']) ? filter::string($_POST['contenu'], maxLenght: 1000) : "Description";
+    
+    $image = null;
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $image = File::saveImage();
+        if (!$image) {
+            http_response_code(400);
+            @ob_clean();
+            echo json_encode(['error' => 'Erreur lors de l\'upload de l\'image']);
+            exit;
+        }
+    }
+    
+    $news = News::create($titre, $contenu, date("Y-m-d H:i:s"), $id_membre, $image);
     http_response_code(201);
     @ob_clean();
     echo json_encode($news->jsonSerialize());

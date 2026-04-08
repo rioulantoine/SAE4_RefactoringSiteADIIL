@@ -94,7 +94,7 @@
                 [$_SESSION["userid"], $eventid]
             );
             foreach($medias as $media => $img):?>
-            <img src="/api/files/<?php echo trim($img['url_media']);?>" alt="Image Personelle de l'événement">
+            <img src="<?php echo (isset($base) ? $base : '/'); ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image Personelle de l'événement">
             <?php endforeach;?>
 
             <form id="add-media" action="/add_media.php" method="post" enctype="multipart/form-data">
@@ -130,7 +130,7 @@
                 [$eventid, $show]
             );
             foreach($medias as $media => $img):?>
-            <img src="/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
+            <img src="<?php echo (isset($base) ? $base : '/'); ?>public/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
             <?php endforeach;?>
 
 

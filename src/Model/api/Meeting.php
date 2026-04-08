@@ -58,7 +58,7 @@ class Meeting extends BaseModel implements JsonSerializable
 
         $data = $res[0];
         $user = $this->getUser();
-        $data['user'] = $user->toJson();
+        $data['user'] = $user->jsonSerialize();
 
         return $data;
     }
