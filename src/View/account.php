@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         $_SESSION['message_type'] = "error";
     }
     // Recharge la page pour afficher la nouvelle image
-    header("Location: " . $base . "src/View/account.php");
+    header("Location: " . $base . "/account");
     exit;
 }
 ?>
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         }
 
         // Recharger la page
-        header("Location: " . $base . "src/View/account.php");
+        header("Location: " . $base . "/account");
         exit();
     }
     ?>
@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         }
 
         // Redirection pour éviter le double envoi du formulaire
-        header("Location: " . $base . "src/View/account.php");
+        header("Location: " . $base . "/account");
         exit();
     }
 ?>
@@ -213,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 <?php
 if (isset($_SESSION['message'])) {
     $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
-    echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
+    echo '<div class="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
     unset($_SESSION['message']); // Supprimer le message après affichage
     unset($_SESSION['message_type']); // Supprimer le type après affichage
 }
@@ -231,7 +231,7 @@ if (isset($_SESSION['message'])) {
 
             <label id="cadre-pp" for="profilePictureInput">
                 <?php if($infoUser[0]['pp_membre'] == null):?>
-                    <img src="<?php echo $base; ?>public/admin/ressources/default_images/user.jpg" alt="Photo de profil de l'utilisateur" />
+                    <img src="<?php echo $base; ?>public/assets/user.jpg" alt="Photo de profil de l'utilisateur" />
                 <?php else:?>
                     <img src="<?php echo $base; ?>public/api/files/<?php echo $infoUser[0]['pp_membre']; ?>" alt="Photo de profil de l'utilisateur" />
                 <?php endif?>

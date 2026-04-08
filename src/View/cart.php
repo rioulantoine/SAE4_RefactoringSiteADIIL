@@ -40,7 +40,7 @@
         <?php
             if (!empty($flashMessage)) {
                 $messageStyle = ($flashType === "error") ? "error-message" : "success-message";
-                echo '<div id="' . $messageStyle . '">' . htmlspecialchars($flashMessage) . '</div>';
+                echo '<div class="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
             }
         ?>
     </div>

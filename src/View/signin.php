@@ -16,7 +16,7 @@
 </head>
     <body>
         <?php if (!empty($errorMessage)): ?>
-            <h3 class="login-error"><?php echo htmlspecialchars($errorMessage); ?></h3>
+            <h3 class="error-message"><?php echo htmlspecialchars($errorMessage); ?></h3>
         <?php endif; ?>
 
         <form method="POST" action="" class="login-form">
