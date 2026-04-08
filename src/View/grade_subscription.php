@@ -70,13 +70,18 @@
                 <input type="hidden" name="mode_paiement" value="carte_credit">
 
                 <label for="numero_carte">Numéro de Carte :</label>
-                <input type="text" id="numero_carte" name="numero_carte" placeholder="XXXX XXXX XXXX XXXX" required><br><br>
+                <input type="text" id="numero_carte" name="numero_carte" placeholder="XXXX XXXX XXXX XXXX" value="<?php echo htmlspecialchars($savedCardNumber); ?>" required><br><br>
 
                 <label for="expiration">Date d'Expiration :</label>
-                <input type="text" id="expiration" name="expiration" placeholder="MM/AA" required><br><br>
+                <input type="text" id="expiration" name="expiration" placeholder="MM/AA" value="<?php echo htmlspecialchars($savedExpiration); ?>" required><br><br>
 
                 <label for="cvv">CVV :</label>
                 <input type="text" id="cvv" name="cvv" placeholder="XXX" required><br><br>
+
+                <label for="remember_payment" class="remember-payment">
+                    <input type="checkbox" id="remember_payment" name="remember_payment" value="1" <?php echo !empty($savedCardNumber) ? 'checked' : ''; ?>>
+                    Enregistrer pour les prochaines commandes
+                </label><br><br>
 
                 <button type="submit" id="finalise-order-button">Valider l'adhésion</button>
             </form>

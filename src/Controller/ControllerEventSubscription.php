@@ -10,6 +10,9 @@ if (!$isLoggedIn) {
 }
 
 $userid = $_SESSION["userid"];
+$savedPaymentInfo = isset($_SESSION['saved_payment_info_event']) ? $_SESSION['saved_payment_info_event'] : [];
+$savedCardNumber = isset($savedPaymentInfo['numero_carte']) ? $savedPaymentInfo['numero_carte'] : '';
+$savedExpiration = isset($savedPaymentInfo['expiration']) ? $savedPaymentInfo['expiration'] : '';
 
 // Vérifie que la requête est POST et contient les données nécessaires
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,6 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $db = new DB();
     if(isset($_POST["price"], $_POST["eventid"])){
+        if (isset($_POST['remember_payment']) && $_POST['remember_payment'] === '1' && isset($_POST['numero_carte'], $_POST['expiration'])) {
+            $_SESSION['saved_payment_info_event'] = [
+                'numero_carte' => $_POST['numero_carte'],
+                'expiration' => $_POST['expiration'],
+            ];
+        }
+
         createEventSubscription($db, $userid, $eventid, $_POST["price"]);
         $xp = getEventSubscriptionXp($db, $eventid)[0]['xp_evenement'];
         addEventXp($db, $xp, $userid);

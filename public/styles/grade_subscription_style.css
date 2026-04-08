@@ -135,6 +135,19 @@ div:nth-of-type(2) div:nth-of-type(2) div {
     font-weight: bold;
 }
 
+.remember-payment {
+    grid-column: 1 / -1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    justify-self: start;
+}
+
+.remember-payment input {
+    width: auto;
+    height: auto;
+}
+
 #carte_credit form {
     display: grid;
     grid-template-columns: 190px minmax(240px, 1fr);
