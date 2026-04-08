@@ -21,10 +21,14 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        var month = exp.substring(0, 2);
-        var year = exp.substring(3, 5);
+        var mois = exp.substring(0, 2);
+        var annee = exp.substring(3, 5);
+        var now = new Date();
+        var anneeActuelle = now.getFullYear() % 100;
 
-        if (isNaN(month) || isNaN(year) || Number(month) < 1 || Number(month) > 12) {
+            if (isNaN(mois) || isNaN(annee) 
+                || Number(mois) < 1 || Number(mois) > 12 
+                || Number(annee) < anneeActuelle || (Number(annee) === anneeActuelle && Number(mois) < (now.getMonth() + 1))) {
             alert('Date d\'expiration invalide.');
             event.preventDefault();
             return;
