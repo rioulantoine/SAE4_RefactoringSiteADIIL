@@ -44,6 +44,8 @@
                     <th>Quantité</th>
                     <th>Prix payé</th>
                     <th>Paiement</th>
+                    <th>Statut</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="tbody">
