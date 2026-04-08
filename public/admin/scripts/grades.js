@@ -19,7 +19,7 @@ const new_btn = document.getElementById('new_btn');
 async function fetchData() {
     let grades = [];
     try{
-        grades = await requestGET('/SAE4_RefactoringSiteADIIL/index.php?page=api_grade');
+        grades = await requestGET('/index.php?page=api_grade');
     } catch (error) {
         toast('Erreur lors du chargement des grades.', true);
     }
@@ -36,7 +36,7 @@ async function saveGrade(id_grade){
     };
 
     try {
-        await requestPUT('/SAE4_RefactoringSiteADIIL/index.php?page=api_grade&id=' + id_grade.toString(), data);
+        await requestPUT('/index.php?page=api_grade&id=' + id_grade.toString(), data);
         toast('Grade mis à jour avec succès.');
         selectGrade(id_grade);
     } catch (error) {
@@ -47,7 +47,7 @@ async function saveGrade(id_grade){
 
 async function deleteGrade(id_grade){
     showLoader();
-    await requestDELETE(`/SAE4_RefactoringSiteADIIL/index.php?page=api_grade&id=${id_grade}`);
+    await requestDELETE(`/index.php?page=api_grade&id=${id_grade}`);
     refreshNavbar(fetchData, selectGrade);
     toast('Grade supprimé avec succès.');
 }
@@ -56,13 +56,13 @@ async function selectGrade(id_grade, li){
     showPropertieSkeleton();
     showLoader();
 
-    const grade = await requestGET(`/SAE4_RefactoringSiteADIIL/index.php?page=api_grade&id=${id_grade}`);
-    const defaultImagePath = '/SAE4_RefactoringSiteADIIL/public/admin/ressources/default_images/grade.webp';
+    const grade = await requestGET(`/index.php?page=api_grade&id=${id_grade}`);
+    const defaultImagePath = window.location.origin + (window.base || window.parent?.base || '') + 'public/admin/ressources/default_images/grade.webp';
 
     if (grade.image_grade && grade.image_grade.startsWith('http')) {
         prop_image_grade.src = grade.image_grade;
     } else if (grade.image_grade && grade.image_grade !== "default.png" && grade.image_grade !== "N/A") {
-        prop_image_grade.src = '/SAE4_RefactoringSiteADIIL/files/' + grade.image_grade;
+        prop_image_grade.src = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + grade.image_grade;
     } else {
         prop_image_grade.src = defaultImagePath;
     }
@@ -106,7 +106,7 @@ async function selectGrade(id_grade, li){
             const formData = new FormData();
             formData.append('file', image);
 
-            const response = await fetch('/SAE4_RefactoringSiteADIIL/index.php?page=api_grade&action=update_image&id=' + id_grade.toString(), {
+            const response = await fetch(window.location.origin + (window.base || window.parent?.base || '') + 'index.php?page=api_grade&action=update_image&id=' + id_grade.toString(), {
                 method: 'POST',
                 body: formData
             });
@@ -132,7 +132,7 @@ async function selectGrade(id_grade, li){
 new_btn.onclick = async ()=>{
     showLoader();
     try {
-        const result = await requestPOST('/SAE4_RefactoringSiteADIIL/index.php?page=api_grade');
+        const result = await requestPOST('/index.php?page=api_grade');
         refreshNavbar(fetchData, selectGrade, result.id_grade);
     } catch (error) {
         toast('Erreur lors de la création du grade.', true);

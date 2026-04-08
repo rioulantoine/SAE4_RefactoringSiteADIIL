@@ -24,7 +24,7 @@ const new_btn = document.getElementById('new_btn');
 async function fetchData() {
     let events = [];
     try{
-        events = await requestGET('/SAE4_RefactoringSiteADIIL/index.php?page=api_event');
+        events = await requestGET('/index.php?page=api_event');
     } catch (error) {
         toast('Erreur lors du chargement des evenements.', true);
     }
@@ -44,7 +44,7 @@ async function saveEvent(id_event){
     };
 
     try {
-        await requestPUT('/SAE4_RefactoringSiteADIIL/index.php?page=api_event&id=' + id_event.toString(), data);
+        await requestPUT('/index.php?page=api_event&id=' + id_event.toString(), data);
         toast('Evenement mis à jour avec succès.');
         selectEvent(id_event);
     } catch (error) {
@@ -55,7 +55,7 @@ async function saveEvent(id_event){
 
 async function deleteEvent(id_event){
     showLoader();
-    await requestDELETE(`/SAE4_RefactoringSiteADIIL/index.php?page=api_event&id=${id_event}`);
+    await requestDELETE(`/index.php?page=api_event&id=${id_event}`);
     refreshNavbar(fetchData, selectEvent);
     toast('Evenement supprimé avec succès.');
 }
@@ -64,13 +64,13 @@ async function selectEvent(id_event, li){
     showPropertieSkeleton();
     showLoader();
 
-    const event = await requestGET(`/SAE4_RefactoringSiteADIIL/index.php?page=api_event&id=${id_event}`);
-    const defaultImagePath = '/SAE4_RefactoringSiteADIIL/public/admin/ressources/default_images/event.jpg';
+    const event = await requestGET(`/index.php?page=api_event&id=${id_event}`);
+    const defaultImagePath = window.location.origin + (window.base || window.parent?.base || '') + 'public/admin/ressources/default_images/event.jpg';
 
     if (event.image_evenement && event.image_evenement.startsWith('http')) {
         prop_image.src = event.image_evenement;
     } else if (event.image_evenement && event.image_evenement !== "default.png") {
-        prop_image.src = '/SAE4_RefactoringSiteADIIL/files/' + event.image_evenement;
+        prop_image.src = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + event.image_evenement;
     } else {
         prop_image.src = defaultImagePath;
     }
@@ -118,7 +118,7 @@ async function selectEvent(id_event, li){
             const formData = new FormData();
             formData.append('file', image);
 
-            const response = await fetch('/SAE4_RefactoringSiteADIIL/index.php?page=api_event&action=update_image&id=' + id_event.toString(), {
+            const response = await fetch(window.location.origin + (window.base || window.parent?.base || '') + 'index.php?page=api_event&action=update_image&id=' + id_event.toString(), {
                 method: 'POST',
                 body: formData
             });
@@ -144,7 +144,7 @@ async function selectEvent(id_event, li){
 new_btn.onclick = async ()=>{
     showLoader();
     try {
-        const result = await requestPOST('/SAE4_RefactoringSiteADIIL/index.php?page=api_event');
+        const result = await requestPOST('/index.php?page=api_event');
         refreshNavbar(fetchData, selectEvent, result.id_evenement);
     } catch (error) {
         toast(error.message, true);

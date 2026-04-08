@@ -16,7 +16,7 @@ async function updateView(){
     addUpdloadButton();
 
     try {
-        const data = await requestGET('/SAE4_RefactoringSiteADIIL/index.php?page=api_accounting');
+        const data = await requestGET('/index.php?page=api_accounting');
         for (let i = 0; i < data.length; i++) {
             addAccountingElement(data[i]);
         }
@@ -58,7 +58,7 @@ function addAccountingElement(data){
     main_content.appendChild(container);
 
     download_button.onclick = () => {
-        const fileUrl = '/SAE4_RefactoringSiteADIIL/files/' + data.url_comptabilite;
+        const fileUrl = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + data.url_comptabilite;
         window.open(fileUrl, '_blank');
     }
 
@@ -72,7 +72,7 @@ function addAccountingElement(data){
         }).then(async (willDelete) => {
             if (willDelete) {
                 try {
-                    await requestDELETE(`/SAE4_RefactoringSiteADIIL/index.php?page=api_accounting&id=${data.id_comptabilite}`);
+                    await requestDELETE(`/index.php?page=api_accounting&id=${data.id_comptabilite}`);
                     toast("Fichier supprimé avec succès.");
                     updateView();
                 } catch (error) {
@@ -118,7 +118,7 @@ async function uploadFile(file, name, date){
     form_data.append('date', date);
 
     try{
-        await fetch('/SAE4_RefactoringSiteADIIL/index.php?page=api_accounting', {
+        await fetch(window.location.origin + (window.base || window.parent?.base || '') + 'index.php?page=api_accounting', {
             method: 'POST',
             body: form_data
         });

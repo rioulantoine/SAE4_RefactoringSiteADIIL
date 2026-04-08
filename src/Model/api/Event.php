@@ -43,6 +43,34 @@ class Event extends BaseModel implements JsonSerializable
 
         return new Event($id);
     }
+    public static function fetchFiltered(string $search = '', bool $onlyAvailable = false, int $limit = 100) : array
+    {
+        $DB = new \DB();
+        $sql = "SELECT E., 
+                (E.places_evenement - (SELECT COUNT() FROM INSCRIPTION I WHERE I.id_evenement = E.id_evenement)) as remaining_places
+                FROM EVENEMENT E 
+                WHERE E.deleted = false";
+
+        $params = [];
+        $types = "";
+
+        if (!empty($search)) {
+            $sql .= " AND E.nom_evenement LIKE ?";
+            $params[] = "%$search%";
+            $types .= "s";
+        }
+
+        if ($onlyAvailable) {
+            // On utilise HAVING car remaining_places est un alias calculé
+            $sql .= " HAVING remaining_places > 0";
+        }
+
+        $sql .= " ORDER BY E.date_evenement ASC LIMIT ?";
+        $params[] = $limit;
+        $types .= "i";
+
+        return $DB->select($sql, $types, $params);
+    }
 
     public static function create(string $nom, int $xp, int $places, float $prix, bool $reductions, string $lieu, string $date) : Event
     {

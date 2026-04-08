@@ -15,7 +15,7 @@ const pdf_preview = document.getElementById('pdf_preview');
 async function fetchData() {
     let meetings = [];
     try{
-        meetings = await requestGET('/SAE4_RefactoringSiteADIIL/index.php?page=api_meeting');
+        meetings = await requestGET('/index.php?page=api_meeting');
     } catch (error) {
         toast(error.message, true);
     }
@@ -25,7 +25,7 @@ async function fetchData() {
 async function deleteReunion(id_reunion){
     showLoader();
     try {
-        await requestDELETE(`/SAE4_RefactoringSiteADIIL/index.php?page=api_meeting&id=${id_reunion}`);
+        await requestDELETE(`/index.php?page=api_meeting&id=${id_reunion}`);
         refreshNavbar(fetchData, selectReunion);
         toast('Réunion supprimée avec succès.');
     } catch (error) {
@@ -39,9 +39,9 @@ async function selectReunion(id_reunion, li){
     showLoader();
 
     try {
-        const meeting = await requestGET(`/SAE4_RefactoringSiteADIIL/index.php?page=api_meeting&id=${id_reunion}`);
+        const meeting = await requestGET(`/index.php?page=api_meeting&id=${id_reunion}`);
         
-        const fileUrl = '/SAE4_RefactoringSiteADIIL/files/' + meeting.fichier_reunion;
+        const fileUrl = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + meeting.fichier_reunion;
         pdf_preview.src = fileUrl;
 
         download_btn.onclick = ()=>{
@@ -79,7 +79,7 @@ new_btn.onclick = async ()=>{
     form_data.append('date', new Date().toISOString().split('T')[0]);
 
     try{
-        const result = await requestPOST('/SAE4_RefactoringSiteADIIL/index.php?page=api_meeting', form_data);
+        const result = await requestPOST('/index.php?page=api_meeting', form_data);
         refreshNavbar(fetchData, selectReunion, result.id_reunion);
         toast("Fichier uploadé avec succès");
     } catch (error) {

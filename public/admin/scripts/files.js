@@ -7,6 +7,8 @@
  * @param {string} defaultFile - The default file path to return if the filename is invalid or the file does not exist.
  * @returns {Promise<string>} The full file path or the default file path.
  */
+const BASE_URL = ((window.base || (window.parent && window.parent.base) || '')).replace(/\/$/, '');
+
 export async function getFullFilepath(filename, defaultFile) {
     // Vérifiez si le filename est invalide (vide, null ou "N/A")
     if (!filename || filename === "N/A") {
@@ -72,5 +74,5 @@ export function getFileBucketUrl(filename) {
         return filename;
     }
 
-    return '/SAE4_RefactoringSiteADIIL/files/' + filename;
+    return BASE_URL ? window.location.origin + BASE_URL + 'files/' + filename : window.location.origin + '/files/' + filename;
 }
