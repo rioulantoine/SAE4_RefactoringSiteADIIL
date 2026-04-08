@@ -68,7 +68,7 @@ switch ($page) {
         break;
 
     case 'order':
-        require_once __DIR__ . '/src/View/order.php';
+        require_once __DIR__ . '/src/Controller/ControllerOrder.php';
         break;
 
     case 'grade':
