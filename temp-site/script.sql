@@ -187,16 +187,16 @@ INSERT INTO ROLE (nom_role, p_log_role, p_boutique_role, p_reunion_role, p_utili
 
 -- Insertion des membres
 INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, password_membre, xp_membre, discord_token_membre, pp_membre, tp_membre) VALUES
-('RUFFAULT--RAVENEL', 'Gemino', 'gemino.ruffault@example.com', 'password1', 50, NULL, 'http://files.bdeinfo.fr/fes2fse1f21se.jpg', '11A'),
-('HANNIER', 'Axelle', 'axelle.hannier@example.com', 'password2', 18, NULL, 'http://files.bdeinfo.fr/fesfe43sf.jpg', '12C'),
-('DAUVERGNE', 'Julien', 'julien.dauvergne@example.com', 'password3', 0, 'g4rd64g6rd4g8f4e64h5bv231h5th44g5ht6h87yj8ty6', 'http://files.bdeinfo.fr/gprdgrd5.jpg','31A'),
-('DELAYE', 'Baptiste', 'baptiste.delahay@example.com', 'password4', 0, NULL, 'http://files.bdeinfo.fr/h5th42fth.jpg', '32D'),
-('VIEILLARD', 'Nathalie', 'nathalie.vieillard@example.com', 'password5', 11, NULL, 'http://files.bdeinfo.fr/jygjgy56yjg.jpg', NULL),
-('HAVARD', 'Barnabe', 'barnabe.havard@example.com', 'password6', 0, 'kiuilui4l8iul654hg2g', 'http://files.bdeinfo.fr/fesifo45ht45h.jpg', '11A'),
-('FEVRIER', 'Theo', 'theo.fevrier@example.com', 'password7', 0, NULL, 'http://files.bdeinfo.fr/gr68grg.jpg', NULL),
-('GOUIN', 'Tom', 'tom.gouin@example.com', 'password8', 12, NULL, 'http://files.bdeinfo.fr/fesf4556fe.jpg', NULL),
-('CONGNARD', 'Evann', 'evann.congnard@example.com', 'password9', 0, NULL, 'http://files.bdeinfo.fr/2f1e2sfs.jpg', '31A'),
-('LE COZ', 'Erwan', 'erwan.lecoz@example.com', 'password10', 0, NULL, 'http://files.bdeinfo.fr/fesf45ef6s4fes6.jpg', '31B');
+('RUFFAULT--RAVENEL', 'Gemino', 'gemino.ruffault@example.com', 'password1', 50, NULL, 'default-user.jpg', '11A'),
+('HANNIER', 'Axelle', 'axelle.hannier@example.com', 'password2', 18, NULL, 'default-user.jpg', '12C'),
+('DAUVERGNE', 'Julien', 'julien.dauvergne@example.com', 'password3', 0, 'g4rd64g6rd4g8f4e64h5bv231h5th44g5ht6h87yj8ty6', 'default-user.jpg','31A'),
+('DELAYE', 'Baptiste', 'baptiste.delahay@example.com', 'password4', 0, NULL, 'default-user.jpg', '32D'),
+('VIEILLARD', 'Nathalie', 'nathalie.vieillard@example.com', 'password5', 11, NULL, 'default-user.jpg', NULL),
+('HAVARD', 'Barnabe', 'barnabe.havard@example.com', 'password6', 0, 'kiuilui4l8iul654hg2g', 'default-user.jpg', '11A'),
+('FEVRIER', 'Theo', 'theo.fevrier@example.com', 'password7', 0, NULL, 'default-user.jpg', NULL),
+('GOUIN', 'Tom', 'tom.gouin@example.com', 'password8', 12, NULL, 'default-user.jpg', NULL),
+('CONGNARD', 'Evann', 'evann.congnard@example.com', 'password9', 0, NULL, 'default-user.jpg', '31A'),
+('LE COZ', 'Erwan', 'erwan.lecoz@example.com', 'password10', 0, NULL, 'default-user.jpg', '31B');
 
 -- Definition des roles
 INSERT INTO ASSIGNATION (id_membre, id_role) VALUES
@@ -208,11 +208,11 @@ INSERT INTO ASSIGNATION (id_membre, id_role) VALUES
 
 -- Ajout des grades
 INSERT INTO GRADE (reduction_grade, image_grade, prix_grade, description_grade, nom_grade) VALUES
-(0, 'http://files.bdeinfo.fr/grade_fer.jpg', 5, 'Un grade de base en fer.', 'Fer'),
-(0, 'http://files.bdeinfo.fr/grade_or.jpg', 10, 'Un grade sup�rieur en or.', 'Or'),
-(10, 'http://files.bdeinfo.fr/grade_diamand.jpg', 13, 'Le grade ultime en diamant.', 'Diamant');
+(0, 'fer.png', 5, 'Un grade de base en fer.', 'Fer'),
+(0, 'or.png', 10, 'Un grade superieur en or.', 'Or'),
+(10, 'diamant.png', 13, 'Le grade ultime en diamant.', 'Diamant');
 
--- Insertion des adh�sions
+-- Insertion des adhsions
 INSERT INTO ADHESION (date_adhesion, prix_adhesion, paiement_adhesion, id_membre, id_grade) VALUES
 ('2024-05-02 11:44:18', 13, 'TPE', 7, 3),	 -- Theo Fevrier achete le grade Diamant
 ('2024-05-02 11:44:18', 10, 'PayPal', 8, 2),  -- Tom Gouin achete le grade Diamant
@@ -221,16 +221,16 @@ INSERT INTO ADHESION (date_adhesion, prix_adhesion, paiement_adhesion, id_membre
 
 -- Ajout des articles de la boutique
 INSERT INTO ARTICLE (xp_article, nom_article, stock_article, image_article, reduction_article, prix_article) VALUES
-(1, 'Canette de Coca', 50, 'http://files.bdeinfo.fr/coca.jpg', 0, 1.50),
-(1, 'Coca Cherry', 30, 'http://files.bdeinfo.fr/coca_cherry.jpg', 0, 1.75),
-(20, 'Lipton Ice Tea', 40, 'http://files.bdeinfo.fr/lipton.jpg', 0, 1.50),
-(1, 'Formule Cafe', 20, 'http://files.bdeinfo.fr/_cafe.jpg', 0, 2.00),
-(1, 'Bueno White', 25, 'http://files.bdeinfo.fr/_bueno_white.jpg', 1, 1.20),
-(1, 'Bueno', 35, 'http://files.bdeinfo.fr/bueno.jpg', 1, 1.20),
-(10, 'Snack Chips', 60, 'http://files.bdeinfo.fr/chips.jpg', 0, 1.00),
-(1, 'Barre de Chocolat', 0, 'http://files.bdeinfo.fr/chocolat.jpg', 0, 1.50),
-(1, 'Jus d Orange', 55, 'http://files.bdeinfo.fr/jus_orange.jpg', 0, 1.30),
-(30, 'Volvic', 70, 'http://files.bdeinfo.fr/volvic.jpg', 0, 0.80);
+(1, 'Canette de Coca', 50, 'coca.webp', 0, 1.50),
+(1, 'Coca Cherry', 30, 'coca-cherry.png', 0, 1.75),
+(20, 'Lipton Ice Tea', 40, 'ice-tea.avif', 0, 1.50),
+(1, 'Formule Cafe', 20, 'cafe.png', 0, 2.00),
+(1, 'Bueno White', 25, 'bueno-white.avif', 1, 1.20),
+(1, 'Bueno', 35, 'bueno.png', 1, 1.20),
+(10, 'Snack Chips', 60, 'chips.png', 0, 1.00),
+(1, 'Barre de Chocolat', 0, 'chocolat.png', 0, 1.50),
+(1, 'Jus d Orange', 55, 'jus-orange.png', 0, 1.30),
+(30, 'Volvic', 70, 'volvic.png', 0, 0.80);
 
 -- Ajout des commandes
 INSERT INTO COMMANDE (statut_commande, prix_commande, paiement_commande, date_commande, qte_commande, id_membre, id_article) VALUES
@@ -275,57 +275,57 @@ INSERT INTO INSCRIPTION (id_membre, id_evenement, date_inscription, paiement_ins
 
 -- Ajout des actualites
 INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date_actualite, id_membre) VALUES
-('http://files.bdeinfo.fr/photoIntegration2024.jpg', 'Un soiree d''integration haute en couleur', 'Hier soir se tenait la soiree d''integration de notre chere BDE. Elle fut remarquable, nous en gardons un tres bon souvenir ! Merci a tous d''etre venu nombreux !', '2024-09-12 19:30:00', 1),
-('http://files.bdeinfo.fr/photoNouvelleSalleEtude.jpg', 'Inauguration de la nouvelle salle d etude', 'La nouvelle salle d etude equipee de postes informatiques dernier cri est desormais ouverte a tous les etudiants. Venez la decouvrir !', '2024-09-18 10:15:00', 1),
-('http://files.bdeinfo.fr/photoNouvelEquipementSport.jpg', 'Nouveau matariel sportif au gymnase', 'Le gymnase de l IUT a ete equipe de nouveaux appareils de musculation. Une bonne nouvelle pour les amateurs de sport.', '2024-09-25 14:45:00', 1),
-('http://files.bdeinfo.fr/photoPartenariatEntreprise.jpg', 'Partenariat avec une entreprise locale', 'Un nouveau partenariat a ete signe entre l IUT et TechMayenne entreprise specialisee dans le developpement d applications web. De belles opportunites de stages en perspective.', '2024-10-01 09:00:00', 1),
-('http://files.bdeinfo.fr/photoRenovationBibliotheque.jpg', 'Renovation de la bibliotheque', 'La bibliotheque de l IUT a subi une renovation complete et propose desormais plus d espace et de nouveaux ouvrages en informatique.', '2024-10-05 11:20:00', 1),
-('http://files.bdeinfo.fr/photoResultatsConcoursTech.jpg', 'Resultats du concours de technologie', 'Les resultats du concours de technologie viennent de tomber ! Felicitations a tous les participants, et en particulier aux vainqueurs du departement informatique Theo et Alban.', '2024-10-10 16:00:00', 1),
-('http://files.bdeinfo.fr/photoSemaineIntegration.jpg', 'Retour sur la semaine d integration', 'La semaine d integration s est achevee avec succes. Merci a tous ceux qui ont contribue a rendre ces moments inoubliables pour les nouveaux etudiants.', '2024-10-15 18:50:00', 1),
-('http://files.bdeinfo.fr/photoNouveauSiteWeb.jpg', 'Lancement du nouveau site web du BDE', 'Le BDE est fier de vous annoncer le lancement de son nouveau site web, entierement repense pour faciliter l acces aux informations et evenements.', '2024-10-20 13:30:00', 1),
-('http://files.bdeinfo.fr/photoCollecteVetements.jpg', 'Collecte de vetements reussie', 'La collecte de vetements organisee par le BDE a permis de rassembler plus de 200 kg de vetements qui seront distribues a des associations locales.', '2024-10-22 10:45:00', 1),
-('http://files.bdeinfo.fr/photoConferenceInnovations.jpg', 'Conference sur les innovations technologiques', 'Une conference sur les innovations technologiques recentes s est tenue a l IUT. Des intervenants de renom ont partage leurs experiences avec les etudiants.', '2024-10-22 17:15:00', 1);
+('actu_default.webp', 'Un soiree d''integration haute en couleur', 'Hier soir se tenait la soiree d''integration de notre chere BDE. Elle fut remarquable, nous en gardons un tres bon souvenir ! Merci a tous d''etre venu nombreux !', '2024-09-12 19:30:00', 1),
+('actu_default.webp', 'Inauguration de la nouvelle salle d etude', 'La nouvelle salle d etude equipee de postes informatiques dernier cri est desormais ouverte a tous les etudiants. Venez la decouvrir !', '2024-09-18 10:15:00', 1),
+('actu_default.webp', 'Nouveau matariel sportif au gymnase', 'Le gymnase de l IUT a ete equipe de nouveaux appareils de musculation. Une bonne nouvelle pour les amateurs de sport.', '2024-09-25 14:45:00', 1),
+('actu_default.webp', 'Partenariat avec une entreprise locale', 'Un nouveau partenariat a ete signe entre l IUT et TechMayenne entreprise specialisee dans le developpement d applications web. De belles opportunites de stages en perspective.', '2024-10-01 09:00:00', 1),
+('actu_default.webp', 'Renovation de la bibliotheque', 'La bibliotheque de l IUT a subi une renovation complete et propose desormais plus d espace et de nouveaux ouvrages en informatique.', '2024-10-05 11:20:00', 1),
+('actu_default.webp', 'Resultats du concours de technologie', 'Les resultats du concours de technologie viennent de tomber ! Felicitations a tous les participants, et en particulier aux vainqueurs du departement informatique Theo et Alban.', '2024-10-10 16:00:00', 1),
+('actu_default.webp', 'Retour sur la semaine d integration', 'La semaine d integration s est achevee avec succes. Merci a tous ceux qui ont contribue a rendre ces moments inoubliables pour les nouveaux etudiants.', '2024-10-15 18:50:00', 1),
+('actu_default.webp', 'Lancement du nouveau site web du BDE', 'Le BDE est fier de vous annoncer le lancement de son nouveau site web, entierement repense pour faciliter l acces aux informations et evenements.', '2024-10-20 13:30:00', 1),
+('actu_default.webp', 'Collecte de vetements reussie', 'La collecte de vetements organisee par le BDE a permis de rassembler plus de 200 kg de vetements qui seront distribues a des associations locales.', '2024-10-22 10:45:00', 1),
+('actu_default.webp', 'Conference sur les innovations technologiques', 'Une conference sur les innovations technologiques recentes s est tenue a l IUT. Des intervenants de renom ont partage leurs experiences avec les etudiants.', '2024-10-22 17:15:00', 1);
 
 -- Ajout de la comptabilite
 INSERT INTO COMPTABILITE (date_comptabilite, nom_comptabilite, url_comptabilite, id_membre) VALUES
-('2024-03-05', 'Compta fev2024', 'http://files.bdeinfo.fr/comptaFev2024.xls', 6),
-('2023-12-10', 'Compta nov2023', 'http://files.bdeinfo.fr/comptaNov2023.xls', 6),
-('2024-01-07', 'Compta dec2023', 'http://files.bdeinfo.fr/comptaDec2023.xls', 6),
-('2024-02-05', 'Compta janv2024', 'http://files.bdeinfo.fr/comptaJanv2024.xls', 6),
-('2024-04-10', 'Compta mars2024', 'http://files.bdeinfo.fr/comptaMars2024.xls', 6),
-('2024-05-07', 'Compta avril2024', 'http://files.bdeinfo.fr/comptaAvril2024.xls', 6),
-('2024-06-10', 'Compta mai2024', 'http://files.bdeinfo.fr/comptaMai2024.xls', 6),
-('2024-07-05', 'Compta juin2024', 'http://files.bdeinfo.fr/comptaJuin2024.xls', 6),
-('2024-08-12', 'Compta juillet2024', 'http://files.bdeinfo.fr/comptaJuillet2024.xls', 6),
-('2024-09-09', 'Compta aout2024', 'http://files.bdeinfo.fr/comptaAout2024.xls', 6);
+('2024-03-05', 'Compta fev2024', 'compta-default.png', 6),
+('2023-12-10', 'Compta nov2023', 'compta-default.png', 6),
+('2024-01-07', 'Compta dec2023', 'compta-default.png', 6),
+('2024-02-05', 'Compta janv2024', 'compta-default.png', 6),
+('2024-04-10', 'Compta mars2024', 'compta-default.png', 6),
+('2024-05-07', 'Compta avril2024', 'compta-default.png', 6),
+('2024-06-10', 'Compta mai2024', 'compta-default.png', 6),
+('2024-07-05', 'Compta juin2024', 'compta-default.png', 6),
+('2024-08-12', 'Compta juillet2024', 'compta-default.png', 6),
+('2024-09-09', 'Compta aout2024', 'compta-default.png', 6);
 
 
 -- Ajout des reunions
 INSERT INTO REUNION (date_reunion, fichier_reunion, id_membre) VALUES
-('2024-09-08', 'http://files.bdeinfo.fr/CR433.odt', 3),
-('2024-09-15', 'http://files.bdeinfo.fr/CR434.odt', 5),
-('2024-09-22', 'http://files.bdeinfo.fr/CR435.odt', 6),
-('2024-09-29', 'http://files.bdeinfo.fr/CR436.odt', 3),
-('2024-10-06', 'http://files.bdeinfo.fr/CR437.odt', 5),
-('2024-10-13', 'http://files.bdeinfo.fr/CR438.odt', 6),
-('2024-10-20', 'http://files.bdeinfo.fr/CR439.odt', 3),
-('2024-10-27', 'http://files.bdeinfo.fr/CR440.odt', 5),
-('2024-11-03', 'http://files.bdeinfo.fr/CR441.odt', 6),
-('2024-11-10', 'http://files.bdeinfo.fr/CR442.odt', 3);
+('2024-09-08', 'reu-default.pdf', 3),
+('2024-09-15', 'reu-default.pdf', 5),
+('2024-09-22', 'reu-default.pdf', 6),
+('2024-09-29', 'reu-default.pdf', 3),
+('2024-10-06', 'reu-default.pdf', 5),
+('2024-10-13', 'reu-default.pdf', 6),
+('2024-10-20', 'reu-default.pdf', 3),
+('2024-10-27', 'reu-default.pdf', 5),
+('2024-11-03', 'reu-default.pdf', 6),
+('2024-11-10', 'reu-default.pdf', 3);
 
 
 -- Ajout des medias
 INSERT INTO MEDIA (url_media, date_media, id_membre, id_evenement) VALUES
-('http://files.bdeinfo.fr/hjrehr.mp4', '2024-10-21', 3, 2),
-('http://files.bdeinfo.fr/fhir.jpeg', '2024-10-21', 5, 2),
-('http://files.bdeinfo.fr/uyjhghg.mp4', '2024-11-05', 6, 3),
-('http://files.bdeinfo.fr/rtuhght.jpeg', '2024-09-17', 3, 1),
-('http://files.bdeinfo.fr/ytraztru.mp4', '2024-12-13', 8, 4),
-('http://files.bdeinfo.fr/rtghyy.jpeg', '2024-10-11', 6, 4),
-('http://files.bdeinfo.fr/ythghtr.mp4', '2025-01-15', 3, 5),
-('http://files.bdeinfo.fr/tuhyy.jpeg', '2024-09-18', 10, 1),
-('http://files.bdeinfo.fr/reyhy.mp4', '2025-05-02', 6, 6),
-('http://files.bdeinfo.fr/yryert.jpeg', '2024-05-02', 9, 6);
+('media-default.jpg', '2024-10-21', 3, 2),
+('media-default.jpg', '2024-10-21', 5, 2),
+('media-default.jpg', '2024-11-05', 6, 3),
+('media-default.jpg', '2024-09-17', 3, 1),
+('media-default.jpg', '2024-12-13', 8, 4),
+('media-default.jpg', '2024-10-11', 6, 4),
+('media-default.jpg', '2025-01-15', 3, 5),
+('media-default.jpg', '2024-09-18', 10, 1),
+('media-default.jpg', '2025-05-02', 6, 6),
+('media-default.jpg', '2024-05-02', 9, 6);
 
 
 -- -------------------------------------------------------------------------------------
@@ -594,10 +594,10 @@ DELIMITER ;
 
 /*Fonctionnement : on fait une insertion dans media*/
 
-INSERT INTO MEDIA (url_media, date_media, id_membre, id_evenement) VALUES('https://bdeinfo.fr/image_345.png', '2024-10-23', 3, 1);
+INSERT INTO MEDIA (url_media, date_media, id_membre, id_evenement) VALUES('media-default.jpg', '2024-10-23', 3, 1);
 
 /* Test */
-SELECT * FROM MEDIA; -- l'image a bien �t� ajout�e
+SELECT * FROM MEDIA; -- l'image a bien ajoutee dans la galerie de l'evenement 1
 
 
 
@@ -854,8 +854,8 @@ END$$
 DELIMITER ;
 
 
-CALL creationCompte('HANNIER', 'axelle', 'axelle.hannier@example.com', 'krjtj4jykjyi8oi', 'http://files.bdeinfo.fr/defaultPP.jpg');
-CALL creationCompte('DUPONT', 'jean', 'dupont.jean@example.com', 'hjhrethe2454rrhit', 'http://files.bdeinfo.fr/defaultPP.jpg');
+CALL creationCompte('HANNIER', 'axelle', 'axelle.hannier@example.com', 'krjtj4jykjyi8oi', 'default-user.jpg');
+CALL creationCompte('DUPONT', 'jean', 'dupont.jean@example.com', 'hjhrethe2454rrhit', 'default-user.jpg');
 
 SELECT*FROM MEMBRE;
 
