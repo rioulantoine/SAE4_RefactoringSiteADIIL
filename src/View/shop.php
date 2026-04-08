@@ -135,6 +135,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
     </div>
 </div>
 
+
 <p id='message-reduc'>
     * Articles non éligibles aux réductions de grade
 </p>

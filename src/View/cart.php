@@ -37,12 +37,12 @@
 
     <!-- Affichage du message de succès ou d'erreur -->
     <div>
-        <?php
-            if (!empty($flashMessage)) {
-                $messageStyle = ($flashType === "error") ? "error-message" : "success-message";
-                echo '<div class="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
-            }
-        ?>
+            <?php
+                if (!empty($flashMessage)) {
+                    $messageStyle = ($flashType === "error") ? "error-message" : "success-message";
+                    echo '<div class="' . $messageStyle . '">' . htmlspecialchars($flashMessage) . '</div>';
+                }
+            ?>
     </div>
 
     <div>

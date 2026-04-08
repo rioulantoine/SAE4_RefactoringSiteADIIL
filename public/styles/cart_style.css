@@ -180,7 +180,6 @@ H1 {
 **************************/
 
 @media (max-width: 1200px) {
-  /* Réduire le titre pour éviter qu'il dépasse sur les côtés */
   H1 {
     font-size: 3em;
     letter-spacing: 6px;
@@ -188,7 +187,6 @@ H1 {
     padding: 0 10px;
   }
 
-  /* Supprimer les grosses marges latérales globales sur mobile */
   .body_margin > *:not(header):not(footer) {
     margin-left: 0;
     margin-right: 0;
@@ -200,12 +198,11 @@ H1 {
     margin-top: 40px;
   }
 
-  /* Réduire la taille globale du tableau pour tenir dans l'écran */
   #cart-container table {
     font-size: 0.9em;
     max-width: 100%;
-    table-layout: fixed; /* force la table à respecter la largeur dispo */
-    overflow: visible; /* ne pas couper le contenu à l'intérieur du tableau */
+    table-layout: fixed;
+    overflow: visible;
   }
 
   #cart-container table thead th {
@@ -216,7 +213,6 @@ H1 {
     padding: 8px 4px;
   }
 
-  /* Rendre la cellule article plus compacte sur mobile */
   #article-cell {
     gap: 8px;
   }

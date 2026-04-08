@@ -1,5 +1,4 @@
 <?php
-// src/Controller/api/cart.php - minimal cart API for add/del/update actions
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 
@@ -9,7 +8,7 @@ require_once __DIR__ . '/../../Model/database.php';
 $db = new DB();
 $cart = new cart($db);
 
-$action = $_GET['action'] ?? ''; // Changed from $_REQUEST to $_GET for consistency, but kept logic
+$action = $_GET['action'] ?? ''; 
 
 $response = ['error' => true, 'message' => 'Action invalide'];
 
@@ -73,8 +72,12 @@ switch ($action) {
         break;
 }
 
-// Support simple redirect for non-AJAX flows
+// Support simple redirect for non-AJAX flows + flash message in session
 if (isset($_GET['redirect'])) {
+    // Enregistrer le message de réponse en "flash" pour l'afficher dans la vue
+    $_SESSION['message'] = $response['message'] ?? '';
+    $_SESSION['message_type'] = (!empty($response['error'])) ? 'error' : 'success';
+
     $loc = $_GET['redirect'];
     // basic safety: allow only same-origin redirects to the base URL
     // Since we are now in include context, $base is available from index.php
