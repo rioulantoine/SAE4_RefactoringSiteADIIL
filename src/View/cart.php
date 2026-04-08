@@ -77,7 +77,7 @@ $cart = new cart($db);
         <?php
             if (isset($_SESSION['message'])) {
                 $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
-                echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
+                echo '<div class="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
                 unset($_SESSION['message']); // Supprimer le message après affichage
                 unset($_SESSION['message_type']); // Supprimer le type après affichage
             }
