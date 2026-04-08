@@ -37,12 +37,12 @@
 
     <!-- Affichage du message de succès ou d'erreur -->
     <div>
-        <?php
-            if (!empty($flashMessage)) {
-                $messageStyle = ($flashType === "error") ? "error-message" : "success-message";
-                echo '<div class="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
-            }
-        ?>
+            <?php
+                if (!empty($flashMessage)) {
+                    $messageStyle = ($flashType === "error") ? "error-message" : "success-message";
+                    echo '<div class="' . $messageStyle . '">' . htmlspecialchars($flashMessage) . '</div>';
+                }
+            ?>
     </div>
 
     <div>
@@ -84,21 +84,27 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Nombre d'articles &nbsp : </th>
-                    <td><?= (int)$cartCount ?></td>
+                    <th colspan="5">
+                        Nombre d'articles &nbsp :
+                        <span class="cart-footer-value"><?= (int)$cartCount ?></span>
+                    </th>
                 </tr>
                 <tr>
-                    <th>Total &nbsp : </th>
-                    <td><?= number_format((float)$cartTotal, 2, ',', ' ') ?> €</td>
+                    <th colspan="5">
+                        Total &nbsp :
+                        <span class="cart-footer-value"><?= number_format((float)$cartTotal, 2, ',', ' ') ?> €</span>
+                    </th>
                 </tr>
-                
+
                 <?php if ($totalWithReduc !== null): ?>
                     <tr>
-                        <th style="min-width: 400px">Total après réductions &nbsp : </th>
-                        <td style="min-width: 50px"><?= number_format((float)$totalWithReduc, 2, ',', ' ') ?> €</td>
+                        <th colspan="5">
+                            Total après réductions &nbsp :
+                            <span class="cart-footer-value"><?= number_format((float)$totalWithReduc, 2, ',', ' ') ?> €</span>
+                        </th>
                     </tr>
                 <?php endif; ?>
-            <tfoot>
+            </tfoot>
         </table>
     </form>
 </div>

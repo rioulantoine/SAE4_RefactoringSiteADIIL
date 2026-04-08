@@ -58,6 +58,7 @@
     </div>
 </div>
 
+
 <p id='message-reduc'>
     * Articles non éligibles aux réductions de grade
 </p>
