@@ -37,7 +37,7 @@ function modelEventDetailsGetUserMedias(DB $db, int $eventId, int $userId, int $
 function modelEventDetailsGetGeneralMedias(DB $db, int $eventId, int $limit): array
 {
     return $db->select(
-        "SELECT url_media FROM MEDIA WHERE id_evenement = ? ORDER BY date_media ASC LIMIT ?",
+        "SELECT id_media, url_media FROM MEDIA WHERE id_evenement = ? ORDER BY date_media ASC LIMIT ?",
         "ii",
         [$eventId, $limit]
     );

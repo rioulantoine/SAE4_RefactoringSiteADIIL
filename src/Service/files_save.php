@@ -16,7 +16,7 @@ function saveFile() : string | null
 
         // Dossier physique: [racine_projet]/public/api/files/
         // __DIR__ = [racine_projet]/src/Service
-        $uploadDir = __DIR__ . '/../../../public/api/files/';
+        $uploadDir = __DIR__ . '/../../public/api/files/';
 
         if (!is_dir($uploadDir)) {
             if (!mkdir($uploadDir, 0775, true) && !is_dir($uploadDir)) {

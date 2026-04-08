@@ -17,9 +17,17 @@ $savedExpiration = isset($savedPaymentInfo['expiration']) ? $savedPaymentInfo['e
 // Vérifie que la requête est POST et contient les données nécessaires
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userid = $_SESSION["userid"];
-    $eventid = $_POST["eventid"];
+    $eventid = isset($_POST["eventid"]) ? $_POST["eventid"] : null;
 
     $db = new DB();
+
+    // Désinscription à un évènement
+    if (isset($_POST['unsubscribe']) && $_POST['unsubscribe'] === '1' && $eventid !== null) {
+        deleteEventSubscription($db, $userid, $eventid);
+        header("Location: $base/events");
+        exit;
+    }
+
     if(isset($_POST["price"], $_POST["eventid"])){
         $mode_paiement = $_POST['mode_paiement'] ?? 'carte_credit';
 
