@@ -27,7 +27,7 @@ if (empty($infoUser)) {
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     // Appelle saveImage() pour traiter l'image
-    $fileName = saveImage();
+    $fileName = saveImageEvent();
 
     if ($fileName !== null) {
 
