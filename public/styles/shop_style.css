@@ -274,6 +274,14 @@ H1 {
     color: rgb(169, 169, 169);
 }
 
+.stock-remaining {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 1em;
+    color: rgb(119, 241, 190);
+    text-align: center;
+}
+
 
 
 #stock-status{

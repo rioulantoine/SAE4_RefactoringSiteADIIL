@@ -81,6 +81,13 @@
                             <span>    * </span>
                             <?php } ?>
                         </p>
+                        <p class="stock-remaining">
+                            <?php if ((int)$product['stock_article'] < 0): ?>
+                                Stock restant : Illimité
+                            <?php else: ?>
+                                Stock restant : <?= htmlspecialchars($product['stock_article']) ?>
+                            <?php endif; ?>
+                        </p>
                     </div>
                     <div>
                         <p id="stock-status">
