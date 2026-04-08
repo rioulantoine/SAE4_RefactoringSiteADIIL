@@ -1,30 +1,36 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var cardForm = document.querySelector('#carte_credit form');
-    if (!cardForm) {
+    var form = document.querySelector('#carte_credit form');
+    if (!form) {
         return;
     }
 
-    cardForm.addEventListener('submit', function (event) {
-        var cardNumber = document.getElementById('numero_carte');
-        var expiration = document.getElementById('expiration');
-        var cvv = document.getElementById('cvv');
-        var cardValue = cardNumber ? cardNumber.value.split(' ').join('') : '';
-        var expirationValue = expiration ? expiration.value : '';
-        var cvvValue = cvv ? cvv.value : '';
+    form.addEventListener('submit', function (event) {
+        var card = document.getElementById('numero_carte').value.split(' ').join('');
+        var exp = document.getElementById('expiration').value;
+        var cvv = document.getElementById('cvv').value;
 
-        if (!cardValue || cardValue.length !== 16) {
+        if (card.length !== 16 || isNaN(card)) {
             alert('Numéro de carte invalide.');
             event.preventDefault();
             return;
         }
 
-        if (!expirationValue || expirationValue.length !== 5 || expirationValue.charAt(2) !== '/') {
+        if (exp.length !== 5 || exp.charAt(2) !== '/') {
             alert('Date d\'expiration invalide.');
             event.preventDefault();
             return;
         }
 
-        if (!cvvValue || cvvValue.length !== 3) {
+        var month = exp.substring(0, 2);
+        var year = exp.substring(3, 5);
+
+        if (isNaN(month) || isNaN(year) || Number(month) < 1 || Number(month) > 12) {
+            alert('Date d\'expiration invalide.');
+            event.preventDefault();
+            return;
+        }
+
+        if (cvv.length !== 3 || isNaN(cvv)) {
             alert('CVV invalide.');
             event.preventDefault();
             return;
