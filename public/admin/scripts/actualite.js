@@ -61,7 +61,7 @@ async function selectNews(id_news, li){
     try {
         const news = await requestGET(`/index.php?page=api_news&id=${id_news}`);
         const baseUrl = (window.base || window.parent?.base || '').replace(/\/$/, '');
-        const defaultImagePath = window.location.origin + baseUrl + '/public/admin/ressources/default_images/actualite.png';
+        const defaultImagePath = window.location.origin + baseUrl + '/public/api/files/actu_default.webp';
 
         prop_image.src = await getFullFilepath(news.image_actualite, defaultImagePath);
         prop_image.hidden = false;
