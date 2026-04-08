@@ -1,135 +1,131 @@
 <?php
 use model\File;
 use model\News;
-use model\Role;
 
-// Nouveaux chemins basés sur ton arborescence exacte
 require_once __DIR__ . '/../../Service/filter.php';
 require_once __DIR__ . '/../../Model/api/News.php';
 require_once __DIR__ . '/../../Model/database.php';
 require_once __DIR__ . '/../../Service/tools.php';
-require_once __DIR__ . '/../../Model/api/File.php'; // Idem ici
+require_once __DIR__ . '/../../Model/api/File.php';
 
-// TODO: Remove this line in production
-ini_set('display_errors', 1);
-
+ob_start();
+ini_set('display_errors', 0);
 header('Content-Type: application/json');
 
-tools::checkPermission('p_actualite');
+set_error_handler(function($severity, $message, $file, $line) {
+    throw new \ErrorException($message, 0, $severity, $file, $line);
+});
 
-$DB = new DB();
+try {
+    tools::checkPermission('p_actualite');
+    $methode = $_SERVER['REQUEST_METHOD'];
 
-$methode = $_SERVER['REQUEST_METHOD'];
-
-switch ($methode) {
-    case 'GET':                      # READ
-        get_news();
-        break;
-    case 'POST':                     # CREATE
-        create_news();
-        break;
-    case 'PUT':                     # UPDATE (données)
-        if (tools::methodAccepted('application/json')) {
-            update_news();
-        }
-        break;
-
-    case 'PATCH':                     # UPDATE (image)
-            update_image();
-        break;
-
-    case 'DELETE':                   # DELETE
-        delete_news();
-        break;
-    default:
-        # 405 Method Not Allowed
-        http_response_code(405);
-        break;
+    switch ($methode) {
+        case 'GET':
+            get_news();
+            break;
+        case 'POST':
+            if (isset($_GET['action']) && $_GET['action'] === 'update_image') {
+                update_image();
+            } else {
+                create_news();
+            }
+            break;
+        case 'PUT':
+            if (tools::methodAccepted('application/json')) {
+                update_news();
+            }
+            break;
+        case 'DELETE':
+            delete_news();
+            break;
+        default:
+            http_response_code(405);
+            break;
+    }
+} catch (\Throwable $e) {
+    @ob_clean();
+    http_response_code(500);
+    echo json_encode(['error' => 'Erreur PHP : ' . $e->getMessage()]);
+    exit;
 }
 
 function get_news() : void
 {
     if (isset($_GET['id'])) {
-        $id = filter::int($_GET['id']);
-        $news = News::getInstance($id);
-
-        if ($news == null) {
+        $news = News::getInstance(filter::int($_GET['id']));
+        if (!$news) {
             http_response_code(404);
             echo json_encode(['error' => 'News not found']);
-            return;
+            exit;
         }
-        echo $news;
-
+        $data = $news->jsonSerialize();
     } else {
-        $news = News::bulkFetch();
-        echo json_encode($news);
+        $data = News::bulkFetch();
     }
+    http_response_code(200);
+    @ob_clean();
+    echo json_encode($data);
+    exit;
 }
 
 function create_news() : void
 {
-    $news = News::create("Nouvel article", "Description de l'article", "2021-01-01", $_SESSION['userid'], null);
-    echo $news;
+    $id_membre = isset($_SESSION['userid']) ? filter::int($_SESSION['userid']) : 1;
+    $news = News::create("Nouvelle actualité", "Description", date("Y-m-d H:i:s"), $id_membre, null);
+    http_response_code(201);
+    @ob_clean();
+    echo json_encode($news->jsonSerialize());
+    exit;
 }
 
 function update_news() : void
 {
-    $id = filter::int($_GET['id']);
-    $news = News::getInstance($id);
-
-    if ($news == null) {
+    $news = News::getInstance(filter::int($_GET['id']));
+    if (!$news) {
         http_response_code(404);
-        echo json_encode(['error' => 'News not found']);
-        return;
+        exit;
     }
-
     $data = json_decode(file_get_contents('php://input'), true);
-    $name = filter::string($data['name'], maxLenght: 100);
-    $description = filter::string($data['description'], maxLenght: 1000);
-    $date = filter::string($data['date']);
-    $id_membre = filter::int($_SESSION['userid']);
-
-    $news->update($name, $description, $date, $id_membre);
-
-    echo $news;
+    $id_membre = isset($_SESSION['userid']) ? filter::int($_SESSION['userid']) : 1;
+    $news->update(
+        filter::string($data['name'], maxLenght: 100),
+        filter::string($data['description'], maxLenght: 1000),
+        filter::string($data['date']),
+        $id_membre
+    );
+    http_response_code(200);
+    @ob_clean();
+    echo json_encode($news->jsonSerialize());
+    exit;
 }
 
 function update_image() : void
 {
-    $id = filter::int($_GET['id']);
-    $news = News::getInstance($id);
-
-    if ($news == null) {
+    $news = News::getInstance(filter::int($_GET['id']));
+    if (!$news) {
         http_response_code(404);
-        echo json_encode(['error' => 'News not found']);
-        return;
+        exit;
     }
-
     $image = File::saveImage();
-
-    if ($image == null) {
+    if (!$image) {
         http_response_code(400);
-        echo json_encode(['error' => 'Image could not be processed']);
-        return;
+        exit;
     }
-
+    @$news->getImage()?->deleteFile();
     $news->updateImage($image);
-    echo $news;
+    http_response_code(200);
+    @ob_clean();
+    echo json_encode($news->jsonSerialize());
+    exit;
 }
-
 
 function delete_news() : void
 {
-    $id = filter::int($_GET['id']);
-    $news = News::getInstance($id);
-
-    if ($news == null) {
-        http_response_code(404);
-        echo json_encode(['error' => 'News not found']);
-        return;
-    }
-
-    $news->delete();
+    $news = News::getInstance(filter::int($_GET['id']));
+    if ($news) $news->delete();
     http_response_code(200);
-    echo json_encode(['message' => 'News deleted']);
+    @ob_clean();
+    echo json_encode(['message' => 'Deleted']);
+    exit;
 }

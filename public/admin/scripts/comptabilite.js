@@ -4,48 +4,38 @@ import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
 import { getFileBucketUrl, openFileDialog } from "./files.js";
 
-// Elements
 const main_content = document.getElementById('main_content');
 
 async function updateView(){
-
-    // Show skeleton
     showPropertieSkeleton();
     showLoader();
 
-    // Remove all files
     while (main_content.firstChild)
         main_content.removeChild(main_content.firstChild);
 
-    // Add "upload file" button
     addUpdloadButton();
 
-    // Fetch data
-    const data = await requestGET('/index.php?page=api_accounting');
-
-    // Add elements
-    for (let i = 0; i < data.length; i++) {
-        addAccountingElement(data[i]);
+    try {
+        const data = await requestGET('/index.php?page=api_accounting');
+        for (let i = 0; i < data.length; i++) {
+            addAccountingElement(data[i]);
+        }
+    } catch (error) {
+        toast("Erreur de chargement");
     }
 
-    // Hide skeletons
     hidePropertieSkeleton();
     hideLoader();
-
 }
 
 function addAccountingElement(data){
-
-    // Create div
     const container = document.createElement('div');
     container.className = 'file-element';
 
-    // Add icon (Chemin corrigé)
     const icon = document.createElement('img');
     icon.src = `public/admin/ressources/sheet.png`;
     container.appendChild(icon);
 
-    // Add text
     const text = document.createElement('div');
     const title = document.createElement('p');
     title.textContent = data.nom_comptabilite;
@@ -55,7 +45,6 @@ function addAccountingElement(data){
     text.appendChild(date);
     container.appendChild(text);
 
-    // Add buttons (Chemins corrigés)
     const download_button = document.createElement('button');
     download_button.className = 'btn-transparent btn-blue';
     download_button.innerHTML = `<img src="public/admin/ressources/download.svg">`;
@@ -66,15 +55,13 @@ function addAccountingElement(data){
     delete_button.innerHTML = `<img src="public/admin/ressources/delete.svg">`;
     container.appendChild(delete_button);
 
-    // Append div
     main_content.appendChild(container);
 
-    // Add download event
     download_button.onclick = () => {
-        window.open(getFileBucketUrl(data.url_comptabilite), '_blank');
+        const fileUrl = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + data.url_comptabilite;
+        window.open(fileUrl, '_blank');
     }
 
-    // Add delete event
     delete_button.onclick = async () => {
         swal({
             title: "Êtes-vous sûr ?",
@@ -93,26 +80,17 @@ function addAccountingElement(data){
                 }
             }
         });
-        
     }
-
 }
 
 function addUpdloadButton(){
-
-    // Add "upload file" button (Chemin corrigé)
     const upload_button = document.createElement('button');
     upload_button.innerHTML = `<img src="public/admin/ressources/download.svg"><p>Upload file</p>`;
     upload_button.className = 'btn-transparent btn-blue upload-button';
     main_content.appendChild(upload_button);
 
-    // Add event listener
     upload_button.onclick = async () => {
-
-        // Get file
-        const file = await openFileDialog("document/*");
-
-        // Ask name
+        const file = await openFileDialog();
         swal({
             title: "Entrez le nom a donner",
             text: "Veuillez saisir le nom :",
@@ -129,32 +107,27 @@ function addUpdloadButton(){
                 uploadFile(file, value, new Date().toISOString().split('T')[0]);
             }
           });
-
     }
-
 }
 
 async function uploadFile(file, name, date){
-
-    // Show loader
     showLoader();
-
-    // Create form data
     const form_data = new FormData();
     form_data.append('file', file);
     form_data.append('nom', name);
     form_data.append('date', date);
 
-    // Send request
     try{
-        await requestPOST('/index.php?page=api_accounting', form_data);
+        await fetch(window.location.origin + (window.base || window.parent?.base || '') + 'index.php?page=api_accounting', {
+            method: 'POST',
+            body: form_data
+        });
         toast("Fichier uploadé avec succès");
         updateView();
     } catch (error) {
         toast(error.message, true);
         hideLoader();
     }
-
 }
 
 updateView();

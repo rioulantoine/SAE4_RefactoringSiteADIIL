@@ -1,8 +1,10 @@
 /**
  * The base URL for the server API.
+ * Injected by the admin panel via window.base.
  * @constant {string}
  */
-const SERVER_API_URL = '.';
+const BASE_URL = ((window.base || (window.parent && window.parent.base) || '')).replace(/\/$/, '');
+const SERVER_API_URL = BASE_URL.length ? BASE_URL : '.';
 
 /**
  * If true, the fetch requests are logged in the console.
@@ -21,9 +23,14 @@ const DEBUG_FETCHS = isDebug();
 async function request(endpoint, method = 'GET', data = null, headers = {}) {
 
     // Create url
-    if (!endpoint.startsWith('/'))
-        endpoint = endpoint + '/';
-    const url = SERVER_API_URL + endpoint;
+    let url;
+    if (/^https?:\/\//i.test(endpoint)) {
+        url = endpoint;
+    } else {
+        endpoint = endpoint.replace(/^\/+/, '');
+        const baseUrl = BASE_URL || '/';
+        url = window.location.origin + baseUrl + (baseUrl.endsWith('/') ? '' : '/') + endpoint;
+    }
 
     // Fetch
     try {
@@ -31,6 +38,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         const options = {
             method,
             headers: {
+                'Accept': 'application/json',
                 ...headers
             }
         };
@@ -52,7 +60,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         // Récupérer et retourner le résultat en JSON
         const text = await response.text();
         if (DEBUG_FETCHS) {
-            console.log(`%c(${response.status}) %c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: red', 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: powderblue;');
+            console.log(`%c(${response.status}) %c${method} %c${endpoint}%c -> %c${url}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: red', 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: blue', 'color: powderblue;');
         }
         let json = null;
         try {

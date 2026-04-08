@@ -9,35 +9,30 @@ require_once __DIR__ . '/Member.php';
 
 class Meeting extends BaseModel implements JsonSerializable
 {
-
     public function delete() : void
     {
-        $this->getFile()?->deleteFile();
+        $file = $this->getFile();
+        if ($file) $file->deleteFile();
         $this->DB->query("DELETE FROM REUNION WHERE id_reunion = ?", "i", [$this->id]);
     }
 
     public function getFile() : File | null
     {
-        $data = $this->DB->select("SELECT fichier_reunion
-                                 FROM REUNION
-                                 WHERE id_reunion = ?", "i", [$this->id])[0];
+        $res = $this->DB->select("SELECT fichier_reunion FROM REUNION WHERE id_reunion = ?", "i", [$this->id]);
+        if (empty($res)) return null;
 
-        return File::getFile($data['fichier_reunion']);
+        return File::getFile($res[0]['fichier_reunion']);
     }
 
     public function getUser() : Member
     {
-        $data = $this->DB->select("SELECT id_membre
-                                 FROM REUNION
-                                 WHERE id_reunion = ?", "i", [$this->id])[0];
-
-        return new Member($data['id_membre']);
+        $res = $this->DB->select("SELECT id_membre FROM REUNION WHERE id_reunion = ?", "i", [$this->id]);
+        return new Member($res[0]['id_membre']);
     }
 
     public static function create(string $date, File $file, Member $member) : Meeting
     {
         $DB = new \DB();
-
         $id = $DB->query("INSERT INTO REUNION (date_reunion, fichier_reunion, id_membre)
                     VALUES (?, ?, ?)", "ssi", [$date, $file->getFileName(), $member->getId()]);
 
@@ -56,14 +51,14 @@ class Meeting extends BaseModel implements JsonSerializable
         return new Meeting($id);
     }
 
-
     public function jsonSerialize(): array
     {
-        $data = $this->DB->select("SELECT id_reunion, date_reunion, fichier_reunion
-                                 FROM REUNION
-                                 WHERE id_reunion = ?", "i", [$this->id])[0];
+        $res = $this->DB->select("SELECT id_reunion, date_reunion, fichier_reunion FROM REUNION WHERE id_reunion = ?", "i", [$this->id]);
+        if (empty($res)) return [];
 
-        $data['user'] = $this->getUser();
+        $data = $res[0];
+        $user = $this->getUser();
+        $data['user'] = $user->toJson();
 
         return $data;
     }
@@ -76,7 +71,6 @@ class Meeting extends BaseModel implements JsonSerializable
 
     public function __toString() : string
     {
-        return json_encode($this);
+        return json_encode($this->jsonSerialize());
     }
-
 }

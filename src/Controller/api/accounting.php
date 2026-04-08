@@ -2,113 +2,106 @@
 use model\Accounting;
 use model\File;
 
-// Chemins corrigés
 require_once __DIR__ . '/../../Model/database.php';
 require_once __DIR__ . '/../../Service/tools.php';
 require_once __DIR__ . '/../../Service/filter.php';
 require_once __DIR__ . '/../../Model/api/File.php';
 require_once __DIR__ . '/../../Model/api/Accounting.php';
 
-// TODO: Remove this line in production
-ini_set('display_errors', 1);
-
+ob_start();
+ini_set('display_errors', 0);
 header('Content-Type: application/json');
 
-tools::checkPermission('p_comptabilite');
+set_error_handler(function($severity, $message, $file, $line) {
+    throw new \ErrorException($message, 0, $severity, $file, $line);
+});
 
-$methode = $_SERVER['REQUEST_METHOD'];
+try {
+    tools::checkPermission('p_comptabilite');
 
-switch ($methode) {
-    case 'GET':                      # READ
-        get_accounting();
-        break;
+    $methode = $_SERVER['REQUEST_METHOD'];
 
-    case 'POST':                     # CREATE
+    switch ($methode) {
+        case 'GET':
+            get_accounting();
+            break;
+        case 'POST':
             create_accounting();
-        break;
-    case 'DELETE':                   # DELETE
+            break;
+        case 'DELETE':
             delete_accounting();
-        break;
-    default:
-        # 405 Method Not Allowed
-        http_response_code(405);
-        break;
+            break;
+        default:
+            http_response_code(405);
+            break;
+    }
+} catch (\Throwable $e) {
+    @ob_clean();
+    http_response_code(500);
+    echo json_encode(['error' => 'Erreur PHP : ' . $e->getMessage()]);
+    exit;
 }
-
 
 function get_accounting(): void
 {
     if (isset($_GET['id'])) {
-        // Si un ID est précisé, on renvoie en plus les infos de l'utilisateur qui a crée le fichier
-        $id = $_GET['id'];
-
+        $id = filter::int($_GET['id']);
         $data = Accounting::getInstance($id);
-
         if ($data == null) {
             http_response_code(404);
-            echo json_encode(["message" => "Accounting file not found"]);
-            return;
+            @ob_clean();
+            echo json_encode(["message" => "Not found"]);
+            exit;
         }
-
+        $result = $data->jsonSerialize();
     } else {
-
-        $data = Accounting::bulkFetch();
+        $result = Accounting::bulkFetch();
     }
 
-    echo json_encode($data);
+    http_response_code(200);
+    @ob_clean();
+    echo json_encode($result);
+    exit;
 }
-
 
 function create_accounting(): void
 {
-    // TODO : Récupérer l'ID de membre grace au token PHP
-
     if (!isset($_POST['date'], $_POST['nom'])) {
         http_response_code(400);
+        @ob_clean();
         echo json_encode(["message" => "Missing parameters"]);
-        return;
+        exit;
     }
 
     $file = File::saveFile();
 
     if ($file == null) {
         http_response_code(400);
-        echo json_encode(["message" => "Accounting file not created"]);
-
-    } else {
-
-        $date = filter::date($_POST['date']);
-        $nom = filter::string($_POST['nom'], maxLenght: 100);
-        $id_membre = filter::int($_SESSION['userid']);
-
-        $compta = Accounting::create($date, $nom, $file, $id_membre);
-
-
-        http_response_code(201);
-        echo $compta;
+        @ob_clean();
+        echo json_encode(["message" => "File error"]);
+        exit;
     }
 
+    $date = filter::date($_POST['date']);
+    $nom = filter::string($_POST['nom'], maxLenght: 100);
+    $id_membre = filter::int($_SESSION['userid'] ?? 1);
+
+    $compta = Accounting::create($date, $nom, $file->getFileName(), $id_membre);
+
+    http_response_code(201);
+    @ob_clean();
+    echo json_encode($compta->jsonSerialize());
+    exit;
 }
 
 function delete_accounting() : void
 {
-    if (!isset($_GET['id'])) {
-        http_response_code(400);
-        echo json_encode(["message" => "Missing parameters"]);
-        return;
-    }
-
     $id = filter::int($_GET['id']);
-
     $compta = Accounting::getInstance($id);
-
-    if ($compta == null) {
-        http_response_code(404);
-        echo json_encode(["message" => "Accounting file not found"]);
-        return;
-    }
-
-    $compta->delete();
+    if ($compta) $compta->delete();
+    
     http_response_code(200);
-    echo json_encode(["message" => "Accounting file deleted"]);
+    @ob_clean();
+    echo json_encode(["message" => "Deleted"]);
+    exit;
 }

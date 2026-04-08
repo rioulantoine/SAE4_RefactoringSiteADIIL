@@ -37,10 +37,14 @@ class Accounting extends BaseModel implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        $data = $this->DB->select("SELECT * FROM COMPTABILITE WHERE id_comptabilite = ?", "i", [$this->id])[0];
-
-        $data['user'] = $this->DB->select("SELECT * FROM MEMBRE WHERE id_membre = ?", "i", [$data['id_membre']])[0];
-
+        $res = $this->DB->select("SELECT * FROM COMPTABILITE WHERE id_comptabilite = ?", "i", [$this->id]);
+        
+        if (empty($res)) return [];
+        
+        $data = $res[0];
+        $userRes = $this->DB->select("SELECT id_membre, nom_membre, prenom_membre FROM MEMBRE WHERE id_membre = ?", "i", [$data['id_membre']]);
+        
+        $data['user'] = !empty($userRes) ? $userRes[0] : null;
         unset($data['id_membre']);
 
         return $data;
@@ -54,6 +58,6 @@ class Accounting extends BaseModel implements JsonSerializable
 
     public function __toString() : string
     {
-        return json_encode($this);
+        return json_encode($this->jsonSerialize());
     }
 }

@@ -1,92 +1,66 @@
 <?php
 use model\Member;
 
-// Chemins corrigés avec __DIR__
 require_once __DIR__ . '/../../Service/filter.php';
 require_once __DIR__ . '/../../Model/api/Role.php';
 require_once __DIR__ . '/../../Model/api/Member.php';
 require_once __DIR__ . '/../../Model/database.php';
 require_once __DIR__ . '/../../Service/tools.php';
 
-// TODO: Remove this line in production
-ini_set('display_errors', 1);
-
+ob_start();
+ini_set('display_errors', 0);
 header('Content-Type: application/json');
 
-tools::checkPermission('p_role');
-tools::checkPermission('p_utilisateur');
+try {
+    tools::checkPermission('p_role');
+    tools::checkPermission('p_utilisateur');
 
-$methode = $_SERVER['REQUEST_METHOD'];
+    $methode = $_SERVER['REQUEST_METHOD'];
 
-switch ($methode) {
-    case 'GET':                      # READ
-        get_userRoles();
-        break;
-    case 'PUT':
-        if (tools::methodAccepted('application/json')) {
-            setUserRoles();
-        }
-        break;
-    default:
-        # 405 Method Not Allowed
-        http_response_code(405);
-        break;
+    switch ($methode) {
+        case 'GET':
+            get_userRoles();
+            break;
+        case 'PUT':
+            if (tools::methodAccepted('application/json')) {
+                setUserRoles();
+            }
+            break;
+        default:
+            http_response_code(405);
+            break;
+    }
+} catch (\Throwable $e) {
+    @ob_clean();
+    http_response_code(500);
+    echo json_encode(['error' => $e->getMessage()]);
 }
 
 function get_userRoles() : void
 {
     if (isset($_GET['id'])) {
-        // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
-        $id = filter::int($_GET['id']);
-
-        $data = Member::getInstance($id);
-
-        if (!$data) {
+        $user = Member::getInstance(filter::int($_GET['id']));
+        if (!$user) {
             http_response_code(404);
-            echo json_encode(["message" => "User not found"]);
-            return;
+            exit;
         }
-
         http_response_code(200);
-        echo json_encode($data->getRoles());
-
-    } else {
-        http_response_code(400);
-        echo json_encode(["message" => "Missing id"]);
+        @ob_clean();
+        echo json_encode($user->getRoles());
     }
+    exit;
 }
 
 function setUserRoles() : void
 {
-    if (isset($_GET['id'])) {
+    $user = Member::getInstance(filter::int($_GET['id']));
+    $data = json_decode(file_get_contents('php://input'), true);
 
-        $id = filter::int($_GET['id']);
-
-        $data = Member::getInstance($id);
-
-        if (!$data) {
-            http_response_code(404);
-            echo json_encode(["message" => "User not found"]);
-            return;
-        }
-        $val = json_decode(file_get_contents('php://input'), true);
-
-        if (!isset($val['roles'])) {
-            http_response_code(400);
-            echo json_encode(['message' => 'Missing parameters']);
-            return;
-        }
-
-        $roles = filter::json($val['roles']);
-        $success = $data->setRoles($roles);
-
-        if ($success) {
-            http_response_code(200);
-            echo json_encode($data->getRoles());
-        } else {
-            http_response_code(400);
-            echo json_encode(["message" => "Error while updating roles"]);
-        }
-
+    if ($user && isset($data['roles'])) {
+        $user->setRoles($data['roles']);
+        http_response_code(200);
+        @ob_clean();
+        echo json_encode($user->getRoles());
     }
+    exit;
 }

@@ -7,16 +7,16 @@ use JsonSerializable;
 require_once __DIR__ . '/BaseModel.php';
 require_once __DIR__ . '/File.php';
 
-
 class Grade extends BaseModel implements JsonSerializable
 {
-
     public static function create(string $name, string $description, float $price, File | null $image, float $reduction) : Grade
     {
         $DB = new \DB();
 
+        $imagePath = $image !== null ? $image->getFileName() : "default.png";
+
         $id = $DB->query("INSERT INTO GRADE (nom_grade, description_grade, prix_grade, image_grade, reduction_grade)
-                    VALUES (?, ?, ?, ?, ?)", "ssdsd", [$name, $description, $price, $image, $reduction]);
+                    VALUES (?, ?, ?, ?, ?)", "ssdsd", [$name, $description, $price, $imagePath, $reduction]);
 
         return new Grade($id);
     }
@@ -31,6 +31,11 @@ class Grade extends BaseModel implements JsonSerializable
     public function getImage() : File | null
     {
         $image = $this->DB->select("SELECT image_grade FROM GRADE WHERE id_grade = ?", "i", [$this->id])[0]['image_grade'];
+        
+        if (str_starts_with($image, 'http')) {
+            return null;
+        }
+        
         return File::getFile($image);
     }
 
@@ -73,6 +78,5 @@ class Grade extends BaseModel implements JsonSerializable
     public function jsonSerialize(): array
     {
         return $this->DB->select("SELECT * FROM GRADE WHERE id_grade = ?", "i", [$this->id])[0];
-
     }
 }

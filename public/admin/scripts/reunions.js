@@ -3,128 +3,89 @@ import { requestGET, requestDELETE, requestPOST } from './ajax.js';
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
-import { getFileBucketUrl, openFileDialog } from "./files.js";
+import { openFileDialog } from "./files.js";
 
-// Show skeleton
 showPropertieSkeleton();
 
-// Get inputs
 const download_btn = document.getElementById('download_btn');
 const delete_btn = document.getElementById('delete_btn');
 const new_btn = document.getElementById('new_btn');
 const pdf_preview = document.getElementById('pdf_preview');
 
-/**
- * Reloads the navigation bar with reunions items.
- */
 async function fetchData() {
-
-    // Fetch data
-    let roles = [];
+    let meetings = [];
     try{
-        roles = await requestGET('/index.php?page=api_meeting');
+        meetings = await requestGET('/index.php?page=api_meeting');
     } catch (error) {
         toast(error.message, true);
     }
-
-    // Transform data to navbar items
-    return roles.map(role => ({label: role.date_reunion.split(' ')[0], id: role.id_reunion}));
-
+    return meetings.map(m => ({label: m.date_reunion.split(' ')[0], id: m.id_reunion}));
 }
 
-/**
- * Deletes the reunion from the DB.
-*/
 async function deleteReunion(id_reunion){
-
-    // Show loader
     showLoader();
-
-    // Send request
-    await requestDELETE(`/index.php?page=api_meeting&id=${id_reunion}`);
-    
-    /// Update navbar
-    refreshNavbar(fetchData, selectReunion);
-
-    // Deleted message
-    toast('Reunion supprimé avec succès.');
-
-}
-
-/**
- * Loads and displays reunion information based on the provided grade ID.
- *
- * @param {number} id_reunion - The ID of the reunion to be selected.
- */
-async function selectReunion(id_reunion, li){
-
-    // Show skeleton
-    showPropertieSkeleton();
-
-    // Show loader
-    showLoader();
-
-    // Fetch grade information
-    const role = await requestGET(`/index.php?page=api_meeting&id=${id_reunion}`);
-
-    // Update displayed information
-    const url = getFileBucketUrl(role.fichier_reunion);
-    pdf_preview.src = url;
-
-    // Update download button
-    download_btn.onclick = ()=>{
-        window.open(url, '_blank');
-    };
-
-    // Delete button
-    delete_btn.onclick = ()=>{
-        swal({
-            title: "Êtes vous sûr ?",
-            text: "Cette action est définitive",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-                deleteReunion(id_reunion);
-            }
-          });
-    };
-
-    // Hide loader
+    try {
+        await requestDELETE(`/index.php?page=api_meeting&id=${id_reunion}`);
+        refreshNavbar(fetchData, selectReunion);
+        toast('Réunion supprimée avec succès.');
+    } catch (error) {
+        toast(error.message, true);
+    }
     hideLoader();
-
-    // Hide skeleton
-    hidePropertieSkeleton();
-    
 }
 
-// Handle new reunion
-new_btn.onclick = async ()=>{
-
-    // Get file
-    const file = await openFileDialog("application/pdf");
-
-    // Show loader
+async function selectReunion(id_reunion, li){
+    showPropertieSkeleton();
     showLoader();
 
-    // Create form data
+    try {
+        const meeting = await requestGET(`/index.php?page=api_meeting&id=${id_reunion}`);
+        
+        const fileUrl = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + meeting.fichier_reunion;
+        pdf_preview.src = fileUrl;
+
+        download_btn.onclick = ()=>{
+            window.open(fileUrl, '_blank');
+        };
+
+        delete_btn.onclick = ()=>{
+            swal({
+                title: "Êtes vous sûr ?",
+                text: "Cette action est définitive",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                if (willDelete) {
+                    deleteReunion(id_reunion);
+                }
+              });
+        };
+    } catch (error) {
+        toast("Erreur lors de la sélection");
+    }
+
+    hideLoader();
+    hidePropertieSkeleton();
+}
+
+new_btn.onclick = async ()=>{
+    const file = await openFileDialog("application/pdf");
+    showLoader();
+
     const form_data = new FormData();
     form_data.append('file', file);
     form_data.append('date', new Date().toISOString().split('T')[0]);
 
-    // Send request
     try{
-        const { id_role: id_reunion } =  await requestPOST('/index.php?page=api_meeting', form_data);
-        refreshNavbar(fetchData, selectReunion, id_reunion);
+        const result = await requestPOST('/index.php?page=api_meeting', form_data);
+        refreshNavbar(fetchData, selectReunion, result.id_reunion);
         toast("Fichier uploadé avec succès");
     } catch (error) {
         toast(error.message, true);
         hideLoader();
     }
-
 }
 
-// Load navbar
 refreshNavbar(fetchData, selectReunion);

@@ -551,7 +551,7 @@ CREATE TRIGGER permissions_create_event AFTER INSERT ON ACTUALITE FOR EACH ROW
 		DECLARE _user_id INT;
 		DECLARE _has_perms INT;
 		SET _user_id = NEW.id_membre;
-		SET _has_perms = (SELECT `Gestion des actualites` FROM LISTE_PERMISSIONS WHERE id_membre = _user_id);
+		SET _has_perms = (SELECT p_actualite FROM LISTE_PERMISSIONS WHERE id_membre = _user_id);
 
 		IF (_has_perms = 0) THEN
 			-- ROLLBACK TRANSACTION n'existe pas en MySQL, on utilise donc une erreur pour annuler l'insertion
@@ -668,9 +668,7 @@ BEGIN
     	where ADHESION.date_adhesion = (select MAX(date_adhesion) from ADHESION where ADHESION.id_membre = _id_membre_acheteur)
     	and ADHESION.id_membre = _id_membre_acheteur);
 
- 	-- RETOUR :
-   	-- NULL ou 0 si, respectivement, le membre ne poss�de de grade ou que son grade n'offre pas de r�duction.
-   	-- Ou alors la valeur de la r�duction en pourcentage.
+
 
  	-- Par consequent, on convertit le pourcentage en valeur multipliable.
  	if (_reduc_grade IS NULL OR _reduc_grade = 0 OR _is_reductible = 0) THEN
@@ -715,16 +713,6 @@ SELECT ARTICLE.stock_article FROM ARTICLE WHERE ARTICLE.id_article = 1; -- Le st
 
 
 
-/*******************************************************************/
-/*Membre : Supprimer son compte utilisateur*/
-/******************************************************************/
-
-/* Contexte : un membre souhaite supprimer son compte.*/
-
-/*Fonctionnement : On supprime, les donnees personnelles de l'utilisateurs
- et les medias qu'il a partage de ce fait les administrateur ne pas faire
- un delete de membre permet aux administrateur d'avoir une meilleure 
- lisibilite de l'historique des achats*/
 
 DROP PROCEDURE IF EXISTS suppressionCompte;
 
@@ -749,11 +737,6 @@ CALL suppressionCompte(5); -- Le membre ayant l'identifiant 5 souhaite supprimer
 
 
 
-/*******************************************************************/
-/*Membre : Annuler l'inscription si pas assez de place */
-/******************************************************************/
-
-/* Contexte : un membre souhaite s'inscrire a un evenement.*/
 
 /*Fonctionnement : Apres l'insertion le SGBD annule l'inscription
 automatiquement si l'evenements est deja complet. */
@@ -812,18 +795,6 @@ SELECT EVENEMENT.places_evenement - COUNT(*) as places_restantes from EVENEMENT
 -- -------------------------------------------------------------------------------------
 
 
-/*****************************************************************************************************************************/
-/*Visiteur : Afficher la liste des evenments et le nombre de place disponible*/
-/*****************************************************************************************************************************/
-
-/* Contexte : un visiteur souhaite consulter la liste 
-des evenements et leurs informations.*/
-
-/*Fonctionnement : On affiche les informations de la 
-table evenement et on compte le nombre de places
-restantes pour chaque evenement
-De plus on trie les evenements par anciennete*/
-
 
 SELECT 
     EVENEMENT.nom_evenement, 
@@ -842,32 +813,9 @@ ORDER BY
 
 
 
-
-/*******************************************************/
-/*Visiteur : Afficher la liste des articles disponibles*/
-
-/******************************************************/
-/* Contexte : un visiteur souhaite consulter la liste 
-des articles disponibles.*/
-
-/*Fonctionnement : On affiche les informations de la 
-table article et on verifie qu'il y a au moins un
-exemplaire de chaque article en stock
-De plus, pour une meilleur lecture on trie les 
-articles dans l'ordre alphabetique*/
-
 SELECT nom_article, xp_article, reduction_article, prix_article FROM ARTICLE WHERE STOCK_article > 0 ORDER BY nom_article;
 
 
-
-/*******************************************************/
-/*Visiteur : Rechercher une actualite par titre*/
-
-/******************************************************/
-/* Contexte : un visiteur souhaite voir les actualit�s 
-dont le titre contient un certain mot cl�.*/
-
-/*Fonctionnement : On affiche toutes les actualit�s dont le titre contient le mot cl�*/
 
 SELECT titre_actualite, image_actualite, date_actualite FROM ACTUALITE WHERE titre_actualite LIKE '%integration%' ORDER BY titre_actualite;
 
