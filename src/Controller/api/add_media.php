@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../Model/database.php';
 $db = new DB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'], $_POST['userid'], $_POST['eventid'])) {
-        $fileName = saveImage();
+        $fileName = saveImageEvent();
         
         $date = new DateTime();
         $sqlDate = $date->format('Y-m-d H:i:s');
