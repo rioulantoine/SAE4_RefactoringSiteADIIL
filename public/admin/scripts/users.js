@@ -69,7 +69,7 @@ async function selectUser(id_member, li){
     if (user.pp_membre && user.pp_membre.startsWith('http')) {
         prop_img.src = user.pp_membre;
     } else if (user.pp_membre && user.pp_membre !== "default.png" && user.pp_membre !== "N/A") {
-        prop_img.src = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + user.pp_membre;
+        prop_img.src = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/' + user.pp_membre;
     } else {
         prop_img.src = defaultImagePath;
     }

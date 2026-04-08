@@ -58,7 +58,7 @@ function addAccountingElement(data){
     main_content.appendChild(container);
 
     download_button.onclick = () => {
-        const fileUrl = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + data.url_comptabilite;
+        const fileUrl = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/' + data.url_comptabilite;
         window.open(fileUrl, '_blank');
     }
 

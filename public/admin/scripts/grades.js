@@ -62,7 +62,7 @@ async function selectGrade(id_grade, li){
     if (grade.image_grade && grade.image_grade.startsWith('http')) {
         prop_image_grade.src = grade.image_grade;
     } else if (grade.image_grade && grade.image_grade !== "default.png" && grade.image_grade !== "N/A") {
-        prop_image_grade.src = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + grade.image_grade;
+        prop_image_grade.src = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/' + grade.image_grade;
     } else {
         prop_image_grade.src = defaultImagePath;
     }

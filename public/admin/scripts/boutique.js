@@ -67,7 +67,7 @@ async function selectArticle(id_article, li){
     if (article.image_article && article.image_article.startsWith('http')) {
         prop_image.src = article.image_article;
     } else if (article.image_article && article.image_article !== "default.png") {
-        prop_image.src = window.location.origin + (window.base || window.parent?.base || '') + 'files/' + article.image_article;
+        prop_image.src = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/' + article.image_article;
     } else {
         prop_image.src = defaultImagePath;
     }
