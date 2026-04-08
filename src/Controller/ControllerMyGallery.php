@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../Service/files_save.php';
-require_once __DIR__ . '/../Model/database.php';
+require_once __DIR__ . '/../Model/ModelMyGallery.php';
 
 $db = new DB();
 
@@ -23,15 +23,7 @@ $db = new DB();
             }
         }
 
-        $event = $db->select(
-            "SELECT `nom_evenement` FROM EVENEMENT WHERE id_evenement = ?",
-            "i",
-            [$eventid]
-        )[0];
+        $event = getMyGalleryEvent($db, $eventid);
 
-        $medias = $db->select(
-                "SELECT id_media, url_media FROM `MEDIA` WHERE id_membre = ? and id_evenement = ? ORDER by date_media ASC LIMIT ?;",
-                "iii",
-                [$userid, $eventid, $limit]
-                );
+        $medias = getMyGalleryMedias($db, $userid, $eventid, $limit);
 require_once __DIR__ . '/../View/api/my_gallery.php';

@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET' || !isset($_GET['id'])) {
     exit;
 }
 
-$newsId = (int) $_GET['id'];
+$newsId = $_GET['id'];
 $db = new DB();
 $event = getNewsById($db, $newsId);
 

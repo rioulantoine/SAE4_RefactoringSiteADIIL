@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../Model/api/Event.php';
+require_once __DIR__ . '/../Model/ModelEvents.php';
 
 use model\Event;
 
@@ -75,11 +76,7 @@ foreach ($events as $event) {
         $otherClasses = '';
     }
 
-    $remaining = $event['places_evenement'] - (int)($db->select(
-        'SELECT COUNT(*) as count FROM INSCRIPTION WHERE id_evenement = ?',
-        'i',
-        [$eventId]
-    )[0]['count']);
+    $remaining = $event['places_evenement'] - getEventCountById($db, $eventId);
 
     if ($isPassed) {
         $subscriptionClass = 'event-full';
@@ -93,11 +90,7 @@ foreach ($events as $event) {
     }
 
     if ($isLoggedIn && !$isPassed) {
-        $isSubscribed = !empty($db->select(
-            'SELECT id_membre FROM INSCRIPTION WHERE id_membre = ? AND id_evenement = ?',
-            'ii',
-            [$_SESSION['userid'], $eventId]
-        ));
+        $isSubscribed = isUserSubscribedToEvent($db, $_SESSION['userid'], $eventId);
 
         if ($isSubscribed) {
             $subscriptionClass = 'event-subscribed';

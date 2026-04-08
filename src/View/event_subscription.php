@@ -47,8 +47,6 @@
             </table>
 
             <h3>Total &nbsp : &nbsp <?= number_format($price, 2, ',', ' ') ?> €</h3>
-            <?php         var_dump($price);
-            var_dump($user_reduction);?>
                         <h3>Total après réductions &nbsp : &nbsp <?= number_format($price*$user_reduction, 2, ',', ' ') ?> €</h3>
                    
         </div>
@@ -80,7 +78,7 @@
                 </form>
             </div>
             <div id="paypal" class="mode_paiement_fields" style="display: none;">
-                <form method="POST" action="/event_subscription.php">
+                <form method="POST" action="<?php echo $base; ?>event_subscription">
                     <input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
                     <input type="hidden" name="price" value="<?php echo $price*$user_reduction; ?>">
                     <input type="hidden" name="mode_paiement" value="paypal">
