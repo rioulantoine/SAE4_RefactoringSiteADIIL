@@ -42,7 +42,7 @@ switch ($page) {
         break;
 
     case 'shop':
-        require_once __DIR__ . '/src/View/shop.php';
+        require_once __DIR__ . '/src/Controller/ControllerShop.php';
         break;
 
     case 'grade_subscription':

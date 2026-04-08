@@ -17,83 +17,6 @@
 <body class="body_margin">
 
 <!--------------->
-<!------PHP------>
-<!--------------->
-
-<!-- Importer les fichiers -->
-<?php 
-require_once __DIR__ . '/../Service/files_save.php';
-// Use the project's Model cart class (temp-site cart_class.php is missing)
-require_once __DIR__ . '/../Model/cart_class.php';  
-
-// Connexion à la base de donnees
-$db = new DB();
-
-// Initialisation du panier
-$cart = new cart($db);
-
-
-// Gestion de la recherche, des filtres et tris
-
-//Traitement du formulaire
-$filters = [];
-$orderBy = "name_asc";
-$searchTerm = "";
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['reset'])) {
-        $filters = [];
-        $orderBy = "name_asc";
-        $searchTerm = "";
-    } else {
-        if (isset($_POST['category'])) {
-            $filters = $_POST['category'];
-        }
-        if (isset($_POST['sort'])) {
-            $orderBy = $_POST['sort'];
-        }
-        if (!empty($_POST['search'])) {
-            $searchTerm = $_POST['search'];
-        }
-    }
-}
-
-//Construction de la requête SQL
-$query = "SELECT * FROM ARTICLE";
-$whereClauses = ["deleted = false"];
-$params = [];
-// Ajout de la recherche par nom
-if (!empty($searchTerm)) {
-    $whereClauses[] = "nom_article LIKE ?";
-    $params[] = '%' . $searchTerm . '%';
-}
-// Ajout des filtres par catégorie
-if (!empty($filters)) {
-    $placeholders = implode(", ", array_fill(0, count($filters), "?"));
-    $whereClauses[] = "categorie_article IN ($placeholders)";
-    $params = array_merge($params, $filters);
-}
-// Ajout des clauses WHERE
-if (!empty($whereClauses)) {
-    $query .= " WHERE " . implode(" AND ", $whereClauses);
-}
-// Ajout du tri
-if ($orderBy === "price_asc") {
-    $query .= " ORDER BY prix_article ASC";
-} elseif ($orderBy === "price_desc") {
-    $query .= " ORDER BY prix_article DESC";
-} elseif ($orderBy === "name_asc") {
-    $query .= " ORDER BY nom_article ASC";
-} elseif ($orderBy === "name_desc") {
-    $query .= " ORDER BY nom_article DESC";
-}
-// Exécution de la requête
-$products = $db->select($query, str_repeat("s", count($params)), $params);
-?>
-
-
-
-
-<!--------------->
 <!------HTML----->
 <!--------------->
 
@@ -129,7 +52,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
         <button>
             <a href="<?php echo $base; ?>cart">
                 <img src="<?php echo $base; ?>public/assets/logo_caddie.png" alt="Logo du panier">
-                <p>Panier (<span id="count"><?=$cart->count();?></span>)</p>
+                <p>Panier (<span id="count"><?php echo $cartCount; ?></span>)</p>
             </a>
         </button>
     </div>
@@ -177,8 +100,6 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
 
 
-
-<?php require_once __DIR__ . '/Template/footer.php' ?>
 
 <!--Dynamisme du panier-->
     <!--Automatisation de la soumission du formulaire (filter-form)-->
