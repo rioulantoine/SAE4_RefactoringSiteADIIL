@@ -49,3 +49,12 @@ function addEventXp($db, $xp, $userid)
         [$xp, $userid]
     );
 }
+
+function deleteEventSubscription($db, $userid, $eventid)
+{
+    $db->query(
+        "DELETE FROM INSCRIPTION WHERE id_membre = ? AND id_evenement = ?;",
+        "ii",
+        [$userid, $eventid]
+    );
+}

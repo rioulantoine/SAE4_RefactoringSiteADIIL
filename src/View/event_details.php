@@ -36,14 +36,20 @@
             <?php if($event_date < $current_date):?>    
                 <button class="subscription" id="passed_subscription">Passé</button>
             <?php else:
-                if($isSubscribed):
-                    echo '<button class="subscription" id="passed_subscription">Inscrit</button>';
-                else:?>
+                if($isSubscribed):?>
                     <form class="subscription" 
-                          action="<?php echo $isLoggedIn ? "event_subscription" : "login"; ?>" 
-                          method="post">    
-                        <input type="text" name="eventid" value="<?php echo $eventid?>" hidden>
-                        <button type="submit">Inscription</a></button>
+                          action="<?php echo $isLoggedIn ? $base . "event_subscription" : $base . "login"; ?>" 
+                          method="post">
+                        <input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
+                        <input type="hidden" name="unsubscribe" value="1">
+                        <button type="submit" id="unsubscribe-button">Se désinscrire</button>
+                    </form>
+               <?php else:?>
+                    <form class="subscription" 
+                          action="<?php echo $isLoggedIn ? $base . "event_subscription" : $base . "login"; ?>" 
+                          method="post">
+                        <input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
+                        <button type="submit">Inscription</button>
                     </form>
                 <?php endif;?>
             <?php endif;?>
