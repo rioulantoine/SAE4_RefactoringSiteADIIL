@@ -62,9 +62,25 @@ if (!empty($adherant)) {
     }
 }
 
+$savedPaymentInfo = isset($_SESSION['saved_payment_info']) ? $_SESSION['saved_payment_info'] : [];
+$savedCardNumber = isset($savedPaymentInfo['numero_carte']) ? $savedPaymentInfo['numero_carte'] : '';
+$savedExpiration = isset($savedPaymentInfo['expiration']) ? $savedPaymentInfo['expiration'] : '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['mode_paiement']) && !empty($_POST['mode_paiement'])) {
         $mode_paiement = $_POST['mode_paiement'];
+
+        if (
+            $mode_paiement === 'carte_credit'
+            && isset($_POST['remember_payment'])
+            && $_POST['remember_payment'] === '1'
+            && isset($_POST['numero_carte'], $_POST['expiration'])
+        ) {
+            $_SESSION['saved_payment_info'] = [
+                'numero_carte' => $_POST['numero_carte'],
+                'expiration' => $_POST['expiration'],
+            ];
+        }
 
         // Enregistrer la commande dans la base de données
         foreach ($cart_items as $product_id => $item) {
