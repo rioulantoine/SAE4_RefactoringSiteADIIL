@@ -1,13 +1,21 @@
 section {
   margin-top: 4vh;
 }
+
 body {
-  margin-left: 5vw;
-  margin-right: 5vw;
+  margin: 0;
+  padding-left: 5vw;
+  padding-right: 5vw;
 }
-footer {
-  margin-left: -5vw;
-  margin-right: -5vw;
+
+footer,
+.footer {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-left: 5vw;
+  padding-right: 5vw;
+  box-sizing: border-box;
 }
 
 /*********************
