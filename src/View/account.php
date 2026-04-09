@@ -181,14 +181,7 @@ if (isset($_SESSION['message'])) {
             </button>
         </form>
 
-        <!--Supprimer son compte-->
-        <form action="<?php echo $base; ?>src/Controller/api/delete_account.php" method="post">
-            <input type="hidden" name="delete_account" value="true">
-            <button type="submit">
-                <img src="<?php echo $base; ?>public/assets/delete_icon.png" alt="icone de suppression">
-                Supprimer mon compte
-            </button>
-        </form>
+        
     </div>
 </section>
 
@@ -196,21 +189,8 @@ if (isset($_SESSION['message'])) {
 <!-- PARTIE MES ACHATS -->
 <section id="section-mesAchats">
 
-<?php
-// Vérifie si "viewAll" est défini et vaut "1" dans l'URL
-?>
 
     <h2>MES ACHATS</h2>
-
-    <?php
-    // Préparer la requête SQL avec ou sans LIMIT
-
-
-    // Ajouter LIMIT si "viewAll" n'est pas activé
-
-
-    // Exécuter la requête (gestion des erreurs)
-    ?>
 
     <!--Zone du tableau-->
 
@@ -256,6 +236,18 @@ if (isset($_SESSION['message'])) {
         <?php else: ?>
             <p>Vous n'avez effectué aucun achat pour le moment.</p>
         <?php endif; ?>
+    </div>
+
+    <h2 id="titre-delete-account">SUPPRESSION DE COMPTE</h2>
+    <div id ="delete-account-section">
+        <!--Supprimer son compte-->
+        <form action="<?php echo $base; ?>src/Controller/api/delete_account.php" method="post">
+            <input type="hidden" name="delete_account" value="true">
+            <button type="submit" class="delete-account-button">
+                <img src="<?php echo $base; ?>public/assets/delete_icon.png" alt="icone de suppression">
+                Supprimer mon compte
+            </button>
+        </form>
     </div>
 </section>
 
