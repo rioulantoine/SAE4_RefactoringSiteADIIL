@@ -2,16 +2,25 @@
 
 class DB
 {
-    private $host = 'localhost';
-    private $port = '3306';
-    private $db = 'sae';
-    private $db_user = 'root';
-    private $db_pass = '';
+    private $host;
+    private $port;
+    private $db;
+    private $db_user;
+    private $db_pass;
+
+    public function __construct()
+    {
+        $this->host = $this->getEnvValue('DB_HOST');
+        $this->port = $this->getEnvValue('DB_PORT');
+        $this->db = $this->getEnvValue('DB_NAME');
+        $this->db_user = $this->getEnvValue('DB_USER');
+        $this->db_pass = $this->getEnvValue('DB_PASS');
+    }
 
     public function connect()
     {
 
-        $conn = new mysqli($this->host, $this->db_user, $this->db_pass, $this->db, $this->port);
+        $conn = new mysqli($this->host, $this->db_user, $this->db_pass, $this->db, (int) $this->port);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
@@ -62,6 +71,16 @@ class DB
     public static function clean($input): string
     {
         return htmlspecialchars($input);
+    }
+
+    private function getEnvValue(string $key): string
+    {
+        $value = $_ENV[$key] ?? null;
+        if ($value === null || $value === '') {
+            return '';
+        }
+
+        return (string) $value;
     }
 }
 ?>
