@@ -241,15 +241,15 @@ if (isset($_SESSION['message'])) {
             </thead>
             <tbody>
                 <?php foreach ($historiqueAchats as $achat): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($achat['date_transaction']); ?></td>
-                        <td><?php echo htmlspecialchars($achat['type_transaction']); ?></td>
-                        <td><?php echo htmlspecialchars($achat['element']); ?></td>
-                        <td><?php echo htmlspecialchars($achat['quantite']); ?></td>
-                        <td><?php echo htmlspecialchars(number_format($achat['montant'], 2, ',', ' ')) . " €"; ?></td>
-                        <td><?php echo htmlspecialchars($achat['mode_paiement']); ?></td>
-                        <td><?php echo htmlspecialchars($achat['statut']); ?></td>
-                    </tr>
+                <tr>
+                    <td data-label="Date"><?php echo htmlspecialchars($achat['date_transaction']); ?></td>
+                    <td data-label="Type"><?php echo htmlspecialchars($achat['type_transaction']); ?></td>
+                    <td data-label="Produit"><?php echo htmlspecialchars($achat['element']); ?></td>
+                    <td data-label="Quantité"><?php echo htmlspecialchars($achat['quantite']); ?></td>
+                    <td data-label="Prix"><?php echo htmlspecialchars(number_format($achat['montant'], 2, ',', ' ')) . " €"; ?></td>
+                    <td data-label="Paiement"><?php echo htmlspecialchars($achat['mode_paiement']); ?></td>
+                    <td data-label="Statut"><?php echo htmlspecialchars($achat['statut']); ?></td>
+                </tr>
                 <?php endforeach; ?>
             </tbody>
             </table>

@@ -124,8 +124,6 @@ H2 {
     height: 50%;
     object-fit: cover;
 }
-
-
 #account-personalInfo-form {
     border-radius: 10px;
     width: 60%;
@@ -366,26 +364,6 @@ H2 {
     margin: 0;
 }
 
-@media (max-width: 980px), (max-height: 760px) {
-    #buttons-section {
-        width: 88%;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    #buttons-section > button:first-of-type,
-    #buttons-section form:first-of-type button,
-    #buttons-section form:nth-of-type(2) button {
-        width: 100%;
-        max-width: 360px;
-    }
-
-    #buttons-section button {
-        font-size: 0.9rem;
-    }
-}
-
 
 
 /***********************
@@ -464,6 +442,8 @@ H2 {
     opacity: 100%;
 }
 
+/* Responsive de la page account */
+/* Responsive PP + XP + Grade */
 @media (max-width: 1300px), (max-height: 820px) {
     #account-personalInfo-form,
     #account-editPass-form {
@@ -506,5 +486,81 @@ H2 {
 
     #account-editPass-form div div:first-of-type p {
         font-size: 1.2em;
+    }
+}
+/* Responsive Champs modification */
+
+@media (max-width: 980px) {
+    #account-generalInfo {
+        width: 90%; 
+        height: auto; 
+        flex-direction: column; 
+        gap: 30px;
+        padding: 30px 10px;
+        align-items: center;
+    }
+
+    #account-generalInfo div:first-of-type {
+        justify-content: center;
+    }
+
+    #account-generalInfo div:nth-of-type(2) p:nth-child(1) {
+        font-size: 3rem;
+        line-height: 1;
+    }
+}
+
+
+@media (max-width: 980px), (max-height: 760px) {
+    #buttons-section {
+        width: 88%;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #buttons-section > button:first-of-type,
+    #buttons-section form:first-of-type button,
+    #buttons-section form:nth-of-type(2) button {
+        width: 100%;
+        max-width: 360px;
+    }
+
+    #buttons-section button {
+        font-size: 0.9rem;
+    }
+}
+
+/* Responsive Historique des achats */
+
+@media (max-width: 980px) {
+    #tab-historique-achats thead {
+        display: none;
+    }
+
+    #tab-historique-achats, 
+    #tab-historique-achats tbody, 
+    #tab-historique-achats tr, 
+    #tab-historique-achats td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #tab-historique-achats tr {
+        margin-bottom: 30px;
+    }
+
+    #tab-historique-achats td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+    }
+
+    #tab-historique-achats td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-align: left;
     }
 }
