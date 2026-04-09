@@ -35,22 +35,17 @@ main{
     border-bottom: 2px solid #63CA60;
 }
 
-.status-button{
-    padding: 6px 10px;
-    border: 1px solid #63CA60;
-    background-color: #ffffff;
-    color: #63CA60;
+.validate-order-btn{
+    border: none;
     border-radius: 6px;
+    padding: 6px 10px;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.status-button:hover{
     background-color: #63CA60;
     color: #ffffff;
+    font-weight: 600;
 }
 
-.status-button:disabled{
+.validate-order-btn:disabled{
     opacity: 0.6;
     cursor: not-allowed;
 }

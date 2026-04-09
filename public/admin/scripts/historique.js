@@ -13,8 +13,17 @@ const userSearch = document.getElementById('userSearch');
 // Values (Correction de la route API)
 const default_data = await requestGET('/index.php?page=api_purchase');
 default_data.forEach(item => {
-    item.user = item.nom_membre.toUpperCase() + ' ' + item.prenom_membre;
+    item.user = (item.nom_membre || '').toUpperCase() + ' ' + (item.prenom_membre || '');
 });
+
+async function validateOrder(idCommande) {
+    await requestPATCH('/index.php?page=api_purchase', { id_commande: idCommande });
+    const item = default_data.find(row => Number(row.id_commande) === Number(idCommande));
+    if (item) {
+        item.statut = 'Récupéré';
+    }
+    loadData();
+}
 
 // Load data
 function loadData(){
@@ -55,7 +64,7 @@ function loadData(){
         row.appendChild(utilisateurCell);
 
         const dateCell = document.createElement('td');
-        dateCell.textContent = item.date_transaction?.split(' ')[0] ?? '';
+        dateCell.textContent = item.date_transaction.split(' ')[0];
         row.appendChild(dateCell);
 
         const quantiteCell = document.createElement('td');
@@ -63,41 +72,34 @@ function loadData(){
         row.appendChild(quantiteCell);
 
         const prixCell = document.createElement('td');
-        prixCell.textContent = parseFloat(item.montant || 0).toFixed(2) + ' €';
+        prixCell.textContent = parseFloat(item.montant).toFixed(2) + ' €';
         row.appendChild(prixCell);
 
         const paiementCell = document.createElement('td');
-        paiementCell.textContent = item.mode_paiement || '';
+        paiementCell.textContent = item.mode_paiement;
         row.appendChild(paiementCell);
 
-        const recupereValue = String(item.recupere ?? item.statut ?? '').trim();
-        const statusText = item.statut || (recupereValue === '1' || recupereValue.toLowerCase() === 'true' ? 'Récupéré' : 'Non récupéré');
-
-        const statusCell = document.createElement('td');
-        statusCell.textContent = statusText;
-        row.appendChild(statusCell);
+        const statutCell = document.createElement('td');
+        const isPending = item.statut === 'En attente';
+        statutCell.textContent = item.statut;
+        row.appendChild(statutCell);
 
         const actionCell = document.createElement('td');
-        const isCommande = String(item.type_transaction || '').toLowerCase() === 'commande';
-        const commandId = item.id_commande ?? item.id_commande;
-
-        if (isCommande && commandId != null) {
-            const button = document.createElement('button');
-            button.className = 'status-button';
-            button.textContent = statusText === 'Récupéré' ? 'Marquer non récupéré' : 'Marquer récupéré';
-            button.addEventListener('click', async () => {
-                button.disabled = true;
+        if (item.type_transaction === 'Commande' && isPending && item.id_commande) {
+            const validateButton = document.createElement('button');
+            validateButton.textContent = 'Valider';
+            validateButton.className = 'validate-order-btn';
+            validateButton.addEventListener('click', async () => {
+                validateButton.disabled = true;
                 try {
-                    const updated = await requestPATCH(`/index.php?page=api_purchase&id=${commandId}`, { recupere: statusText !== 'Récupéré' });
-                    item.recupere = updated.recupere;
-                    item.statut = updated.statut;
-                    loadData();
+                    await validateOrder(item.id_commande);
                 } catch (error) {
+                    validateButton.disabled = false;
                     console.error(error);
-                    button.disabled = false;
+                    alert('Impossible de valider la commande.');
                 }
             });
-            actionCell.appendChild(button);
+            actionCell.appendChild(validateButton);
         } else {
             actionCell.textContent = '-';
         }
