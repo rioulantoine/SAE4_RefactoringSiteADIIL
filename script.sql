@@ -187,16 +187,16 @@ INSERT INTO ROLE (nom_role, p_log_role, p_boutique_role, p_reunion_role, p_utili
 
 -- Insertion des membres
 INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, password_membre, xp_membre, discord_token_membre, pp_membre, tp_membre) VALUES
-('RUFFAULT--RAVENEL', 'Gemino', 'gemino.ruffault@example.com', 'password1', 50, NULL, 'default-user.jpg', '11A'),
-('HANNIER', 'Axelle', 'axelle.hannier@example.com', 'password2', 18, NULL, 'default-user.jpg', '12C'),
-('DAUVERGNE', 'Julien', 'julien.dauvergne@example.com', 'password3', 0, 'g4rd64g6rd4g8f4e64h5bv231h5th44g5ht6h87yj8ty6', 'default-user.jpg','31A'),
-('DELAYE', 'Baptiste', 'baptiste.delahay@example.com', 'password4', 0, NULL, 'default-user.jpg', '32D'),
-('VIEILLARD', 'Nathalie', 'nathalie.vieillard@example.com', 'password5', 11, NULL, 'default-user.jpg', NULL),
-('HAVARD', 'Barnabe', 'barnabe.havard@example.com', 'password6', 0, 'kiuilui4l8iul654hg2g', 'default-user.jpg', '11A'),
-('FEVRIER', 'Theo', 'theo.fevrier@example.com', 'password7', 0, NULL, 'default-user.jpg', NULL),
-('GOUIN', 'Tom', 'tom.gouin@example.com', 'password8', 12, NULL, 'default-user.jpg', NULL),
-('CONGNARD', 'Evann', 'evann.congnard@example.com', 'password9', 0, NULL, 'default-user.jpg', '31A'),
-('LE COZ', 'Erwan', 'erwan.lecoz@example.com', 'password10', 0, NULL, 'default-user.jpg', '31B');
+('RUFFAULT--RAVENEL', 'Gemino', 'gemino.ruffault@example.com', 'password1', 50, NULL, 'default-user.webp', '11A'),
+('HANNIER', 'Axelle', 'axelle.hannier@example.com', 'password2', 18, NULL, 'default-user.webp', '12C'),
+('DAUVERGNE', 'Julien', 'julien.dauvergne@example.com', 'password3', 0, 'g4rd64g6rd4g8f4e64h5bv231h5th44g5ht6h87yj8ty6', 'default-user.webp','31A'),
+('DELAYE', 'Baptiste', 'baptiste.delahay@example.com', 'password4', 0, NULL, 'default-user.webp', '32D'),
+('VIEILLARD', 'Nathalie', 'nathalie.vieillard@example.com', 'password5', 11, NULL, 'default-user.webp', NULL),
+('HAVARD', 'Barnabe', 'barnabe.havard@example.com', 'password6', 0, 'kiuilui4l8iul654hg2g', 'default-user.webp', '11A'),
+('FEVRIER', 'Theo', 'theo.fevrier@example.com', 'password7', 0, NULL, 'default-user.webp', NULL),
+('GOUIN', 'Tom', 'tom.gouin@example.com', 'password8', 12, NULL, 'default-user.webp', NULL),
+('CONGNARD', 'Evann', 'evann.congnard@example.com', 'password9', 0, NULL, 'default-user.webp', '31A'),
+('LE COZ', 'Erwan', 'erwan.lecoz@example.com', 'password10', 0, NULL, 'default-user.webp', '31B');
 
 -- Definition des roles
 INSERT INTO ASSIGNATION (id_membre, id_role) VALUES
@@ -208,9 +208,9 @@ INSERT INTO ASSIGNATION (id_membre, id_role) VALUES
 
 -- Ajout des grades
 INSERT INTO GRADE (reduction_grade, image_grade, prix_grade, description_grade, nom_grade) VALUES
-(0, 'fer.png', 5, 'Un grade de base en fer.', 'Fer'),
-(0, 'or.png', 10, 'Un grade superieur en or.', 'Or'),
-(10, 'diamant.png', 13, 'Le grade ultime en diamant.', 'Diamant');
+(0, 'fer.webp', 5, 'Un grade de base en fer.', 'Fer'),
+(0, 'or.webp', 10, 'Un grade superieur en or.', 'Or'),
+(10, 'diamant.webp', 13, 'Le grade ultime en diamant.', 'Diamant');
 
 -- Insertion des adhsions
 INSERT INTO ADHESION (date_adhesion, prix_adhesion, paiement_adhesion, id_membre, id_grade) VALUES
@@ -222,15 +222,15 @@ INSERT INTO ADHESION (date_adhesion, prix_adhesion, paiement_adhesion, id_membre
 -- Ajout des articles de la boutique
 INSERT INTO ARTICLE (xp_article, nom_article, stock_article, image_article, reduction_article, prix_article) VALUES
 (1, 'Canette de Coca', 50, 'coca.webp', 0, 1.50),
-(1, 'Coca Cherry', 30, 'coca-cherry.png', 0, 1.75),
-(20, 'Lipton Ice Tea', 40, 'ice-tea.avif', 0, 1.50),
-(1, 'Formule Cafe', 20, 'cafe.png', 0, 2.00),
-(1, 'Bueno White', 25, 'bueno-white.avif', 1, 1.20),
-(1, 'Bueno', 35, 'bueno.png', 1, 1.20),
-(10, 'Snack Chips', 60, 'chips.png', 0, 1.00),
-(1, 'Barre de Chocolat', 0, 'chocolat.png', 0, 1.50),
-(1, 'Jus d Orange', 55, 'jus-orange.png', 0, 1.30),
-(30, 'Volvic', 70, 'volvic.png', 0, 0.80);
+(1, 'Coca Cherry', 30, 'coca-cherry.webp', 0, 1.75),
+(20, 'Lipton Ice Tea', 40, 'ice-tea.webp', 0, 1.50),
+(1, 'Formule Cafe', 20, 'cafe.webp', 0, 2.00),
+(1, 'Bueno White', 25, 'bueno-white.webp', 1, 1.20),
+(1, 'Bueno', 35, 'bueno.webp', 1, 1.20),
+(10, 'Snack Chips', 60, 'chips.webp', 0, 1.00),
+(1, 'Barre de Chocolat', 0, 'chocolat.webp', 0, 1.50),
+(1, 'Jus d Orange', 55, 'jus-orange.webp', 0, 1.30),
+(30, 'Volvic', 70, 'volvic.webp', 0, 0.80);
 
 -- Ajout des commandes
 INSERT INTO COMMANDE (statut_commande, prix_commande, paiement_commande, date_commande, qte_commande, id_membre, id_article) VALUES
@@ -288,16 +288,16 @@ INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date
 
 -- Ajout de la comptabilite
 INSERT INTO COMPTABILITE (date_comptabilite, nom_comptabilite, url_comptabilite, id_membre) VALUES
-('2024-03-05', 'Compta fev2024', 'compta-default.png', 6),
-('2023-12-10', 'Compta nov2023', 'compta-default.png', 6),
-('2024-01-07', 'Compta dec2023', 'compta-default.png', 6),
-('2024-02-05', 'Compta janv2024', 'compta-default.png', 6),
-('2024-04-10', 'Compta mars2024', 'compta-default.png', 6),
-('2024-05-07', 'Compta avril2024', 'compta-default.png', 6),
-('2024-06-10', 'Compta mai2024', 'compta-default.png', 6),
-('2024-07-05', 'Compta juin2024', 'compta-default.png', 6),
-('2024-08-12', 'Compta juillet2024', 'compta-default.png', 6),
-('2024-09-09', 'Compta aout2024', 'compta-default.png', 6);
+('2024-03-05', 'Compta fev2024', 'compta-default.webp', 6),
+('2023-12-10', 'Compta nov2023', 'compta-default.webp', 6),
+('2024-01-07', 'Compta dec2023', 'compta-default.webp', 6),
+('2024-02-05', 'Compta janv2024', 'compta-default.webp', 6),
+('2024-04-10', 'Compta mars2024', 'compta-default.webp', 6),
+('2024-05-07', 'Compta avril2024', 'compta-default.webp', 6),
+('2024-06-10', 'Compta mai2024', 'compta-default.webp', 6),
+('2024-07-05', 'Compta juin2024', 'compta-default.webp', 6),
+('2024-08-12', 'Compta juillet2024', 'compta-default.webp', 6),
+('2024-09-09', 'Compta aout2024', 'compta-default.webp', 6);
 
 
 -- Ajout des reunions
@@ -316,16 +316,16 @@ INSERT INTO REUNION (date_reunion, fichier_reunion, id_membre) VALUES
 
 -- Ajout des medias
 INSERT INTO MEDIA (url_media, date_media, id_membre, id_evenement) VALUES
-('media-default.jpg', '2024-10-21', 3, 2),
-('media-default.jpg', '2024-10-21', 5, 2),
-('media-default.jpg', '2024-11-05', 6, 3),
-('media-default.jpg', '2024-09-17', 3, 1),
-('media-default.jpg', '2024-12-13', 8, 4),
-('media-default.jpg', '2024-10-11', 6, 4),
-('media-default.jpg', '2025-01-15', 3, 5),
-('media-default.jpg', '2024-09-18', 10, 1),
-('media-default.jpg', '2025-05-02', 6, 6),
-('media-default.jpg', '2024-05-02', 9, 6);
+('media-default.webp', '2024-10-21', 3, 2),
+('media-default.webp', '2024-10-21', 5, 2),
+('media-default.webp', '2024-11-05', 6, 3),
+('media-default.webp', '2024-09-17', 3, 1),
+('media-default.webp', '2024-12-13', 8, 4),
+('media-default.webp', '2024-10-11', 6, 4),
+('media-default.webp', '2025-01-15', 3, 5),
+('media-default.webp', '2024-09-18', 10, 1),
+('media-default.webp', '2025-05-02', 6, 6),
+('media-default.webp', '2024-05-02', 9, 6);
 
 
 -- -------------------------------------------------------------------------------------
@@ -563,11 +563,11 @@ DELIMITER ;
 
 /* Test */
 -- Le membre 2 n'a pas les permissions pour ajouter une actualit� donc l'actualit� ne va pas �tre cr��e
--- INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date_actualite, id_membre) VALUES ('http://files.bdeinfo.fr/lougarou2024.jpg', 'Un loup garou qui a fait son effet', 'Hier soir a eu lieu le goup garou annuel et le moins qu''on puisse dire c''est qu''on va recommencer et bientot!', '2024-10-25 19:45:00', 2);
+-- INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date_actualite, id_membre) VALUES ('http://files.bdeinfo.fr/lougarou2024.webp', 'Un loup garou qui a fait son effet', 'Hier soir a eu lieu le goup garou annuel et le moins qu''on puisse dire c''est qu''on va recommencer et bientot!', '2024-10-25 19:45:00', 2);
 -- SELECT* FROM ACTUALITE;
 
 -- Le membre 1 a les permissions pour ajouter une actualit� donc l'actualit� va bien �tre cr��e
--- INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date_actualite, id_membre) VALUES ('http://files.bdeinfo.fr/lougarou2024.jpg', 'Un loup garou qui a fait son effet', 'Hier soir a eu lieu le goup garou annuel et le moins qu''on puisse dire c''est qu''on va recommencer et bientot!', '2024-10-25 19:45:00', 1);
+-- INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date_actualite, id_membre) VALUES ('http://files.bdeinfo.fr/lougarou2024.webp', 'Un loup garou qui a fait son effet', 'Hier soir a eu lieu le goup garou annuel et le moins qu''on puisse dire c''est qu''on va recommencer et bientot!', '2024-10-25 19:45:00', 1);
 -- SELECT* FROM ACTUALITE;
 
 
@@ -594,7 +594,7 @@ DELIMITER ;
 
 /*Fonctionnement : on fait une insertion dans media*/
 
-INSERT INTO MEDIA (url_media, date_media, id_membre, id_evenement) VALUES('media-default.jpg', '2024-10-23', 3, 1);
+INSERT INTO MEDIA (url_media, date_media, id_membre, id_evenement) VALUES('media-default.webp', '2024-10-23', 3, 1);
 
 /* Test */
 SELECT * FROM MEDIA; -- l'image a bien ajoutee dans la galerie de l'evenement 1
@@ -854,8 +854,8 @@ END$$
 DELIMITER ;
 
 
-CALL creationCompte('HANNIER', 'axelle', 'axelle.hannier@example.com', 'krjtj4jykjyi8oi', 'default-user.jpg');
-CALL creationCompte('DUPONT', 'jean', 'dupont.jean@example.com', 'hjhrethe2454rrhit', 'default-user.jpg');
+CALL creationCompte('HANNIER', 'axelle', 'axelle.hannier@example.com', 'krjtj4jykjyi8oi', 'default-user.webp');
+CALL creationCompte('DUPONT', 'jean', 'dupont.jean@example.com', 'hjhrethe2454rrhit', 'default-user.webp');
 
 SELECT*FROM MEMBRE;
 
