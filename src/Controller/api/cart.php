@@ -1,15 +1,21 @@
 <?php
 
-if (session_status() === PHP_SESSION_NONE) session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-require_once __DIR__ . '/../../Model/cart_class.php';
+require_once __DIR__ . '/../../Model/ModelCart.php';
 require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Service/filter.php';
 
 $db = new DB();
-$cart = new cart($db);
+$modelCart = new ModelCart($db);
 
-$action = $_GET['action'] ?? ''; 
+if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
 
+$action = $_GET['action'] ?? '';
 $response = ['error' => true, 'message' => 'Action invalide'];
 
 switch ($action) {
@@ -18,22 +24,19 @@ switch ($action) {
             $response['message'] = 'Identifiant manquant';
             break;
         }
-        $id = intval($_REQUEST['id']);
-        $product = $db->select(
-            "SELECT id_article FROM ARTICLE WHERE id_article = ?",
-            "i",
-            [$id]
-        );
-        if (empty($product)) {
+
+        $id = Filter::int($_REQUEST['id']);
+        if (!$modelCart->doesProductExist($id)) {
             $response['message'] = 'Produit introuvable';
             break;
         }
-        $cart->add($id);
+
+        $modelCart->addToCart($id);
         $response = [
             'error' => false,
             'message' => 'Produit ajouté au panier',
-            'count' => $cart->count(),
-            'total' => $cart->total(),
+            'count' => $modelCart->getCartCount($_SESSION['cart']),
+            'total' => $modelCart->getCartTotal($_SESSION['cart']),
         ];
         break;
 
@@ -42,13 +45,14 @@ switch ($action) {
             $response['message'] = 'Identifiant manquant';
             break;
         }
-        $id = intval($_REQUEST['id']);
-        $cart->del($id);
+
+        $id = Filter::int($_REQUEST['id']);
+        $modelCart->removeFromCart($id);
         $response = [
             'error' => false,
             'message' => 'Produit supprimé du panier',
-            'count' => $cart->count(),
-            'total' => $cart->total(),
+            'count' => $modelCart->getCartCount($_SESSION['cart']),
+            'total' => $modelCart->getCartTotal($_SESSION['cart']),
         ];
         break;
 
@@ -57,14 +61,14 @@ switch ($action) {
             $response['message'] = 'Méthode invalide';
             break;
         }
-        if (!empty($_POST['cart']['quantity'])) {
-            // cart_class::recalc() lit $_POST et met à jour $_SESSION['cart']
-            $cart->recalc();
+
+        if (!empty($_POST['cart']['quantity']) && is_array($_POST['cart']['quantity'])) {
+            $modelCart->recalcCart($_POST['cart']['quantity']);
             $response = [
                 'error' => false,
                 'message' => 'Quantités mises à jour',
-                'count' => $cart->count(),
-                'total' => $cart->total(),
+                'count' => $modelCart->getCartCount($_SESSION['cart']),
+                'total' => $modelCart->getCartTotal($_SESSION['cart']),
             ];
         } else {
             $response['message'] = 'Aucune quantité fournie';
@@ -72,16 +76,12 @@ switch ($action) {
         break;
 }
 
-// Support simple redirect for non-AJAX flows + flash message in session
 if (isset($_GET['redirect'])) {
     $_SESSION['message'] = $response['message'] ?? '';
     $_SESSION['message_type'] = (!empty($response['error'])) ? 'error' : 'success';
 
     $loc = $_GET['redirect'];
-    // basic safety: allow only same-origin redirects to the base URL
-    // Since we are now in include context, $base is available from index.php
-    global $base; 
-    if (strpos($loc, $base) === 0 || strpos($loc, '/') === 0) {
+    if (strpos($loc, '/') === 0) {
         header('Location: ' . $loc);
         exit;
     }
