@@ -7,13 +7,14 @@ $base = $_ENV['BASE_URL'] ?? '/';
 
 session_start();
 $page = $_GET['page'] ?? 'accueil';
-
+$footerAffichage = false; // Variable pour contrôler l'affichage du footer
 $isAdmin = ($page === 'admin' || $page === 'admin_panel');
 
 $isApi = str_starts_with($page, 'api_') || in_array($page, ['logout', 'item.php', 'cart.php', 'add_media', 'delete_media']);
 
 if (!$isAdmin && !$isApi) {
     require_once __DIR__ . '/src/Controller/ControllerHeader.php';
+    $footerAffichage = true; // Afficher le footer pour les pages non-admin et non-API
 }
 
 switch ($page) {
@@ -175,7 +176,7 @@ switch ($page) {
         break;
 }
 
-if (!$isAdmin && !$isApi) {
+if ($footerAffichage) {
     require_once __DIR__ . '/src/View/Template/footer.php';
 }
 ?>
