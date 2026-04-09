@@ -17,6 +17,7 @@
 session_start();
 
 require_once __DIR__ . '/../../Model/database.php';
+require_once __DIR__ . '/../../Model/ModelSuppressionCompte.php';
 $db = new DB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -46,11 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     endif;
 
     if (isset($_POST['delete_account_valid']) && $_POST['delete_account_valid'] === 'true'){
-        $db->query(
-            "CALL suppressionCompte ( ? );",
-            "i",
-            [$_SESSION["userid"]]
-        );
+        deleteAccount($db, $_SESSION["userid"]);
         session_destroy();
         header("Location: /index.php");
         exit();
