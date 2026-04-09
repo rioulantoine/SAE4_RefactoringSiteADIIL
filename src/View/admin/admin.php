@@ -39,8 +39,15 @@ if (!(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'])){
         <a id="accueil" href="<?php echo $base; ?>accueil">
             ADIIL - Admin
         </a>
+        <input type="checkbox" id="admin-menu-toggle" class="menu-toggle" aria-label="Ouvrir le menu admin">
+        <label for="admin-menu-toggle" class="menu-burger" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
 
-        <ul>
+        <div class="admin-menu">
+            <ul>
 
             <li perm="chat">
                 <img src="<?php echo $base; ?>public/admin/ressources/panels_icons/chat.svg" alt="Icone du chat">
@@ -157,7 +164,8 @@ if (!(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'])){
                 }
             ?>
 
-        </ul>
+            </ul>
+        </div>
     </nav>
 
     <!-- Permissions -->

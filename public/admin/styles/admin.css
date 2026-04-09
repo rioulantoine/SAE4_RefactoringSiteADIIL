@@ -1,11 +1,10 @@
 /* VARIABLES */
 :root {
-    --bg-color: #0F0F0F;
+  --bg-color: #0f0f0f;
 
-    --nav-text-color: white;
-    --nav-width: 270px;
+  --nav-text-color: white;
+  --nav-width: 270px;
 }
-
 
 /*
     All the styles are prefixed with #main to avoid conflicts with styles within the iframe.
@@ -13,157 +12,217 @@
 
 /* MAIN BODY */
 #main {
-    background-color: var(--bg-color);
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    padding: 30px;
-    overflow: hidden;
+  background-color: var(--bg-color);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding: 30px;
+  overflow: hidden;
 }
 
 /* NAVIGATION */
 #main nav {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 
-    width: var(--nav-width);
+  width: var(--nav-width);
+  position: relative;
 }
 
 #main nav h1 {
-    color: var(--nav-text-color);
-    font-size: 30px;
-    font-weight: bold;
+  color: var(--nav-text-color);
+  font-size: 30px;
+  font-weight: bold;
 }
 
 #main nav ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    user-select: none;
-    overflow: auto;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  user-select: none;
+  overflow: auto;
+}
+
+.admin-menu {
+  width: 100%;
 }
 
 #main nav ul li {
-    width: 100%;
-    padding: 15px;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 15px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
 
-    color: var(--nav-text-color);
-    font-size: 16px;
+  color: var(--nav-text-color);
+  font-size: 16px;
 
-    position: relative;
-    cursor: pointer;
+  position: relative;
+  cursor: pointer;
 
-    transition-duration: 0.2s;
+  transition-duration: 0.2s;
 }
 
 #main nav ul li img {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 #main nav ul li.selected {
-    background-color: rgba(169, 169, 169, 0.15);
+  background-color: rgba(169, 169, 169, 0.15);
 }
 
 /* MAIN */
 #main main {
-    width: calc(100% - var(--nav-width));
-    border-radius: 35px;
-    background-color: var(--background-color);
-    overflow: hidden;
+  width: calc(100% - var(--nav-width));
+  border-radius: 35px;
+  background-color: var(--background-color);
+  overflow: hidden;
 }
 
 #main main iframe {
-    width: 100%;
-    height: 100%;
-    user-select: none;
+  width: 100%;
+  height: 100%;
+  user-select: none;
 }
 
 /* SCROLL BAR */
 ::-webkit-scrollbar {
-    width: 7px;
-    /* Largeur de la barre */
-    height: 7px;
+  width: 7px;
+  /* Largeur de la barre */
+  height: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, #ededed, #cfcfcf);
-    /* Couleur et gradient du curseur */
-    border-radius: 4px;
-    /* Coins arrondis */
+  background: linear-gradient(45deg, #ededed, #cfcfcf);
+  /* Couleur et gradient du curseur */
+  border-radius: 4px;
+  /* Coins arrondis */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, #cccccc, #b0b0b0);
-    /* Couleur au survol */
+  background: linear-gradient(45deg, #cccccc, #b0b0b0);
+  /* Couleur au survol */
 }
 
 ::-webkit-scrollbar-track {
-    background: #1e1e1e;
-    /* Couleur de fond de la piste */
-    border-radius: 4px;
-    /* Coins arrondis de la piste */
+  background: #1e1e1e;
+  /* Couleur de fond de la piste */
+  border-radius: 4px;
+  /* Coins arrondis de la piste */
 }
 
 ::-webkit-scrollbar-track:hover {
-    background: #2e2e2e;
-    /* Couleur au survol de la piste */
+  background: #2e2e2e;
+  /* Couleur au survol de la piste */
 }
 
 #main nav a {
-    color: var(--nav-text-color);
-    text-decoration: none;
-    font-size: 30px;
-    font-weight: bold;
+  color: var(--nav-text-color);
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.menu-toggle,
+.menu-burger {
+  display: none;
+}
+
+.menu-burger {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--nav-text-color);
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.menu-burger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: var(--nav-text-color);
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 /* RESPONSIVE */
 @media screen and (max-width: 1300px) {
-    #main {
-        flex-direction: column-reverse;
-        gap: 30px;
-        padding: 10px;
-    }
+  #main {
+    flex-direction: column;
+    gap: 30px;
+    padding: 10px;
+  }
 
-    #main nav {
-        width: 100%;
-    }
+  #main nav {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    #main::after {
-        content: 'ADIIL - Admin';
-        color: var(--nav-text-color);
-        font-size: 30px;
-        font-weight: bold;
-        text-align: center;
-    }
+  #main::after {
+    content: none;
+  }
 
-    #main nav>h1 {
-        display: none;
-    }
+  .menu-burger {
+    display: inline-flex;
+  }
 
-    #main nav>ul {
-        flex-direction: row;
-        gap: 15px;
-        overflow: auto;
-    }
+  #main nav .admin-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    left: auto;
+    width: min(90vw, 360px);
+    background-color: var(--bg-color);
+    padding: 10px 0;
+    max-height: 70vh;
+    overflow: auto;
+    display: none;
+    z-index: 10;
+  }
 
-    #main nav>ul>li {
-        height: 60px;
-    }
+  #main nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-    #main main {
-        width: 100%;
-        height: 80vh;
-    }
+  #main nav > ul > li {
+    height: auto;
+  }
+
+  #main main {
+    width: 100%;
+    height: 80vh;
+  }
+
+  .menu-toggle:checked + .menu-burger span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .menu-toggle:checked + .menu-burger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle:checked + .menu-burger span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  #main nav .menu-toggle:checked ~ .admin-menu {
+    display: block;
+  }
 }
