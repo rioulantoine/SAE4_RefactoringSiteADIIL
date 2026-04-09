@@ -47,7 +47,7 @@ class Event extends BaseModel implements JsonSerializable
     {
         $DB = new \DB();
         $sql = "SELECT E.*, 
-            (E.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION I WHERE I.id_evenement = E.id_evenement)) as remaining_places
+                (E.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION I WHERE I.id_evenement = E.id_evenement)) as remaining_places
                 FROM EVENEMENT E 
                 WHERE E.deleted = false";
 

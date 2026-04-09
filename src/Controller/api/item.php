@@ -58,8 +58,6 @@ try {
     exit;
 }
 
-// --- TES FONCTIONS RESTENT INCHANGÉES ---
-
 function get_items() : void
 {
     if (isset($_GET['id']))
