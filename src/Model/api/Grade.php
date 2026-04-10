@@ -13,7 +13,7 @@ class Grade extends BaseModel implements JsonSerializable
     {
         $DB = new \DB();
 
-        $imagePath = $image !== null ? $image->getFileName() : "grade.webP";
+        $imagePath = $image !== null ? $image->getFileName() : "grade.webp";
 
         $id = $DB->query("INSERT INTO GRADE (nom_grade, description_grade, prix_grade, image_grade, reduction_grade)
                     VALUES (?, ?, ?, ?, ?)", "ssdsd", [$name, $description, $price, $imagePath, $reduction]);
@@ -49,7 +49,7 @@ class Grade extends BaseModel implements JsonSerializable
     public function delete() : void
     {
         $image = $this->DB->select("SELECT image_grade FROM GRADE WHERE id_grade = ?", "i", [$this->id])[0]['image_grade'];
-        if ($image !== null && $image !== 'default.png' && $image !== 'N/A' && $image !== 'grade.webP' && !str_starts_with($image, 'http')) {
+        if ($image !== null && $image !== 'default.png' && $image !== 'N/A' && $image !== 'grade.webp' && !str_starts_with($image, 'http')) {
             File::getFile($image)?->deleteFile();
         }
         $this->DB->query("UPDATE GRADE SET deleted=true WHERE id_grade = ?", "i", [$this->id]);

@@ -57,7 +57,7 @@ async function selectGrade(id_grade, li){
     showLoader();
 
     const grade = await requestGET(`/index.php?page=api_grade&id=${id_grade}`);
-    const defaultImagePath = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/grade.webP';
+    const defaultImagePath = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/grade.webp';
 
     if (grade.image_grade && grade.image_grade.startsWith('http')) {
         prop_image_grade.src = grade.image_grade;
