@@ -72,8 +72,8 @@ if (isset($_SESSION['message'])) {
             <p>Vous n'avez pas de grade</p>
         <?php else: ?>
             <p><?php echo $infoUser[0]['nom_grade']; ?></p>
-            <?php if($infoUser[0]['image_grade'] == null):?>
-                <img src="<?php echo $base; ?>public/admin/ressources/default_images/grade.webp" alt="Image du grade" />
+            <?php if($infoUser[0]['image_grade'] == null || $infoUser[0]['image_grade'] === 'default.png' || $infoUser[0]['image_grade'] === 'N/A'):?>
+                <img src="<?php echo $base; ?>public/api/files/grade.webp" alt="Image du grade" />
             <?php else:?>
                 <img src="<?php echo $base; ?>public/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur" />
             <?php endif?>

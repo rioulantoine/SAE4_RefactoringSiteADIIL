@@ -66,8 +66,8 @@
         <?php foreach ($products as $product) : ?>
                 <div id="one-product">
                     <div>
-                        <?php if($product['image_article'] == null):?>
-                            <img src="<?php echo $base; ?>public/admin/ressources/default_images/boutique.png" alt="Image de l'article" />
+                        <?php if($product['image_article'] == null || $product['image_article'] === 'default.png' || $product['image_article'] === 'N/A'):?>
+                            <img src="<?php echo $base; ?>public/api/files/coca.webp" alt="Image de l'article" />
                         <?php else:?>
                             <img src="<?php echo $base; ?>public/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
                         <?php endif?>

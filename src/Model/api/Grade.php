@@ -13,7 +13,7 @@ class Grade extends BaseModel implements JsonSerializable
     {
         $DB = new \DB();
 
-        $imagePath = $image !== null ? $image->getFileName() : "default.png";
+        $imagePath = $image !== null ? $image->getFileName() : "grade.webp";
 
         $id = $DB->query("INSERT INTO GRADE (nom_grade, description_grade, prix_grade, image_grade, reduction_grade)
                     VALUES (?, ?, ?, ?, ?)", "ssdsd", [$name, $description, $price, $imagePath, $reduction]);

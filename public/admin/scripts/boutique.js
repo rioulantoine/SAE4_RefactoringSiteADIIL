@@ -62,11 +62,11 @@ async function selectArticle(id_article, li){
     showLoader();
 
     const article = await requestGET(`/index.php?page=api_item&id=${id_article}`);
-    const defaultImagePath = window.location.origin + (window.base || window.parent?.base || '') + 'public/admin/ressources/default_images/boutique.png';
+    const defaultImagePath = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/coca.webp';
     
     if (article.image_article && article.image_article.startsWith('http')) {
         prop_image.src = article.image_article;
-    } else if (article.image_article && article.image_article !== "default.png") {
+    } else if (article.image_article && article.image_article !== "default.png" && article.image_article !== "N/A") {
         prop_image.src = window.location.origin + (window.base || window.parent?.base || '') + 'public/api/files/' + article.image_article;
     } else {
         prop_image.src = defaultImagePath;

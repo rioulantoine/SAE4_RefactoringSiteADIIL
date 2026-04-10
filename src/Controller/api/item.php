@@ -155,7 +155,10 @@ function update_image() : void
         return;
     }
 
-    @$item->getImage()?->deleteFile();
+    $oldImage = $item->jsonSerialize()['image_article'];
+    if ($oldImage !== null && $oldImage !== 'default.png' && $oldImage !== 'N/A' && $oldImage !== 'coca.webp' && !str_starts_with($oldImage, 'http')) {
+        File::getFile($oldImage)?->deleteFile();
+    }
 
     $item->updateImage($imageName);
 

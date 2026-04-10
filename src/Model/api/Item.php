@@ -13,7 +13,7 @@ class Item extends BaseModel implements JsonSerializable
     {
         $DB = new \DB();
 
-        $imagePath = $image !== null ? $image->getFileName() : "default.png";
+        $imagePath = $image !== null ? $image->getFileName() : "coca.webp";
 
         $id = $DB->query("INSERT INTO ARTICLE (nom_article, xp_article, stock_article, reduction_article, prix_article, image_article)
                     VALUES (?, ?, ?, ?, ?, ?)", "siiids", [$name, $xp, $stocks, $reduction, $price, $imagePath]);
@@ -48,7 +48,10 @@ class Item extends BaseModel implements JsonSerializable
 
     public function delete() : void
     {
-        $this->getImage()?->deleteFile();
+        $image = $this->DB->select("SELECT image_article FROM ARTICLE WHERE id_article = ?", "i", [$this->id])[0]['image_article'];
+        if ($image !== null && $image !== 'default.png' && $image !== 'N/A' && $image !== 'coca.webp' && !str_starts_with($image, 'http')) {
+            File::getFile($image)?->deleteFile();
+        }
         $this->DB->query("UPDATE ARTICLE SET deleted=true WHERE id_article = ?", "i", [$this->id]);
     }
 
