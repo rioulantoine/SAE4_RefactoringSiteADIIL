@@ -123,8 +123,8 @@
     
             <div class="propertie">
                 <div>
-                    <p>Description affiché</p>
-                    <p>Description affiché dans la boutique.</p>
+                    <p>Description affichée</p>
+                    <p>Description affichée dans la boutique.</p>
                 </div>
                 <div>
                     <input type="text" placeholder="Or" id="prop_description_grade_grade">
