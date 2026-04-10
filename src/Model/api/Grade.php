@@ -48,7 +48,10 @@ class Grade extends BaseModel implements JsonSerializable
 
     public function delete() : void
     {
-        $this->getImage()?->deleteFile();
+        $image = $this->DB->select("SELECT image_grade FROM GRADE WHERE id_grade = ?", "i", [$this->id])[0]['image_grade'];
+        if ($image !== null && $image !== 'default.png' && $image !== 'N/A' && $image !== 'grade.webp' && !str_starts_with($image, 'http')) {
+            File::getFile($image)?->deleteFile();
+        }
         $this->DB->query("UPDATE GRADE SET deleted=true WHERE id_grade = ?", "i", [$this->id]);
     }
 

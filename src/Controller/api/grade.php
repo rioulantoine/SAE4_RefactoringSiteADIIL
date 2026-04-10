@@ -156,7 +156,7 @@ function update_image() : void
     }
 
     $oldImage = $grade->jsonSerialize()['image_grade'];
-    if ($oldImage !== 'default.png' && $oldImage !== 'N/A' && !str_starts_with($oldImage, 'http')) {
+    if ($oldImage !== 'default.png' && $oldImage !== 'N/A' && $oldImage !== 'grade.webp' && !str_starts_with($oldImage, 'http')) {
         $deleteFile = File::getFile($oldImage);
         $deleteFile?->deleteFile();
     }
