@@ -1,4 +1,4 @@
-<link rel="shortcut icon" href="/admin/ressources/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="<?php echo $base; ?>public/admin/ressources/favicon.png" type="image/x-icon">
 
 
 <!-- HEADER -->
