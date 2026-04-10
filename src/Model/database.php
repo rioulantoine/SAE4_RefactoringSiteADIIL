@@ -75,7 +75,7 @@ class DB
 
     private function getEnvValue(string $key): string
     {
-        $value = $_ENV[$key] ?? null;
+        $value = $_ENV[$key] ?? getenv($key) ?: null;
         if ($value === null || $value === '') {
             return '';
         }

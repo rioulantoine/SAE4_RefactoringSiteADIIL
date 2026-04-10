@@ -10,7 +10,7 @@ $page = $_GET['page'] ?? 'accueil';
 $footerAffichage = false; // Variable pour contrôler l'affichage du footer
 $isAdmin = ($page === 'admin' || $page === 'admin_panel');
 
-$isApi = str_starts_with($page, 'api_') || in_array($page, ['logout', 'item.php', 'cart.php', 'add_media', 'delete_media']);
+$isApi = str_starts_with($page, 'api_') || in_array($page, ['logout', 'item.php', 'cart.php', 'add_media', 'delete_media', 'delete_account']);
 
 if (!$isAdmin && !$isApi) {
     require_once __DIR__ . '/src/Controller/ControllerHeader.php';
@@ -66,6 +66,10 @@ switch ($page) {
     
     case 'account':
         require_once __DIR__ . '/src/Controller/ControllerAccount.php';
+        break;
+
+    case 'delete_account':
+        require_once __DIR__ . '/src/Controller/ControllerDeleteAccount.php';
         break;
 
     case 'order':

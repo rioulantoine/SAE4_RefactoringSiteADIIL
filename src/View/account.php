@@ -241,7 +241,7 @@ if (isset($_SESSION['message'])) {
     <h2 id="titre-delete-account">SUPPRESSION DE COMPTE</h2>
     <div id ="delete-account-section">
         <!--Supprimer son compte-->
-        <form action="<?php echo $base; ?>src/Controller/api/delete_account.php" method="post">
+        <form action="<?php echo $base; ?>delete_account" method="post">
             <input type="hidden" name="delete_account" value="true">
             <button type="submit" class="delete-account-button">
                 <img src="<?php echo $base; ?>public/assets/delete_icon.png" alt="icone de suppression">
