@@ -10,7 +10,7 @@ require_once __DIR__ . '/File.php';
 
 class Member extends BaseModel implements JsonSerializable
 {
-    public function delete() : void
+        public function delete() : void
     {
         $pp = $this->getProfilePic();
         if ($pp) $pp->deleteFile();
@@ -39,7 +39,7 @@ class Member extends BaseModel implements JsonSerializable
         
         $ppPath = $pp !== null ? $pp->getFileName() : "default.png";
 
-        $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, pp_membre, tp_membre) VALUES (?,?,?,?,?)", "sssss", [$nom, $prenom, $email, $ppPath, $tp]);
+        $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, pp_membre, tp_membre, password_membre) VALUES (?,?,?,?,?,?)", "ssssss", [$nom, $prenom, $email, $ppPath, $tp, password_hash("achanger", PASSWORD_DEFAULT)]);
 
         return new Member($id);
     }

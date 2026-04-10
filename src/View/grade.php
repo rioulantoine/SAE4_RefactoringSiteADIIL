@@ -50,7 +50,7 @@
                 <div id="one-product">
                     <div>
                         <?php if($product['image_grade'] == null || $product['image_grade'] === 'default.png' || $product['image_grade'] === 'N/A'):?>
-                            <img src="<?php echo $base; ?>/public/api/files/grade.webp" alt="Image du grade" />
+                            <img src="<?php echo $base; ?>/public/api/files/grade.webP" alt="Image du grade" />
                         <?php else:?>
                             <img src="<?php echo $base; ?>/public/api/files/<?php echo $product['image_grade']; ?>" alt="Image du grade" />
                         <?php endif?>

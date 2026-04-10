@@ -73,7 +73,7 @@ if (isset($_SESSION['message'])) {
         <?php else: ?>
             <p><?php echo $infoUser[0]['nom_grade']; ?></p>
             <?php if($infoUser[0]['image_grade'] == null || $infoUser[0]['image_grade'] === 'default.png' || $infoUser[0]['image_grade'] === 'N/A'):?>
-                <img src="<?php echo $base; ?>public/api/files/grade.webp" alt="Image du grade" />
+                <img src="<?php echo $base; ?>public/api/files/grade.webP" alt="Image du grade" />
             <?php else:?>
                 <img src="<?php echo $base; ?>public/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur" />
             <?php endif?>
